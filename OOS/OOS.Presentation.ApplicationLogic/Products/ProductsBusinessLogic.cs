@@ -24,6 +24,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var result = new CreateProductResponse();
             var pro = _mapper.Map<CreateProductRequest, Product>(request);
             pro.Id = Guid.NewGuid().ToString();
+       
             
             _mongoDbRepository.Create(pro);
             return result;
