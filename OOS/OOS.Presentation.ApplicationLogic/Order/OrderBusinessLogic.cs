@@ -17,6 +17,7 @@ namespace OOS.Presentation.ApplicationLogic.Order
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
         }
+
         public void DeleteOrder(string id)
         {
             var orderToDelete = _mongoDbRepository.Get<Orders>(id);

@@ -13,10 +13,12 @@ namespace OOS.Presentation.WebAPIs.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderBusinessLogic _orderBusinessLogic;
+
         public OrderController(IOrderBusinessLogic orderBusinessLogic)
         {
             _orderBusinessLogic = orderBusinessLogic;
         }
+
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<string> Get()
