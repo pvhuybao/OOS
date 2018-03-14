@@ -1,13 +1,16 @@
-﻿using OOS.Shared.Enums;
+﻿
+
+using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Domain.Orders.Models
+namespace OOS.Presentation.ApplicationLogic.Order.Messages
 {
-    public class Address
+    public class EditAddressRequest
     {
-        public string Name { get; set;}
+
+        public string Name { get; set; }
 
         public string Phone { get; set; }
 

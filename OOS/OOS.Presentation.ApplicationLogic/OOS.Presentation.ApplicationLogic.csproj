@@ -5,12 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Order\Messages\EditAddressRequest.cs" />
+    <Compile Remove="Order\Messages\EditOrderDetailRequest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OOS.Domain\OOS.Domain.csproj" />
     <ProjectReference Include="..\OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj" />
+    <ProjectReference Include="..\OOS.Shared\OOS.Shared.csproj" />
   </ItemGroup>
 
 </Project>
