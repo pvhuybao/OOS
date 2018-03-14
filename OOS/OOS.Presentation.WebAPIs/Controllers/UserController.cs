@@ -26,8 +26,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
             var listUser = _usersBusinessLogic.GetUser();
             return Ok(listUser);
         }
-
-        // GET api/values/5
+      
+        // GET: api/User/5
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
