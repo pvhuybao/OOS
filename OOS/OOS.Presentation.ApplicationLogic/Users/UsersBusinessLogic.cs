@@ -26,9 +26,7 @@ namespace OOS.Presentation.ApplicationLogic.Users
             var listUser = _mongoDbRepository.Find(filter).ToList();
             return  listUser;
         }
-
-        
-
+    
         public User GetUser(string id)
         {
             var user = _mongoDbRepository.Get<User>(id);
