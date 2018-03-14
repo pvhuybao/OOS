@@ -1,4 +1,5 @@
-﻿using OOS.Infrastructure.Mongodb;
+﻿using OOS.Domain.Products.Models;
+using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Products.Messages;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace OOS.Presentation.ApplicationLogic.Products
         CreateProductResponse EditProduct(CreateProductRequest Request, string Id);
 
         void DeleteProduct(string id);
+        List<Product> GetProduct();
+        Product GetProduct(string id);
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MongoDB.Driver;
 using OOS.Domain.Products.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Products.Messages;
@@ -42,5 +43,16 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var product = _mongoDbRepository.Get<Product>(id);
             _mongoDbRepository.Delete(product);
         }
+        public List<Product> GetProduct()
+        {
+            var filter = Builders<Product>.Filter.Empty;
+            var listProducts = _mongoDbRepository.Find(filter).ToList();
+            return listProducts;
+        }
+        public Product GetProduct(string id)
+        {
+            return _mongoDbRepository.Get<Product>(id);
+        }
+
     }
 }
