@@ -4,36 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OOS.Presentation.ApplicationLogic.Products;
+using OOS.Presentation.ApplicationLogic.Users;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 
 namespace OOS.Presentation.WebAPIs.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/User")]
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly IUsersBusinessLogic _usersBusinessLogic;
 
-        public UserController(IUsersBusinessLogic usersBusinessLogic)
+        public UserController(IUsersBusinessLogic UsersBusinessLogic)
         {
-            _usersBusinessLogic = usersBusinessLogic;
+            _usersBusinessLogic = UsersBusinessLogic;
         }
 
-        // GET: api/User
+        // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var listUser = _usersBusinessLogic.GetUser();
+            return Ok(listUser);
         }
-
+      
         // GET: api/User/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(string id)
         {
-            return "value";
+            var user = _usersBusinessLogic.GetUser(id);
+            return Ok(user);
         }
-        
+     
         // POST: api/User
         [HttpPost]
         public IActionResult Post([FromBody]CreateUserRequest request)

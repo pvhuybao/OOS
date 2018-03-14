@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OOS.Domain\OOS.Domain.csproj" />
     <ProjectReference Include="..\OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj" />
     <ProjectReference Include="..\OOS.Presentation.ApplicationLogic\OOS.Presentation.ApplicationLogic.csproj" />
   </ItemGroup>

@@ -13,4 +13,10 @@
     <ProjectReference Include="..\OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="OOS.Shared">
+      <HintPath>..\OOS.Shared\bin\Debug\netcoreapp2.0\OOS.Shared.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

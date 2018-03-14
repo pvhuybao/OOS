@@ -9,6 +9,8 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
     public class CreateUserRequest : RequestBase
     {
         [Required]
+        public string Name { get; set; }
+
         public string Username { get; set; }
 
         [Required]
