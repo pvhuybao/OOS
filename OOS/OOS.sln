@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation", "1. Presentation", "{EFB858C0-8B67-4DCD-B636-F53B3A116E21}"
 EndProject
@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Domain", "OOS.Domain\OO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Infrastructure.Mongodb", "OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj", "{C9DB8194-168E-4F37-833E-7D016E149EEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOS.Presentation.WebAPIs", "OOS.Presentation.WebAPIs\OOS.Presentation.WebAPIs.csproj", "{A136D3BD-7517-47EE-970F-508F4137E377}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Presentation.WebAPIs", "OOS.Presentation.WebAPIs\OOS.Presentation.WebAPIs.csproj", "{A136D3BD-7517-47EE-970F-508F4137E377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOS.Presentation.ApplicationLogic", "OOS.Presentation.ApplicationLogic\OOS.Presentation.ApplicationLogic.csproj", "{FF67B234-0247-494D-BAC3-A0D06AEB8981}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Presentation.ApplicationLogic", "OOS.Presentation.ApplicationLogic\OOS.Presentation.ApplicationLogic.csproj", "{FF67B234-0247-494D-BAC3-A0D06AEB8981}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,6 +13,7 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.0-preview1-final" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="2.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="2.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="2.3.0" />
@@ -23,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OOS.Domain\OOS.Domain.csproj" />
     <ProjectReference Include="..\OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj" />
     <ProjectReference Include="..\OOS.Presentation.ApplicationLogic\OOS.Presentation.ApplicationLogic.csproj" />
   </ItemGroup>

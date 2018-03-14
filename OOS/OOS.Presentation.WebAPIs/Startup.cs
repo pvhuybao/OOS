@@ -13,6 +13,7 @@ using OOS.Infrastructure.Mongodb;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using OOS.Presentation.WebAPIs.Configs;
+using OOS.Presentation.ApplicationLogic.Users;
 
 namespace OOS.Presentation.WebAPIs
 {
@@ -30,6 +31,7 @@ namespace OOS.Presentation.WebAPIs
         {
             services.AddMvc();
 
+            services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
             services.AddTransient<IProductsBusinessLogic, ProductsBusinessLogic>();
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(Configuration.GetValue<string>("MongoDb:DefaultConnectionString")));            
 
