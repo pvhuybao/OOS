@@ -12,7 +12,7 @@ namespace OOS.Presentation.ApplicationLogic.Order
 
         void DeleteOrder(string id);
 
-        EditOrderResponse EditOrder(EditOrderRequest request);
+        EditOrderResponse EditOrder(string id,EditOrderRequest request);
 
         List<Orders> GetOders();
 

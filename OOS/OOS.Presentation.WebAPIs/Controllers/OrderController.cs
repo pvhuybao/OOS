@@ -46,8 +46,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]EditOrderRequest value)
         {
-            value.Id = id;
-            _orderBusinessLogic.EditOrder(value);
+            
+            _orderBusinessLogic.EditOrder(id,value);
             return Ok();
 
         }

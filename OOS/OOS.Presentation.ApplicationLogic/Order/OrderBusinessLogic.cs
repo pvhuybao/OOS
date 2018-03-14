@@ -28,13 +28,14 @@ namespace OOS.Presentation.ApplicationLogic.Order
         }
 
 
-        public EditOrderResponse EditOrder(EditOrderRequest request)
+        public EditOrderResponse EditOrder(string id, EditOrderRequest request)
         {
             var result = new EditOrderResponse();
             var ord = _mapper.Map<EditOrderRequest, Orders>(request);
-
+            ord.Id = id;
             _mongoDbRepository.Replace<Orders>(ord);
             return result;
+
         }
 
 
