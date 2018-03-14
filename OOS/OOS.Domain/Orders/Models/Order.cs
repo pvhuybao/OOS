@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Domain.ProductCategories
+namespace OOS.Domain.Orders.Models
 {
     [BsonIgnoreExtraElements]
-    public class ProductCategory : IAggregateRoot
+    public class Order : IAggregateRoot
     {
         public string Id { get; set; }
 
-        public string Name { get; set; }
+        public string Email { get; set; }
     }
 }
