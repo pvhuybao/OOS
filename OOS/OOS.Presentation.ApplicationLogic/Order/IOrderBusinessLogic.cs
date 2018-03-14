@@ -11,9 +11,8 @@ namespace OOS.Presentation.ApplicationLogic.Order
     {
 
         void DeleteOrder(string id);
-        EditOrderResponse EditOrder(EditOrderRequest request);
 
-        void DeleteOrder (string id);
+        EditOrderResponse EditOrder(EditOrderRequest request);
 
         List<Orders> GetOders();
 
