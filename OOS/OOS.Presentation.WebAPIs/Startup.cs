@@ -13,6 +13,7 @@ using OOS.Infrastructure.Mongodb;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using OOS.Presentation.WebAPIs.Configs;
+using OOS.Presentation.ApplicationLogic.Users;
 using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 using OOS.Presentation.ApplicationLogic.Categories;
@@ -33,6 +34,7 @@ namespace OOS.Presentation.WebAPIs
         {
             services.AddMvc();
 
+            services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
             services.AddTransient<IProductsBusinessLogic, ProductsBusinessLogic>();
             services.AddTransient<IOrderBusinessLogic, OrderBusinessLogic>();
             services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
