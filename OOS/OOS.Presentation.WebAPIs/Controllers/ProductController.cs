@@ -51,8 +51,9 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _productsBusinessLogic.DeleteProduct(id);
             return Ok();
         }
     }

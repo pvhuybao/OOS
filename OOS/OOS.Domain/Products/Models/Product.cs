@@ -26,13 +26,13 @@ namespace OOS.Domain.Products.Models
         [Required]
         public string IdCategory { get; set; }
 
-        public DateTime Createdate { get; set; }
+        public DateTime CreateDate { get; set; }
 
-        public string Createby { get; set; }
+        public string CreateBy { get; set; }
 
-        public DateTime Updatedate { get; set; }
+        public DateTime UpdateDate { get; set; }
 
-        public string Updateby { get; set; }
+        public string UpdateBy { get; set; }
 
         public string Status { get; set; }
     }
