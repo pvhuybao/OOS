@@ -1,4 +1,4 @@
-﻿using OOS.Domain.Users.Models;
+using OOS.Domain.Users.Models;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 using System;
 using System.Collections.Generic;

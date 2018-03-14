@@ -15,4 +15,3 @@ namespace OOS.Presentation.ApplicationLogic.Users
         }
     }
 }
-

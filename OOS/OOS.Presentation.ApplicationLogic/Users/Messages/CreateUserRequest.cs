@@ -10,5 +10,22 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
     {
         [Required]
         public string Name { get; set; }
+
+        public string Username { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        public Boolean Gender { get; set; }
+
+        public string Image { get; set; }
+
+        public string Email { get; set; }
     }
 }
