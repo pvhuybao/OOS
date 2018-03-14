@@ -24,14 +24,16 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var result = _productsBusinessLogic.GetProduct();
+            return Ok(result);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
-            return Ok();
+            var result = _productsBusinessLogic.GetProduct(id);
+            return Ok(result);
         }
 
         // POST api/values
@@ -44,8 +46,9 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]string value)
+        public IActionResult Put(string id, [FromBody]CreateProductRequest request)
         {
+            _productsBusinessLogic.EditProduct(request, id);
             return Ok();
         }
 

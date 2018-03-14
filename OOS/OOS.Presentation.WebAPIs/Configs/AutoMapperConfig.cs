@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Products;
+using OOS.Presentation.ApplicationLogic.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace OOS.Presentation.WebAPIs.Configs
             {
                 c.AddProfile<ProductsBusinessLogicAutoMapper>();
                 c.AddProfile<CategoriesBusinessLogicAutoMapper>();
+                c.AddProfile<UsersBusinessLogicAutoMapper>();
             });
 
             services.AddAutoMapper(n => config.CreateMapper());
