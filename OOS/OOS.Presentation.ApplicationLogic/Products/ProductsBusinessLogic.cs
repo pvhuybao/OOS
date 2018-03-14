@@ -32,14 +32,8 @@ namespace OOS.Presentation.ApplicationLogic.Products
         public CreateProductResponse EditProduct(CreateProductRequest request, string id)
         {
             var result = new CreateProductResponse();
-            var pro = _mapper.Map<CreateProductRequest, Product>(request);
-            pro.Id = Guid.NewGuid().ToString();
-
-            var product =  _mongoDbRepository.Get<Product>(id);
-            if (id != null)
-            {
-                pro.Id = product.Id;
-            }
+            var pro = _mapper.Map<CreateProductRequest, Product>(request);         
+                pro.Id = id;    
             _mongoDbRepository.Replace<Product>(pro);
             return result;
         }
