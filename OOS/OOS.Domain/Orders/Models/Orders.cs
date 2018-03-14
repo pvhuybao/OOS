@@ -7,7 +7,7 @@ using System.Text;
 namespace OOS.Domain.Orders.Models
 {
     [BsonIgnoreExtraElements]
-    public class Order : IAggregateRoot
+    public class Orders : IAggregateRoot
     {
         public string Id { get; set; }
 
