@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,8 +50,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _categoriesBusinessLogic.DeleteCategory(id);
+            return Ok();
         }
     }
 }

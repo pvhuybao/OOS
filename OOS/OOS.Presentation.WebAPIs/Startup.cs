@@ -15,6 +15,7 @@ using AutoMapper;
 using OOS.Presentation.WebAPIs.Configs;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
+using OOS.Presentation.ApplicationLogic.Categories;
 
 namespace OOS.Presentation.WebAPIs
 {

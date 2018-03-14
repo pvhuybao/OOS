@@ -8,5 +8,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
     public interface ICategoriesBusinessLogic
     {
         CreateCategoryResponse CreateCategory(CreateCategoryRequest request);
+    
+        void DeleteCategory(string id);
     }
 }

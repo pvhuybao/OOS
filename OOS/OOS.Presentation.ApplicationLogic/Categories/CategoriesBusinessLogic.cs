@@ -1,4 +1,5 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
@@ -18,7 +19,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
         }
-
+        
         public CreateCategoryResponse CreateCategory(CreateCategoryRequest request)
         {
             var result = new CreateCategoryResponse();
@@ -28,6 +29,12 @@ namespace OOS.Presentation.ApplicationLogic.Categories
 
             _mongoDbRepository.Create<Category>(cate);
             return result;
+        }
+
+        public void DeleteCategory(string id)
+        {
+            var category = _mongoDbRepository.Get<Category>(id);
+            _mongoDbRepository.Delete(category);
         }
     }
 }

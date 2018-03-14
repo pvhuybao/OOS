@@ -9,7 +9,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
 {
     public class CategoriesBusinessLogicAutoMapper : Profile
     {
-        public CategoriesBusinessLogicAutoMapper()                                                                                                                        
+        public CategoriesBusinessLogicAutoMapper()
         {
             CreateMap<CreateCategoryRequest, Category>();
         }
