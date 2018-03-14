@@ -44,7 +44,10 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return result;
         }
 
-
-
+        public void DeleteProduct(string id)
+        {
+            var product = _mongoDbRepository.Get<Product>(id);
+            _mongoDbRepository.Delete(product);
+        }
     }
 }

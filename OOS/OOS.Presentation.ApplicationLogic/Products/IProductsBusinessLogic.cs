@@ -12,5 +12,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         CreateProductResponse EditProduct(CreateProductRequest Request, string Id);
 
+        void DeleteProduct(string id);
+
     }
 }
