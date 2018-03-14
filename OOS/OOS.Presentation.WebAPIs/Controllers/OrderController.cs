@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OOS.Presentation.ApplicationLogic.Order;
+using OOS.Presentation.ApplicationLogic.Order.Messages;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,8 +38,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody] CreateOrderRequest request)
         {
+            _orderBusinessLogic.CreateOrder(request);
+            return Ok();
         }
 
         // PUT api/<controller>/5

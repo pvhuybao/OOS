@@ -5,6 +5,7 @@ using OOS.Domain.Orders.Models;
 using System.Collections.Generic;
 using System.Text;
 using MongoDB.Driver;
+using OOS.Presentation.ApplicationLogic.Order.Messages;
 
 namespace OOS.Presentation.ApplicationLogic.Order
 {
@@ -18,6 +19,15 @@ namespace OOS.Presentation.ApplicationLogic.Order
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
         }
+
+        public CreateOrderResponse CreateOrder(CreateOrderRequest request)
+        {
+            var result = new CreateOrderResponse();
+            var pro = _mapper.Map<CreateOrderRequest, Orders>(request);
+            pro.Id = Guid.NewGuid().ToString();
+            _mongoDbRepository.Create(pro);
+            return result;
+        } 
 
         public void DeleteOrder(string id)
         {
