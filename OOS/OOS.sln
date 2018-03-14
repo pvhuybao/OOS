@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Domain", "OOS.Domain\OO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Infrastructure.Mongodb", "OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj", "{C9DB8194-168E-4F37-833E-7D016E149EEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOS.Presentation.WebAPIs", "OOS.Presentation.WebAPIs\OOS.Presentation.WebAPIs.csproj", "{A136D3BD-7517-47EE-970F-508F4137E377}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Presentation.WebAPIs", "OOS.Presentation.WebAPIs\OOS.Presentation.WebAPIs.csproj", "{A136D3BD-7517-47EE-970F-508F4137E377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOS.Presentation.ApplicationLogic", "OOS.Presentation.ApplicationLogic\OOS.Presentation.ApplicationLogic.csproj", "{FF67B234-0247-494D-BAC3-A0D06AEB8981}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOS.Presentation.ApplicationLogic", "OOS.Presentation.ApplicationLogic\OOS.Presentation.ApplicationLogic.csproj", "{FF67B234-0247-494D-BAC3-A0D06AEB8981}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOS.Shared", "OOS.Shared\OOS.Shared.csproj", "{01134CEB-ED6C-41AF-8B08-A864B70F7FEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{FF67B234-0247-494D-BAC3-A0D06AEB8981}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF67B234-0247-494D-BAC3-A0D06AEB8981}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF67B234-0247-494D-BAC3-A0D06AEB8981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01134CEB-ED6C-41AF-8B08-A864B70F7FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01134CEB-ED6C-41AF-8B08-A864B70F7FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01134CEB-ED6C-41AF-8B08-A864B70F7FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01134CEB-ED6C-41AF-8B08-A864B70F7FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{C9DB8194-168E-4F37-833E-7D016E149EEB} = {7831D884-1D10-4A05-9903-709362CB2699}
 		{A136D3BD-7517-47EE-970F-508F4137E377} = {EFB858C0-8B67-4DCD-B636-F53B3A116E21}
 		{FF67B234-0247-494D-BAC3-A0D06AEB8981} = {EFB858C0-8B67-4DCD-B636-F53B3A116E21}
+		{01134CEB-ED6C-41AF-8B08-A864B70F7FEA} = {950EC2A5-DCA4-4639-BDDC-DE8BC2D4A0FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {67225B26-6446-4842-A6F1-3D3BB7B1386A}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOS.Shared.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,11 +17,6 @@ namespace OOS.Domain.Orders.Models
 
         public string Province { get; set; }
 
-        public enum AddressType
-        {
-            ShippingAddress = 0,
-
-            BillingAddress = 1
-        }
+        public AddressType Type { get; set; }
     }
 }
