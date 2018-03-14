@@ -34,8 +34,7 @@ namespace OOS.Presentation.ApplicationLogic.Order
 
         public Orders GetOdersById(string id)
         {
-            var order = _mongoDbRepository.Get<Orders>(id);
-            return order;
+            return _mongoDbRepository.Get<Orders>(id);
         }
     }
 }
