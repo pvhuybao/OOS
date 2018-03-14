@@ -14,6 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using OOS.Presentation.WebAPIs.Configs;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
+using OOS.Presentation.ApplicationLogic.Users;
 
 namespace OOS.Presentation.WebAPIs
 {

@@ -5,8 +5,9 @@ using AutoMapper;
 using System.Collections.Generic;
 using System.Text;
 using OOS.Infrastructure.Mongodb;
+using OOS.Presentation.ApplicationLogic.Users.Messages;
 
-namespace OOS.Presentation.ApplicationLogic.Users.Messages
+namespace OOS.Presentation.ApplicationLogic.Users
 {
     public class UsersBusinessLogic : IUsersBusinessLogic
     {
