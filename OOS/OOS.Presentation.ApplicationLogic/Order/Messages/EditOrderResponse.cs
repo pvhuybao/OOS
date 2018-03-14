@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OOS.Presentation.ApplicationLogic.Order.Messages
 {
-    class EditOrderResponse : ResponseBase
+    public class EditOrderResponse : ResponseBase
     {
     }
 }

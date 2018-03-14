@@ -25,26 +25,13 @@ namespace OOS.Presentation.ApplicationLogic.Order
             _mongoDbRepository.Delete(orderToDelete);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public void EditOrder(EditOrderRequest request)
+        public EditOrderResponse EditOrder(EditOrderRequest request)
         {
-
+            var result = new EditOrderResponse();
+            var ord = _mapper.Map<EditOrderRequest, Orders>(request);
+           
+            _mongoDbRepository.Replace<Orders>(ord);
+            return result;
 
         }
     }
