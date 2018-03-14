@@ -21,16 +21,18 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var listOrders = _orderBusinessLogic.GetOders();
+            return Ok(listOrders);
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(string id)
         {
-            return "value";
+            var order = _orderBusinessLogic.GetOdersById(id);
+            return Ok(order);
         }
 
         // POST api/<controller>
