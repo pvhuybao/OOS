@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OOS.Presentation.ApplicationLogic.Order;
-using OOS.Presentation.ApplicationLogic.Order.Messages;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -48,6 +47,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
+            _orderBusinessLogic.DeleteOrder(id);
+            return Ok();
         }
     }
 }
