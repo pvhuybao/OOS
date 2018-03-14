@@ -10,5 +10,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories.Messages
     {
         [Required]
         public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

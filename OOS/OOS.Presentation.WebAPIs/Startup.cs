@@ -33,7 +33,7 @@ namespace OOS.Presentation.WebAPIs
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(Configuration.GetValue<string>("MongoDb:DefaultConnectionString")));            
 
             AutoMapperConfig.Configure(services);
-
+            
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
