@@ -13,4 +13,8 @@
     <ProjectReference Include="..\OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Users\Messages\" />
+  </ItemGroup>
+
 </Project>
