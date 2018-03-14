@@ -44,15 +44,17 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]string value)
+        public IActionResult Put(string id, [FromBody]CreateProductRequest request)
         {
+            _productsBusinessLogic.EditProduct(request, id);
             return Ok();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _productsBusinessLogic.DeleteProduct(id);
             return Ok();
         }
     }
