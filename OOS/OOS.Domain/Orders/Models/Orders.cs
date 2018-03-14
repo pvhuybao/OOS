@@ -15,11 +15,10 @@ namespace OOS.Domain.Orders.Models
 
         public string UserId { get; set; }
 
-        public List<OrderDetail> OrderDetail { get; set; }
+        public List<OrderDetails> OrderDetails { get; set; }
 
         public List<Address> Address { get; set; }
 
         public double Total { get; set; }
-        
     }
 }

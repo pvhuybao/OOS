@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OOS.Domain.Orders.Models
 {
-    public class OrderDetail 
+    public class OrderDetails 
     {
         public string IdProduct { get; set; }
 
