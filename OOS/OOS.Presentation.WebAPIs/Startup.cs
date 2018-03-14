@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using OOS.Presentation.ApplicationLogic.Products;
 using OOS.Infrastructure.Mongodb;
 using Swashbuckle.AspNetCore.Swagger;
-using AutoMapper;
 using OOS.Presentation.WebAPIs.Configs;
 using OOS.Presentation.ApplicationLogic.Categories;
+using OOS.Presentation.ApplicationLogic.Order;
+using OOS.Presentation.ApplicationLogic.Users.Messages;
 
 namespace OOS.Presentation.WebAPIs
 {
@@ -32,7 +27,9 @@ namespace OOS.Presentation.WebAPIs
             services.AddMvc();
 
             services.AddTransient<IProductsBusinessLogic, ProductsBusinessLogic>();
+            services.AddTransient<IOrderBusinessLogic, OrderBusinessLogic>();
             services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
+            services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(Configuration.GetValue<string>("MongoDb:DefaultConnectionString")));            
 
             AutoMapperConfig.Configure(services);
