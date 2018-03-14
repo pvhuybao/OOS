@@ -16,6 +16,11 @@ namespace OOS.Domain.Orders.Models
 
         public string Province { get; set; }
 
-        public bool TypeAddress { get; set; }
+        public enum AddressType
+        {
+            ShippingAddress = 0,
+
+            BillingAddress = 1
+        }
     }
 }
