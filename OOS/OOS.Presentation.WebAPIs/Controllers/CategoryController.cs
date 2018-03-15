@@ -22,16 +22,19 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/Category
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_categoriesBusinessLogic.GetCategories());
         }
 
         // GET: api/Category/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(string id)
         {
-            return "value";
+            var request = new GetCategoryRequest();
+            request.Id = id;
+
+            return Ok(_categoriesBusinessLogic.GetCategory(request));
         }
         
         // POST: api/Category
