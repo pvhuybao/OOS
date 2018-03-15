@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
+using MongoDB.Driver;
 using OOS.Domain.Categories.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Categories.Messages;
@@ -28,6 +29,27 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             cate.Id = Guid.NewGuid().ToString();
 
             _mongoDbRepository.Create<Category>(cate);
+            return result;
+        }
+
+        public List<GetCategoryResponse> GetCategories()
+        {
+            var result = new List<GetCategoryResponse>();
+
+            var filter = Builders<Category>.Filter.Empty;
+            var data = _mongoDbRepository.Find<Category>(filter).ToList();
+
+            result = _mapper.Map<List<Category>, List<GetCategoryResponse>>((List<Category>)data);
+
+            return result;
+        }
+
+        public GetCategoryResponse GetCategory(GetCategoryRequest request)
+        {
+            var result = new GetCategoryResponse();
+
+            result = _mapper.Map<Category, GetCategoryResponse>((Category)_mongoDbRepository.Get<Category>(request.Id));
+
             return result;
         }
 
