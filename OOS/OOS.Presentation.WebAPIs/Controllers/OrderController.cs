@@ -46,8 +46,12 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(string id, [FromBody]EditOrderRequest value)
         {
+            
+            _orderBusinessLogic.EditOrder(id,value);
+            return Ok();
+
         }
 
         // DELETE api/<controller>/5

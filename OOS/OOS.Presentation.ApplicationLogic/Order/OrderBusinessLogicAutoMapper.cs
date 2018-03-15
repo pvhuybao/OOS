@@ -13,6 +13,8 @@ namespace OOS.Presentation.ApplicationLogic.Order
         public OrderBusinessLogicAutoMapper()
         {
             CreateMap<CreateOrderRequest, Orders>();
+
+            CreateMap<EditOrderRequest, Orders>();
         }
     }
 }

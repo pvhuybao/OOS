@@ -12,8 +12,11 @@ namespace OOS.Presentation.ApplicationLogic.Order
         CreateOrderResponse CreateOrder(CreateOrderRequest request);
         void DeleteOrder (string id);
 
+        EditOrderResponse EditOrder(string id,EditOrderRequest request);
+
         List<Orders> GetOders();
 
         Orders GetOdersById(string id);
+
     }
 }
