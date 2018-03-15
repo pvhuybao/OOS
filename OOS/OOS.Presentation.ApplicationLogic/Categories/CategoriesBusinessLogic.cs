@@ -27,6 +27,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
 
             var cate = _mapper.Map<CreateCategoryRequest, Category>(request);
             cate.Id = Guid.NewGuid().ToString();
+            cate.Status = 1;
 
             _mongoDbRepository.Create<Category>(cate);
             return result;
@@ -36,7 +37,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         {
             var result = new List<GetCategoryResponse>();
 
-            var filter = Builders<Category>.Filter.Empty;
+            var filter = Builders<Category>.Filter.Where(c => c.Status == 1);
             var data = _mongoDbRepository.Find<Category>(filter).ToList();
 
             result = _mapper.Map<List<Category>, List<GetCategoryResponse>>((List<Category>)data);
@@ -56,7 +57,9 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         public void DeleteCategory(string id)
         {
             var category = _mongoDbRepository.Get<Category>(id);
-            _mongoDbRepository.Delete(category);
+            category.Status = 0;
+            _mongoDbRepository.Replace<Category>(category);
+
         }
 
         public EditCategoryResponse EditCategory(string id, EditCategoryRequest request)

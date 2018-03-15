@@ -29,5 +29,7 @@ namespace OOS.Domain.Users.Models
         public string Image { get; set; }
 
         public string Email { get; set; }
+
+        public int Status { get; set; }
     }
 }
