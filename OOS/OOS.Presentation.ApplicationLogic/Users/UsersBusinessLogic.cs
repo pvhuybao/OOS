@@ -24,9 +24,9 @@ namespace OOS.Presentation.ApplicationLogic.Users
         {
             var filter = Builders<User>.Filter.Empty;
             var listUser = _mongoDbRepository.Find(filter).ToList();
-            return  listUser;
+            return listUser;
         }
-    
+
         public User GetUser(string id)
         {
             var user = _mongoDbRepository.Get<User>(id);
@@ -42,7 +42,14 @@ namespace OOS.Presentation.ApplicationLogic.Users
             _mongoDbRepository.Create(user);
             return result;
         }
-
+        public EditUserResponse EditUser(EditUserRequest request, string id)
+        {
+            var result = new EditUserResponse();
+            var pro = _mapper.Map<EditUserRequest, User>(request);
+            pro.Id = id;
+            _mongoDbRepository.Replace<User>(pro);
+            return result;
+        }
         public void DeleteUser(string id)
         {
             var User = _mongoDbRepository.Get<User>(id);
