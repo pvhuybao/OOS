@@ -38,8 +38,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody] CreateOrderRequest request)
         {
+            _orderBusinessLogic.CreateOrder(request);
+            return Ok();
         }
 
         // PUT api/<controller>/5

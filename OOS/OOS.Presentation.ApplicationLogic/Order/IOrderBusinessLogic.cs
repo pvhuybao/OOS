@@ -9,8 +9,8 @@ namespace OOS.Presentation.ApplicationLogic.Order
 {
     public interface IOrderBusinessLogic
     {
-
-        void DeleteOrder(string id);
+        CreateOrderResponse CreateOrder(CreateOrderRequest request);
+        void DeleteOrder (string id);
 
         EditOrderResponse EditOrder(string id,EditOrderRequest request);
 
