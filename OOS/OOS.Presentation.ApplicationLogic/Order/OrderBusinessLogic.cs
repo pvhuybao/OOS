@@ -4,7 +4,9 @@ using System;
 using OOS.Domain.Orders.Models;
 using System.Collections.Generic;
 using System.Text;
+using OOS.Presentation.ApplicationLogic.Order.Messages;
 using MongoDB.Driver;
+
 
 namespace OOS.Presentation.ApplicationLogic.Order
 {
@@ -24,6 +26,18 @@ namespace OOS.Presentation.ApplicationLogic.Order
             var orderToDelete = _mongoDbRepository.Get<Orders>(id);
             _mongoDbRepository.Delete(orderToDelete);
         }
+
+
+        public EditOrderResponse EditOrder(string id, EditOrderRequest request)
+        {
+            var result = new EditOrderResponse();
+            var ord = _mapper.Map<EditOrderRequest, Orders>(request);
+            ord.Id = id;
+            _mongoDbRepository.Replace<Orders>(ord);
+            return result;
+
+        }
+
 
         public List<Orders> GetOders()
         {
