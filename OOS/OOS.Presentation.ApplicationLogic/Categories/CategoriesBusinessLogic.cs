@@ -36,5 +36,17 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             var category = _mongoDbRepository.Get<Category>(id);
             _mongoDbRepository.Delete(category);
         }
+
+        public EditCategoryResponse EditCategory(string id, EditCategoryRequest request)
+        {
+            var result = new EditCategoryResponse();
+
+            request.Id = id;
+            var cate = _mapper.Map<EditCategoryRequest, Category>(request);
+            cate.Id = id;
+
+            _mongoDbRepository.Replace<Category>(cate);
+            return result;
+        }
     }
 }

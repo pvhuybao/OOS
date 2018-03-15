@@ -38,8 +38,16 @@ namespace OOS.Presentation.WebAPIs.Controllers
             _usersBusinessLogic.CreateUser(request);
             return Ok();
         }
-        
-        // PUT api/values/5
+
+
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _usersBusinessLogic.DeleteUser(id);
+            return Ok();
+        }
+            
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]EditUserRequest request)
         {

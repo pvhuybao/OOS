@@ -10,5 +10,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         CreateCategoryResponse CreateCategory(CreateCategoryRequest request);
     
         void DeleteCategory(string id);
+
+        EditCategoryResponse EditCategory(string id,EditCategoryRequest request);
     }
 }

@@ -44,8 +44,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
         
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(string id, [FromBody]EditCategoryRequest value)
         {
+            _categoriesBusinessLogic.EditCategory(id,value);
+            return Ok();
         }
         
         // DELETE: api/ApiWithActions/5
