@@ -41,7 +41,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         {
             var result = new EditCategoryResponse();
 
-            request.Id = id;
+            //request.Id = id;
             var cate = _mapper.Map<EditCategoryRequest, Category>(request);
             cate.Id = id;
 

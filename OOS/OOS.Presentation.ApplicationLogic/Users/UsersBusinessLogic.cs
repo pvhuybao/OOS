@@ -36,10 +36,12 @@ namespace OOS.Presentation.ApplicationLogic.Users
         public CreateUserResponse CreateUser(CreateUserRequest request)
         {
             var result = new CreateUserResponse();
+
             var user = _mapper.Map<CreateUserRequest, User>(request);
             user.Id = Guid.NewGuid().ToString();
 
             _mongoDbRepository.Create(user);
+
             return result;
         }
         public EditUserResponse EditUser(EditUserRequest request, string id)

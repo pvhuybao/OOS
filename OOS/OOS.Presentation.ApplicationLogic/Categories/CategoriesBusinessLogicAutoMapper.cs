@@ -12,6 +12,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         public CategoriesBusinessLogicAutoMapper()
         {
             CreateMap<CreateCategoryRequest, Category>();
+            CreateMap<EditCategoryRequest, Category>();
         }
     }
 }

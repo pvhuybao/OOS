@@ -38,16 +38,16 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]CreateCategoryRequest value)
         {
-            _categoriesBusinessLogic.CreateCategory(value);
-            return Ok();
+            var rs = _categoriesBusinessLogic.CreateCategory(value);
+            return Ok(rs);
         }
         
         // PUT: api/Category/5
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]EditCategoryRequest value)
         {
-            _categoriesBusinessLogic.EditCategory(id,value);
-            return Ok();
+            var rs = _categoriesBusinessLogic.EditCategory(id,value);
+            return Ok(rs);
         }
         
         // DELETE: api/ApiWithActions/5

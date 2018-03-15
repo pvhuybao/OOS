@@ -8,7 +8,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories.Messages
 {
     public class EditCategoryRequest : RequestBase
     {           
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
         [Required]
         public string Name { get; set; }

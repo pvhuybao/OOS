@@ -7,5 +7,6 @@ namespace OOS.Presentation.ApplicationLogic.Categories.Messages
 {
     public class EditCategoryResponse : ResponseBase
     {
+        public string Id { get; set; }
     }
 }
