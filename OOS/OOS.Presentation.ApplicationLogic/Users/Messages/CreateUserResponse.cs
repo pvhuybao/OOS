@@ -7,5 +7,6 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
 {
     public class CreateUserResponse : ResponseBase
     {
+        public string Id { get; set; }
     }
 }

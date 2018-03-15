@@ -6,5 +6,6 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
 {
     public class EditUserResponse
     {
+        public string Id { get; set; }
     }
 }

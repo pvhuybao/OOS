@@ -40,6 +40,8 @@ namespace OOS.Presentation.ApplicationLogic.Users
             var user = _mapper.Map<CreateUserRequest, User>(request);
             user.Id = Guid.NewGuid().ToString();
 
+            result = _mapper.Map<User, CreateUserResponse>(user);
+
             _mongoDbRepository.Create(user);
 
             return result;

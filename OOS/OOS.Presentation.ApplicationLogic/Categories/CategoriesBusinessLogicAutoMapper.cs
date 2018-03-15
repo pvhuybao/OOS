@@ -15,6 +15,8 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             CreateMap<EditCategoryRequest, Category>();
             CreateMap<GetCategoryRequest, Category>();
             CreateMap<Category, GetCategoryResponse>();
+            CreateMap<Category, EditCategoryResponse>();
+            CreateMap<Category, CreateCategoryResponse>();
         }
     }
 }

@@ -13,7 +13,8 @@ namespace OOS.Presentation.ApplicationLogic.Users
         {
             CreateMap<CreateUserRequest, User>();
             CreateMap<EditUserRequest, User>();
-
+            CreateMap<User, EditUserRequest>();
+            CreateMap<User, CreateUserRequest>();
         }
 
     }
