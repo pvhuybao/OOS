@@ -12,6 +12,9 @@ namespace OOS.Presentation.ApplicationLogic.Users
         public UsersBusinessLogicAutoMapper()
         {
             CreateMap<CreateUserRequest, User>();
+            CreateMap<EditUserRequest, User>();
+
         }
+
     }
 }

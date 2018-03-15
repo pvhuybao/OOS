@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OOS.Domain.Orders.Models;
+using OOS.Domain.Products.Models;
 using OOS.Presentation.ApplicationLogic.Order.Messages;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace OOS.Presentation.ApplicationLogic.Order
     {
         public OrderBusinessLogicAutoMapper()
         {
+            CreateMap<CreateOrderRequest, Orders>();
+
             CreateMap<EditOrderRequest, Orders>();
         }
     }
