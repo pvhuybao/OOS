@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using OOS.Infrastructure.Domain;
 using OOS.Infrastructure.Mongodb;
 using OOS.Shared.Enums;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 namespace OOS.Domain.Orders.Models
 {
     [BsonIgnoreExtraElements]
-    public class Orders : IAggregateRoot
+    public class Orders : AuditableEntityBase, IAggregateRoot
     {
         public string Id { get; set; }
 
