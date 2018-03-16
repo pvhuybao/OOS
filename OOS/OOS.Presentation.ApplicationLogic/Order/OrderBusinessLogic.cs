@@ -27,9 +27,9 @@ namespace OOS.Presentation.ApplicationLogic.Order
             var result = new CreateOrderResponse();
             var pro = _mapper.Map<CreateOrderRequest, Orders>(request);
             pro.Id = Guid.NewGuid().ToString();
-            pro
             pro.Status = 0;
             _mongoDbRepository.Create(pro);
+            result.Id = pro.Id;
             return result;
         } 
 
@@ -43,11 +43,17 @@ namespace OOS.Presentation.ApplicationLogic.Order
         public EditOrderResponse EditOrder(string id, EditOrderRequest request)
         {
             var result = new EditOrderResponse();
-            var ord = _mapper.Map<EditOrderRequest, Orders>(request);
-            ord.Id = id;
-            _mongoDbRepository.Replace<Orders>(ord);
+            var ordDb = _mongoDbRepository.Get<Orders>(id);
+            if (ordDb != null)
+            {
+                var ord = _mapper.Map<EditOrderRequest, Orders>(request);
+                ord.Id = id;
+                ord.CreatedDate = ordDb.CreatedDate;
+                ord.UpdatedDate = DateTime.UtcNow;
+                _mongoDbRepository.Replace(ord);
+            }
+            
             return result;
-
         }
 
 
