@@ -7,6 +7,8 @@ namespace OOS.Presentation.ApplicationLogic.Categories.Messages
 {
     public class GetCategoryResponse : ResponseBase
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
