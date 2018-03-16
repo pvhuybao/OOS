@@ -1,5 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using OOS.Infrastructure.Domain;
 using OOS.Infrastructure.Mongodb;
+using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +9,7 @@ using System.Text;
 namespace OOS.Domain.Orders.Models
 {
     [BsonIgnoreExtraElements]
-    public class Orders : IAggregateRoot
+    public class Orders : AuditableEntityBase, IAggregateRoot
     {
         public string Id { get; set; }
 
@@ -20,5 +22,7 @@ namespace OOS.Domain.Orders.Models
         public List<Address> Address { get; set; }
 
         public double Total { get; set; }
+
+        public OrderStatus Status { get; set; }
     }
 }

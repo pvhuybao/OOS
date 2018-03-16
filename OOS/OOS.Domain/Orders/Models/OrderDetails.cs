@@ -8,6 +8,8 @@ namespace OOS.Domain.Orders.Models
     {
         public string IdProduct { get; set; }
 
+        public string NameProduct { get; set; }
+
         public int Quantity { get; set; }
 
         public double Price { get; set; }

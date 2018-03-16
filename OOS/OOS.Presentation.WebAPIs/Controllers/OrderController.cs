@@ -40,8 +40,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateOrderRequest request)
         {
-            _orderBusinessLogic.CreateOrder(request);
-            return Ok();
+            var result = _orderBusinessLogic.CreateOrder(request);
+            return Ok(result);
         }
 
         // PUT api/<controller>/5
