@@ -27,6 +27,8 @@ namespace OOS.Presentation.ApplicationLogic.Order
             var result = new CreateOrderResponse();
             var pro = _mapper.Map<CreateOrderRequest, Orders>(request);
             pro.Id = Guid.NewGuid().ToString();
+            pro
+            pro.Status = 0;
             _mongoDbRepository.Create(pro);
             return result;
         } 

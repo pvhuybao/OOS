@@ -7,5 +7,6 @@ namespace OOS.Presentation.ApplicationLogic.Order.Messages
 {
     public class CreateOrderResponse : ResponseBase
     {
+        public string Id { get; set; }
     }
 }

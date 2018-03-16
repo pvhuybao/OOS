@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using OOS.Infrastructure.Mongodb;
+using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,5 +21,15 @@ namespace OOS.Domain.Orders.Models
         public List<Address> Address { get; set; }
 
         public double Total { get; set; }
+
+        public DateTime CreateDate { get; set; }
+
+        public string CreateBy { get; set; }
+
+        public DateTime UpdateDate { get; set; }
+
+        public string UpdateBy { get; set; }
+
+        public OrderStatus Status { get; set; }
     }
 }
