@@ -1,13 +1,14 @@
 ﻿using OOS.Domain.Orders.Models;
+using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace OOS.Presentation.ApplicationLogic.Order.Messages
 {
-     public class EditOrderRequest
+    public class EditOrderRequest
     {
-  
+
 
         public string Email { get; set; }
 
@@ -18,5 +19,7 @@ namespace OOS.Presentation.ApplicationLogic.Order.Messages
         public List<Address> Address { get; set; }
 
         public double Total { get; set; }
+
+        public OrderStatus Status { get; set; }
     }
 }
