@@ -29,6 +29,8 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             cate.Id = Guid.NewGuid().ToString();
 
             _mongoDbRepository.Create<Category>(cate);
+
+            result = _mapper.Map<Category, CreateCategoryResponse>(cate);
             return result;
         }
 
@@ -66,6 +68,8 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             //request.Id = id;
             var cate = _mapper.Map<EditCategoryRequest, Category>(request);
             cate.Id = id;
+
+            result = _mapper.Map<Category, EditCategoryResponse>(cate);
 
             _mongoDbRepository.Replace<Category>(cate);
             return result;
