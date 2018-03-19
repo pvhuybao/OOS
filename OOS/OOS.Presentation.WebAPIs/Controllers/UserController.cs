@@ -35,8 +35,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]CreateUserRequest request)
         {            
-            _usersBusinessLogic.CreateUser(request);
-            return Ok();
+            var rs = _usersBusinessLogic.CreateUser(request);
+            return Ok(rs);
         }
 
 
@@ -51,8 +51,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody]EditUserRequest request)
         {
-            _usersBusinessLogic.EditUser(request, id);
-            return Ok();
+            var rs = _usersBusinessLogic.EditUser(request, id);
+            return Ok(rs);
         }
 
     }

@@ -35,19 +35,21 @@ namespace OOS.Presentation.ApplicationLogic.Users
 
         public CreateUserResponse CreateUser(CreateUserRequest request)
         {
-            var result = new CreateUserResponse();
             var user = _mapper.Map<CreateUserRequest, User>(request);
             user.Id = Guid.NewGuid().ToString();
 
             _mongoDbRepository.Create(user);
+
+            var result = _mapper.Map<User, CreateUserResponse>(user);
+
             return result;
         }
         public EditUserResponse EditUser(EditUserRequest request, string id)
         {
-            var result = new EditUserResponse();
-            var pro = _mapper.Map<EditUserRequest, User>(request);
-            pro.Id = id;
-            _mongoDbRepository.Replace<User>(pro);
+            var user = _mapper.Map<EditUserRequest, User>(request);
+            user.Id = id;
+            _mongoDbRepository.Replace<User>(user);
+            var result = _mapper.Map<User, EditUserResponse>(user);
             return result;
         }
         public void DeleteUser(string id)
