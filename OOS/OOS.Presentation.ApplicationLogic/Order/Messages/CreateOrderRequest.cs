@@ -12,6 +12,8 @@ namespace OOS.Presentation.ApplicationLogic.Order.Messages
 
         public string UserId { get; set; }
 
+        public string IdBill { get; set; }
+
         public List<OrderDetails> OrderDetails { get; set; }
 
         public List<Address> Address { get; set; }
