@@ -9,6 +9,7 @@ using OOS.Presentation.WebAPIs.Configs;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Users;
 using OOS.Presentation.ApplicationLogic.Order;
+using OOS.Presentation.WebAPIs.Filters;
 
 namespace OOS.Presentation.WebAPIs
 {
@@ -24,7 +25,10 @@ namespace OOS.Presentation.WebAPIs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ValidationFilter));
+            });
 
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
             services.AddTransient<IProductsBusinessLogic, ProductsBusinessLogic>();

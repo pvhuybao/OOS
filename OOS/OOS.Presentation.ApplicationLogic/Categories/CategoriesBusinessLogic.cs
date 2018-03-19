@@ -23,12 +23,12 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         
         public CreateCategoryResponse CreateCategory(CreateCategoryRequest request)
         {
-            var result = new CreateCategoryResponse();
-
             var cate = _mapper.Map<CreateCategoryRequest, Category>(request);
             cate.Id = Guid.NewGuid().ToString();
 
             _mongoDbRepository.Create<Category>(cate);
+
+            var result = _mapper.Map<Category, CreateCategoryResponse>(cate);
             return result;
         }
 
@@ -61,13 +61,14 @@ namespace OOS.Presentation.ApplicationLogic.Categories
 
         public EditCategoryResponse EditCategory(string id, EditCategoryRequest request)
         {
-            var result = new EditCategoryResponse();
 
             request.Id = id;
             var cate = _mapper.Map<EditCategoryRequest, Category>(request);
             cate.Id = id;
 
             _mongoDbRepository.Replace<Category>(cate);
+
+            var result = _mapper.Map<Category, EditCategoryResponse>(cate);
             return result;
         }
     }
