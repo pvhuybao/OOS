@@ -64,5 +64,11 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 return true;
             return false;
         }
+        public List<Product> SearchProduct(string keyword)
+        {
+            var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
+            var products = _mongoDbRepository.Find(filter).ToList();
+            return products;
+        }
     }
 }

@@ -17,5 +17,6 @@ namespace OOS.Presentation.ApplicationLogic.Products
         List<Product> GetProduct();
         Product GetProduct(string id);
         bool checkExistedCode(string code);
+        List<Product> SearchProduct(string keyword);
     }
 }

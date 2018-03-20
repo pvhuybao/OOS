@@ -67,5 +67,12 @@ namespace OOS.Presentation.WebAPIs.Controllers
             response.IsCodeExisted = _productsBusinessLogic.checkExistedCode(code);
             return Ok(response);
         }
+
+        [Route ("{keyword}/searchproduct")]
+        public IActionResult searchProduct(string keyword)
+        {
+            var products = _productsBusinessLogic.SearchProduct(keyword);
+            return Ok(products);
+        }
     }
 }
