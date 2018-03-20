@@ -59,7 +59,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
             _productsBusinessLogic.DeleteProduct(id);
             return Ok();
         }
-
+        [HttpGet]
         [Route("{code}/checkexistedcode")]
         public IActionResult checkExistedCode(string code)
         {
@@ -67,7 +67,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
             response.IsCodeExisted = _productsBusinessLogic.checkExistedCode(code);
             return Ok(response);
         }
-
+        [HttpGet]
         [Route ("{keyword}/searchproduct")]
         public IActionResult searchProduct(string keyword)
         {
@@ -75,10 +75,20 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(products);
         }
 
-        [Route ("{widget}/widget")]
+        [Route("{widget}/widget")]
         public IActionResult widgetProduct(string widget)
         {
             var products = _productsBusinessLogic.ProductWidget(widget);
+            return Ok(products);
+        }
+
+        //Get product base on ID Category
+        [HttpGet]
+        [Route("{idCategory}/category")]
+        public IActionResult GetProductBaseOnIDCategory(string idCategory)
+        {
+            var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(idCategory);
+
             return Ok(products);
         }
     }
