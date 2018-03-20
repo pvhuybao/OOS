@@ -16,6 +16,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
         void DeleteProduct(string id);
         List<Product> GetProduct();
         Product GetProduct(string id);
+        long CountProductByCode(string code);
 
     }
 }

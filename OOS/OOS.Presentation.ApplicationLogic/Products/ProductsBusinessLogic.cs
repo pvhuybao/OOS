@@ -6,6 +6,8 @@ using OOS.Presentation.ApplicationLogic.Products.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -52,6 +54,13 @@ namespace OOS.Presentation.ApplicationLogic.Products
         public Product GetProduct(string id)
         {
             return _mongoDbRepository.Get<Product>(id);
+        }
+
+        public long CountProductByCode(string code)
+        {
+            var filter = Builders<Product>.Filter.Where(p => p.Code == code);
+            var product = _mongoDbRepository.Find(filter).Count();
+            return product;
         }
 
     }
