@@ -70,5 +70,11 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var products = _mongoDbRepository.Find(filter).ToList();
             return products;
         }
+        public List<Product> GetProductsBaseOnIDCategory(string idCategory)
+        {
+            var filter = Builders<Product>.Filter.Where(p => p.IdCategory.Equals(idCategory));
+            var products = _mongoDbRepository.Find(filter).ToList();
+            return products;
+        }
     }
 }
