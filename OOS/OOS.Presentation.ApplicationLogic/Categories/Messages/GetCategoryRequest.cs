@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using OOS.Domain.Categories.Models;
+using OOS.Shared.Enums;
 
 namespace OOS.Presentation.ApplicationLogic.Categories.Messages
 {
@@ -10,6 +11,6 @@ namespace OOS.Presentation.ApplicationLogic.Categories.Messages
     {
         public string Id { get; set; }
 
-        public Status Status { get; set; }
+        public CategoryStatus Status { get; set; }
     }
 }

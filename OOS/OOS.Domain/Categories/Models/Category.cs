@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using OOS.Infrastructure.Mongodb;
+using OOS.Shared.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace OOS.Domain.Categories.Models
@@ -15,21 +16,7 @@ namespace OOS.Domain.Categories.Models
  
         public string Description { get; set; }
 
-        public Status Status { get; set; }
-
-
-
+        public CategoryStatus Status { get; set; }    
     }
-
-    public enum Status
-    {
-        [Display(Name = "Còn hàng")]
-        Status1,
-        [Display(Name = "Hết hàng")]
-        Status2,
-        [Display(Name = "Mới")]
-        Status3,
-        [Display(Name = "sadasd")]
-        Status4
-    }
+   
 }

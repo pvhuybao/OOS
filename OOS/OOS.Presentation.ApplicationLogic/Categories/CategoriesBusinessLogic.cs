@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using OOS.Domain.Categories.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Categories.Messages;
+using OOS.Shared.Enums;
 
 namespace OOS.Presentation.ApplicationLogic.Categories
 {
@@ -53,7 +54,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             return result;
         }
 
-        public List<Category> Get(Status status)
+        public List<Category> Get(CategoryStatus status)
         {
             var filter = Builders<Category>.Filter.Where(c => c.Status == status);
             var listCategory = _mongoDbRepository.Find(filter).ToList();
