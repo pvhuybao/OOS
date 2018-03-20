@@ -6,6 +6,8 @@ using OOS.Presentation.ApplicationLogic.Products.Messages;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -54,5 +56,13 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return _mongoDbRepository.Get<Product>(id);
         }
 
+        public bool checkExistedCode(string code)
+        {
+            var filter = Builders<Product>.Filter.Where(p => p.Code == code);
+            var count = _mongoDbRepository.Find(filter).Count();
+            if (count > 0)
+                return true;
+            return false;
+        }
     }
 }
