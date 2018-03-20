@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using OOS.Domain.Categories.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Categories.Messages;
+using OOS.Shared.Enums;
 
 namespace OOS.Presentation.ApplicationLogic.Categories
 {
@@ -53,6 +54,13 @@ namespace OOS.Presentation.ApplicationLogic.Categories
             return result;
         }
 
+        public List<Category> Get(CategoryStatus status)
+        {
+            var filter = Builders<Category>.Filter.Where(c => c.Status == status);
+            var listCategory = _mongoDbRepository.Find(filter).ToList();
+            return listCategory;
+        }
+
         public void DeleteCategory(string id)
         {
             var category = _mongoDbRepository.Get<Category>(id);
@@ -60,9 +68,7 @@ namespace OOS.Presentation.ApplicationLogic.Categories
         }
 
         public EditCategoryResponse EditCategory(string id, EditCategoryRequest request)
-        {
-
-            request.Id = id;
+        {            
             var cate = _mapper.Map<EditCategoryRequest, Category>(request);
             cate.Id = id;
 
