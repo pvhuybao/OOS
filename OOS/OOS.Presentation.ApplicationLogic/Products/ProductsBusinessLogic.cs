@@ -56,12 +56,13 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return _mongoDbRepository.Get<Product>(id);
         }
 
-        public long CountProductByCode(string code)
+        public bool checkExistedCode(string code)
         {
             var filter = Builders<Product>.Filter.Where(p => p.Code == code);
-            var product = _mongoDbRepository.Find(filter).Count();
-            return product;
+            var count = _mongoDbRepository.Find(filter).Count();
+            if (count > 0)
+                return true;
+            return false;
         }
-
     }
 }

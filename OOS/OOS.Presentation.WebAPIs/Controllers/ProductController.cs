@@ -61,13 +61,11 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         [Route("{code}/checkexistedcode")]
-        public bool checkExistedCode(string code)
+        public IActionResult checkExistedCode(string code)
         {
-            var result = _productsBusinessLogic.CountProductByCode(code);
-            if (result > 0)
-                return true;
-            else
-                return false;
+            CheckExistedCodeResponse response = new CheckExistedCodeResponse();
+            response.IsCodeExisted = _productsBusinessLogic.checkExistedCode(code);
+            return Ok(response);
         }
     }
 }
