@@ -28,6 +28,7 @@ namespace OOS.Presentation.WebAPIs
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ValidationFilter));
+                options.Filters.Add(typeof(GlobalExceptionFilter));
             });
 
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
