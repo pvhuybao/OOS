@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Categories.Messages;
+using OOS.Domain.Categories.Models;
+using OOS.Shared.Enums;
 
 namespace OOS.Presentation.WebAPIs.Controllers
 {
@@ -36,7 +38,16 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
             return Ok(_categoriesBusinessLogic.GetCategory(request));
         }
-        
+
+        // GET: api/Category/{status}/status
+        [HttpGet("{status}/status")]
+        public IActionResult Get(CategoryStatus status)
+        {
+            var cate = _categoriesBusinessLogic.Get(status);
+
+            return Ok(cate);
+        }
+
         // POST: api/Category
         [HttpPost]
         public IActionResult Post([FromBody]CreateCategoryRequest value)

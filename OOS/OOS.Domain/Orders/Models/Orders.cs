@@ -13,6 +13,8 @@ namespace OOS.Domain.Orders.Models
     {
         public string Id { get; set; }
 
+        public string IdBill { get; set; } 
+
         public string Email { get; set; }
 
         public string UserId { get; set; }
