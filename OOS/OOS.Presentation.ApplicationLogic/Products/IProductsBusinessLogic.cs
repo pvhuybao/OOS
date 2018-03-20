@@ -14,9 +14,15 @@ namespace OOS.Presentation.ApplicationLogic.Products
         CreateProductResponse EditProduct(CreateProductRequest Request, string Id);
 
         void DeleteProduct(string id);
+
         List<Product> GetProduct();
+
         Product GetProduct(string id);
+
         bool checkExistedCode(string code);
+
         List<Product> SearchProduct(string keyword);
+
+        List<Product> ProductWidget(string widget);
     }
 }

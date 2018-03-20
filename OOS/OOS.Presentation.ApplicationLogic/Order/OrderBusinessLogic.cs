@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using OOS.Presentation.ApplicationLogic.Order.Messages;
 using MongoDB.Driver;
-using OOS.Presentation.ApplicationLogic.Order.Messages;
-
+using System.Linq;
 
 namespace OOS.Presentation.ApplicationLogic.Order
 {
@@ -59,8 +58,9 @@ namespace OOS.Presentation.ApplicationLogic.Order
 
         public List<Orders> GetOders()
         {
+            List<Orders> listOrders = new List<Orders>();
             var filter = Builders<Orders>.Filter.Empty;
-            var listOrders = _mongoDbRepository.Find(filter).ToList();
+            listOrders.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate));
             return listOrders;
         }
 

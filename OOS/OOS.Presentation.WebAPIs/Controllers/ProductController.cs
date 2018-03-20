@@ -74,5 +74,12 @@ namespace OOS.Presentation.WebAPIs.Controllers
             var products = _productsBusinessLogic.SearchProduct(keyword);
             return Ok(products);
         }
+
+        [Route ("{widget}/widget")]
+        public IActionResult widgetProduct(string widget)
+        {
+            var products = _productsBusinessLogic.ProductWidget(widget);
+            return Ok(products);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using OOS.Infrastructure.Domain;
 using OOS.Infrastructure.Mongodb;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Text;
 namespace OOS.Domain.Products.Models
 {
     [BsonIgnoreExtraElements]
-    public class Product : IAggregateRoot
+    public class Product : AuditableEntityBase, IAggregateRoot
     {
         public string Id { get; set; }
 
@@ -28,14 +29,6 @@ namespace OOS.Domain.Products.Models
 
         [Required]
         public string IdCategory { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
-        public string CreateBy { get; set; }
-
-        public DateTime UpdateDate { get; set; }
-
-        public string UpdateBy { get; set; }
 
         public string Status { get; set; }
     }

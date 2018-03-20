@@ -17,6 +17,5 @@ namespace OOS.Presentation.ApplicationLogic.Order
         List<Orders> GetOders();
 
         Orders GetOdersById(string id);
-
     }
 }
