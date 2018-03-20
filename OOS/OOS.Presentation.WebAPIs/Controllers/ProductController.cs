@@ -59,5 +59,13 @@ namespace OOS.Presentation.WebAPIs.Controllers
             _productsBusinessLogic.DeleteProduct(id);
             return Ok();
         }
+
+        [Route("{code}/checkexistedcode")]
+        public IActionResult checkExistedCode(string code)
+        {
+            CheckExistedCodeResponse response = new CheckExistedCodeResponse();
+            response.IsCodeExisted = _productsBusinessLogic.checkExistedCode(code);
+            return Ok(response);
+        }
     }
 }

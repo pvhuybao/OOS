@@ -9,6 +9,9 @@ namespace OOS.Presentation.ApplicationLogic.Products.Messages
     public class CreateProductRequest : RequestBase
     {
         [Required]
+        public string Code { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         [Required]
