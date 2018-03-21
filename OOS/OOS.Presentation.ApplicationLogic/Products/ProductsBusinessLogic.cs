@@ -31,13 +31,16 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return result;
         }
 
-        public CreateProductResponse EditProduct(CreateProductRequest request, string id)
+        public EditProductResponse EditProduct(string id, EditProductResquest request)
         {
-            var result = new CreateProductResponse();
-            var pro = _mapper.Map<CreateProductRequest, Product>(request);         
-                pro.Id = id;    
+            var pro = _mapper.Map<EditProductResquest, Product>(request);
+            pro.Id = id;
+
             _mongoDbRepository.Replace<Product>(pro);
+
+            var result = _mapper.Map<Product, EditProductResponse>(pro);
             return result;
+            
         }
 
         public void DeleteProduct(string id)

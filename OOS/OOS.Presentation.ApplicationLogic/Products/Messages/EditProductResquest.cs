@@ -7,7 +7,7 @@ using System.Text;
 
 namespace OOS.Presentation.ApplicationLogic.Products.Messages
 {
-    public class CreateProductRequest : RequestBase
+   public class EditProductResquest : RequestBase
     {
         [Required]
         public string Code { get; set; }

@@ -11,7 +11,10 @@ namespace OOS.Presentation.ApplicationLogic.Products
     {
         public ProductsBusinessLogicAutoMapper()
         {
-            CreateMap<CreateProductRequest, Product>();            
+            CreateMap<CreateProductRequest, Product>(); 
+            CreateMap<EditProductResquest, Product>();
+            CreateMap<Product, CreateProductResponse>();
+            CreateMap<Product, EditProductResponse>();
         }
     }
 }

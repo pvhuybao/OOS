@@ -11,7 +11,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
     {
         CreateProductResponse CreateProduct(CreateProductRequest request);
 
-        CreateProductResponse EditProduct(CreateProductRequest Request, string Id);
+        EditProductResponse EditProduct(string Id, EditProductResquest Request);
 
         void DeleteProduct(string id);
 
