@@ -31,6 +31,6 @@ namespace OOS.Domain.Products.Models
         [Required]
         public string IdCategory { get; set; }
 
-        public ProductStatus Status { get; set; }
+        public ProductStatus? Status { get; set; }
     }
 }
