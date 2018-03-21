@@ -70,6 +70,25 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var products = _mongoDbRepository.Find(filter).ToList();
             return products;
         }
+
+        public List<Product> ProductWidget(string widget)
+        {
+            List<Product> products = new List<Product>();
+            if (widget == "newestProduct")
+            {
+                //TimeSpan timeSpan = TimeSpan.FromDays(10);
+                var filter = Builders<Product>.Filter.Empty;
+                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(10));
+            }else if(widget == "topSales")
+            {
+                //wait for further update
+            }
+            else if (widget == "topDiscount")
+            {
+                //wait for further update
+            }
+            return products;
+        }
         public List<Product> GetProductsBaseOnIDCategory(string idCategory)
         {
             var filter = Builders<Product>.Filter.Where(p => p.IdCategory.Equals(idCategory));

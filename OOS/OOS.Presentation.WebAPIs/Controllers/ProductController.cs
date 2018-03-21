@@ -75,12 +75,20 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(products);
         }
 
+        [Route("{widget}/widget")]
+        public IActionResult widgetProduct(string widget)
+        {
+            var products = _productsBusinessLogic.ProductWidget(widget);
+            return Ok(products);
+        }
+
         //Get product base on ID Category
         [HttpGet]
         [Route("{idCategory}/category")]
         public IActionResult GetProductBaseOnIDCategory(string idCategory)
         {
             var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(idCategory);
+
             return Ok(products);
         }
     }
