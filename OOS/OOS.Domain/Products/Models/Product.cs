@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using OOS.Infrastructure.Domain;
 using OOS.Infrastructure.Mongodb;
+using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,6 +31,6 @@ namespace OOS.Domain.Products.Models
         [Required]
         public string IdCategory { get; set; }
 
-        public string Status { get; set; }
+        public ProductStatus Status { get; set; }
     }
 }
