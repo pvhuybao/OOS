@@ -8,7 +8,7 @@ namespace OOS.Presentation.ApplicationLogic.Order.Messages
 {
     public class EditOrderRequest
     {
-
+        public string IdBill { get; set; }
 
         public string Email { get; set; }
 
