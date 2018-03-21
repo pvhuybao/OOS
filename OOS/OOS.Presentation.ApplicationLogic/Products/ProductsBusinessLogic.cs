@@ -67,12 +67,6 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 return true;
             return false;
         }
-        public List<Product> SearchProduct(string keyword)
-        {
-            var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
-            var products = _mongoDbRepository.Find(filter).ToList();
-            return products;
-        }
 
         public List<Product> ProductWidget(string widget)
         {
@@ -92,10 +86,33 @@ namespace OOS.Presentation.ApplicationLogic.Products
             }
             return products;
         }
+
         public List<Product> GetProductsBaseOnIDCategory(string idCategory)
         {
             var filter = Builders<Product>.Filter.Where(p => p.IdCategory.Equals(idCategory));
             var products = _mongoDbRepository.Find(filter).ToList();
+            return products;
+        }
+
+        public List<Product> SearchProduct(string keyword)
+        {
+            var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
+            var products = _mongoDbRepository.Find(filter).ToList();
+            return products;
+        }
+
+        public List<Product> SearchProductByIdCategory(string idCategory, string keyword)
+        {
+            var products = new List<Product>();
+            if (idCategory == "all") {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
+                products = _mongoDbRepository.Find(filter).ToList();
+            }
+            else
+            {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword) && p.IdCategory.Equals(idCategory));
+                products = _mongoDbRepository.Find(filter).ToList();
+            }
             return products;
         }
     }
