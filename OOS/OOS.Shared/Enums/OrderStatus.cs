@@ -6,7 +6,16 @@ namespace OOS.Shared.Enums
 {
     public enum  OrderStatus
     {
-        Shipping = 0 ,
-        Shipped = 1
+        //chưa xác nhận
+        Confirming = 0,
+
+        //đã xác nhận
+        Confirmed = 1,
+
+        //đang giao hàng
+        Shipping = 2,
+
+        //đã giao hàng
+        Shipped = 3
     }
 }
