@@ -4,6 +4,7 @@ using OOS.Infrastructure.Mongodb;
 using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace OOS.Domain.Orders.Models
@@ -15,8 +16,10 @@ namespace OOS.Domain.Orders.Models
 
         public string IdBill { get; set; } 
 
+        [Required]
         public string Email { get; set; }
 
+        [Required]
         public string UserId { get; set; }
 
         public List<OrderDetails> OrderDetails { get; set; }
