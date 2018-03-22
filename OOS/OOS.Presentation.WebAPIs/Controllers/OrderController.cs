@@ -51,8 +51,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         public IActionResult Put(string id, [FromBody]EditOrderRequest value)
         {
             
-            _orderBusinessLogic.EditOrder(id,value);
-            return Ok();
+            var result = _orderBusinessLogic.EditOrder(id,value);
+            return Ok(result);
 
         }
 
