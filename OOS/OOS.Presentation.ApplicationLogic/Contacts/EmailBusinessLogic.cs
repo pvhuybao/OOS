@@ -15,7 +15,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             string senderPassword = "tau0bieT";
             string emailAdmin = "nguyenhuuloc304@gmail.com";
 
-            string body = "Feedback from " + request.toEmail +"\r\n";
+            string body = "Feedback from " + request.toEmail +"<br>";
             body += request.content;
             MailMessage mail = new MailMessage();
             mail.To.Add(emailAdmin);
