@@ -113,12 +113,12 @@ namespace OOS.Presentation.ApplicationLogic.Products
         {
             var products = new List<Product>();
             if (idCategory == "all") {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
                 products = _mongoDbRepository.Find(filter).ToList();
             }
             else
             {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword) && p.IdCategory.Equals(idCategory));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.IdCategory.Equals(idCategory));
                 products = _mongoDbRepository.Find(filter).ToList();
             }
             return products;
