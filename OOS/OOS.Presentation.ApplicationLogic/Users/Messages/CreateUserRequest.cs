@@ -15,7 +15,11 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
         [Required(ErrorMessage = "Please enter {0}!")]
         [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
         public string Password { get; set; }
-        
+
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [Compare("Password")]
+        public string PasswordConfirm { get; set; }
+
         public string FirstName { get; set; }
         
         public string LastName { get; set; }
@@ -25,6 +29,7 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
         public string Image { get; set; }
 
         [Required(ErrorMessage = "Please enter {0}!")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address!")]
         public string Email { get; set; }
     }
 }
