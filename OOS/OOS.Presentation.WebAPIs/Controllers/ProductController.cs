@@ -24,8 +24,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _productsBusinessLogic.GetProduct();
-            return Ok(result);
+            var products = _productsBusinessLogic.GetProduct();
+            return Ok(products);
         }
 
         // GET api/values/5

@@ -10,6 +10,7 @@ using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Users;
 using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.WebAPIs.Filters;
+using OOS.Presentation.ApplicationLogic.Contacts;
 
 namespace OOS.Presentation.WebAPIs
 {
@@ -36,6 +37,7 @@ namespace OOS.Presentation.WebAPIs
             services.AddTransient<IOrderBusinessLogic, OrderBusinessLogic>();
             services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
+            services.AddTransient<IEmailBusinessLogic, EmailBusinessLogic>();
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(Configuration.GetValue<string>("MongoDb:DefaultConnectionString")));            
 
             AutoMapperConfig.Configure(services);
