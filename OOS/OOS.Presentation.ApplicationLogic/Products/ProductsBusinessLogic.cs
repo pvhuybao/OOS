@@ -96,7 +96,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         public List<Product> SearchProduct(string keyword)
         {
-            var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
+            var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
             var products = _mongoDbRepository.Find(filter).ToList();
             return products;
         }
