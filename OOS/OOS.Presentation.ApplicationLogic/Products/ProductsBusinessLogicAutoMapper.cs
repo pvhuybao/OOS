@@ -15,6 +15,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             CreateMap<EditProductResquest, Product>();
             CreateMap<Product, CreateProductResponse>();
             CreateMap<Product, EditProductResponse>();
+            CreateMap<Product, GetProductExtraCategoryNameResponse>();
         }
     }
 }

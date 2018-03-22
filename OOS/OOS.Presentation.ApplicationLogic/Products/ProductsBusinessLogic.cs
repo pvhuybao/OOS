@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-
+using OOS.Domain.Categories.Models;
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -48,11 +48,19 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var product = _mongoDbRepository.Get<Product>(id);
             _mongoDbRepository.Delete(product);
         }
-        public List<Product> GetProduct()
+        public List<GetProductExtraCategoryNameResponse> GetProduct()
         {
             var filter = Builders<Product>.Filter.Empty;
             var listProducts = _mongoDbRepository.Find(filter).ToList();
-            return listProducts;
+            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
+            foreach(var p in listProducts)
+            {
+                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
+                //add category name
+                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                listResult.Add(response);
+            }
+            return listResult;     
         }
         public Product GetProduct(string id)
         {
@@ -105,12 +113,12 @@ namespace OOS.Presentation.ApplicationLogic.Products
         {
             var products = new List<Product>();
             if (idCategory == "all") {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
                 products = _mongoDbRepository.Find(filter).ToList();
             }
             else
             {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword) && p.IdCategory.Equals(idCategory));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.IdCategory.Equals(idCategory));
                 products = _mongoDbRepository.Find(filter).ToList();
             }
             return products;

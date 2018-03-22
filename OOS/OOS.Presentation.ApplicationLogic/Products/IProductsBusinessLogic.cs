@@ -15,7 +15,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         void DeleteProduct(string id);
 
-        List<Product> GetProduct();
+         List<GetProductExtraCategoryNameResponse> GetProduct();
 
         Product GetProduct(string id);
 
