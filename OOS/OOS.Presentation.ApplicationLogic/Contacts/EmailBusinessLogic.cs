@@ -13,13 +13,14 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             var result = new SentEmailResponse();
             string senderID = "dmthanh572@gmail.com";
             string senderPassword = "tau0bieT";
+            string emailAdmin = "nguyenhuuloc304@gmail.com";
 
-            string body = "Email is sent from " + request.toEmail;
+            string body = "Feedback from " + request.toEmail +"<br>";
             body += request.content;
             MailMessage mail = new MailMessage();
-            mail.To.Add(request.toEmail);
+            mail.To.Add(emailAdmin);
             mail.From = new MailAddress(senderID);
-            mail.Subject = request.subject;
+            mail.Subject = "Feedback: "+request.subject;
             mail.Body = body;
             mail.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient();
@@ -28,6 +29,16 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             smtp.Port = 587;
             smtp.EnableSsl = true;
             smtp.Send(mail);
+
+
+            string body1 = "We received a feedback from you";
+            MailMessage mailFeedback = new MailMessage();
+            mailFeedback.To.Add(request.toEmail);
+            mailFeedback.From = new MailAddress(senderID);
+            mailFeedback.Subject = "Email feedback";
+            mailFeedback.Body = body1;
+            mailFeedback.IsBodyHtml = true;
+            smtp.Send(mailFeedback);
             return result;
         }
     }
