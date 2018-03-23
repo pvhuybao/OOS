@@ -1,4 +1,5 @@
-﻿using OOS.Presentation.ApplicationLogic.Common;
+﻿using OOS.Domain.Products.Models;
+using OOS.Presentation.ApplicationLogic.Common;
 using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
@@ -32,5 +33,7 @@ namespace OOS.Presentation.ApplicationLogic.Products.Messages
         public ProductStatus? Status { get; set; }
 
         public string CategoryName { get; set; }
+
+        public List<ProductTail> ProductTails { get; set; }
     }
 }
