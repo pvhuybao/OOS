@@ -8,22 +8,28 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
 {
     public class CreateUserRequest : RequestBase
     {
-
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
         public string Password { get; set; }
 
-        [Required]
-        public string FirstName { get; set; }
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [Compare("Password")]
+        public string PasswordConfirm { get; set; }
 
-        [Required]
+        public string FirstName { get; set; }
+        
         public string LastName { get; set; }
 
         public Boolean Gender { get; set; }
 
         public string Image { get; set; }
 
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address!")]
         public string Email { get; set; }
     }
 }
