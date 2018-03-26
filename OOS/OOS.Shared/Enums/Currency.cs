@@ -2,7 +2,7 @@
 {
     public enum Currency
     {
-        USD = 1,
-        VND
+        VND = 1,
+        USD
     }
 }
