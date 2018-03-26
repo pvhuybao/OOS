@@ -1,36 +1,12 @@
 Code: 500
-Stack Trace:    at MongoDB.Driver.Core.Connections.BinaryConnection.OpenHelper(CancellationToken cancellationToken)
-   at MongoDB.Driver.Core.Connections.BinaryConnection.Open(CancellationToken cancellationToken)
-   at MongoDB.Driver.Core.ConnectionPools.ExclusiveConnectionPool.AcquiredConnection.Open(CancellationToken cancellationToken)
-   at MongoDB.Driver.Core.Servers.Server.GetChannel(CancellationToken cancellationToken)
-   at MongoDB.Driver.Core.Bindings.ServerChannelSource.GetChannel(CancellationToken cancellationToken)
-   at MongoDB.Driver.Core.Bindings.ChannelSourceHandle.GetChannel(CancellationToken cancellationToken)
-   at MongoDB.Driver.Core.Operations.FindOperation`1.Execute(IReadBinding binding, CancellationToken cancellationToken)
-   at MongoDB.Driver.OperationExecutor.ExecuteReadOperation[TResult](IReadBinding binding, IReadOperation`1 operation, CancellationToken cancellationToken)
-   at MongoDB.Driver.MongoCollectionImpl`1.ExecuteReadOperation[TResult](IClientSessionHandle session, IReadOperation`1 operation, ReadPreference readPreference, CancellationToken cancellationToken)
-   at MongoDB.Driver.MongoCollectionImpl`1.ExecuteReadOperation[TResult](IClientSessionHandle session, IReadOperation`1 operation, CancellationToken cancellationToken)
-   at MongoDB.Driver.MongoCollectionImpl`1.FindSync[TProjection](IClientSessionHandle session, FilterDefinition`1 filter, FindOptions`2 options, CancellationToken cancellationToken)
-   at MongoDB.Driver.MongoCollectionImpl`1.<>c__DisplayClass35_0`1.<FindSync>b__0(IClientSessionHandle session)
-   at MongoDB.Driver.MongoCollectionImpl`1.UsingImplicitSession[TResult](Func`2 func, CancellationToken cancellationToken)
-   at MongoDB.Driver.MongoCollectionImpl`1.FindSync[TProjection](FilterDefinition`1 filter, FindOptions`2 options, CancellationToken cancellationToken)
-   at MongoDB.Driver.FindFluent`2.ToCursor(CancellationToken cancellationToken)
-   at MongoDB.Driver.IAsyncCursorSourceExtensions.ToList[TDocument](IAsyncCursorSource`1 source, CancellationToken cancellationToken)
-   at OOS.Presentation.ApplicationLogic.Products.ProductsBusinessLogic.GetProduct() in C:\Users\NguyenHuan\Documents\OOS\OOS\OOS.Presentation.ApplicationLogic\Products\ProductsBusinessLogic.cs:line 54
-   at OOS.Presentation.WebAPIs.Controllers.ProductController.Get() in C:\Users\NguyenHuan\Documents\OOS\OOS\OOS.Presentation.WebAPIs\Controllers\ProductController.cs:line 27
-   at lambda_method(Closure , Object , Object[] )
-   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__10.MoveNext()
---- End of stack trace from previous location where exception was thrown ---
-   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
-   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+Stack Trace:    at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.GetService(IServiceProvider sp, Type type, Type requiredBy, Boolean isDefaultParameterRequired)
+   at lambda_method(Closure , IServiceProvider , Object[] )
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerActivatorProvider.<>c__DisplayClass4_0.<CreateActivator>b__0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass5_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
    at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
    at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeInnerFilterAsync>d__14.MoveNext()
 --- End of stack trace from previous location where exception was thrown ---
    at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
-Message: An exception occurred while opening a connection to the server.
+Message: Unable to resolve service for type 'OOS.Presentation.ApplicationLogic.Configurations.IConfigurationsBusinessLogic' while attempting to activate 'OOS.Presentation.WebAPIs.Controllers.ConfigurationController'.
