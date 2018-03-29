@@ -22,9 +22,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var listEmailSubsribe = _emailsBusinessLogic.GetEmailSubsribe();
+            return Ok(listEmailSubsribe);
         }
 
         // GET api/<controller>/5
@@ -42,16 +43,20 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok();
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [Route("emailSubsribe")]
+        [HttpPost]
+        public IActionResult EmailSubsribe([FromBody] CreateEmailSubscribeRequest value)
         {
+            _emailsBusinessLogic.CreateEmailSubscribe(value);
+            return Ok();
         }
 
-        // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _emailsBusinessLogic.DeleteEmailSubsribe(id);
+            return Ok();
         }
+
     }
 }
