@@ -58,6 +58,8 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
                 //add category name
                 response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                //calculate other values of Product:min-max price, total quantity, basic image
+                response.CalculateProductValues();
                 listResult.Add(response);
             }
             return listResult;     
@@ -83,7 +85,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             {
                 //TimeSpan timeSpan = TimeSpan.FromDays(10);
                 var filter = Builders<Product>.Filter.Empty;
-                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(10));
+                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
             }else if(widget == "topSales")
             {
                 //wait for further update

@@ -4,6 +4,7 @@ using System.Text;
 using OOS.Domain.Orders.Models;
 using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.ApplicationLogic.Order.Messages;
+using OOS.Infrastructure.Queries;
 
 namespace OOS.Presentation.ApplicationLogic.Order
 {
@@ -14,8 +15,10 @@ namespace OOS.Presentation.ApplicationLogic.Order
 
         EditOrderResponse EditOrder(string id,EditOrderRequest request);
 
-        List<Orders> GetOders();
+        PagedQueryResult<GetOrdersResponse> GetOders(GetOrdersRequest query);
 
         Orders GetOdersById(string id);
+
+        List<Orders> SearchOrders(string keyword);
     }
 }
