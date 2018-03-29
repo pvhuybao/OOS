@@ -8,13 +8,15 @@ using System.Text;
 
 namespace OOS.Presentation.ApplicationLogic.Order
 {
-    public class OrderBusinessLogicAutoMapper: Profile
+    public class OrderBusinessLogicAutoMapper : Profile
     {
         public OrderBusinessLogicAutoMapper()
         {
             CreateMap<CreateOrderRequest, Orders>();
 
             CreateMap<EditOrderRequest, Orders>();
+
+            CreateMap<Orders, GetOrdersResponse>();
         }
     }
 }

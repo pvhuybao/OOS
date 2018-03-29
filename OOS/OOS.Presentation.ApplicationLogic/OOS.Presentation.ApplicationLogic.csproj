@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Remove="Order\Messages\EditAddressRequest.cs" />
     <Compile Remove="Order\Messages\EditOrderDetailRequest.cs" />
+    <Compile Remove="Order\Messages\GetOrdersQuery.cs" />
   </ItemGroup>
 
   <ItemGroup>

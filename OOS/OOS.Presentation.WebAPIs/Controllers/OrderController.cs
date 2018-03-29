@@ -22,9 +22,9 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(GetOrdersRequest query)
         {
-            var listOrders = _orderBusinessLogic.GetOders();
+            var listOrders = _orderBusinessLogic.GetOders(query);
             return Ok(listOrders);
         }
 
@@ -62,14 +62,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
         {
             _orderBusinessLogic.DeleteOrder(id);
             return Ok();
-        }
-
-        [HttpGet]
-        [Route("{keyword}/SearchOrders")]
-        public IActionResult SearchOrders(string keyword)
-        {
-            var orders = _orderBusinessLogic.SearchOrders(keyword);
-            return Ok(orders);
         }
     }
 }
