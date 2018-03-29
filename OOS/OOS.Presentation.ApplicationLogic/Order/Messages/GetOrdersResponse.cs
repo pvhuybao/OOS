@@ -17,6 +17,8 @@ namespace OOS.Presentation.ApplicationLogic.Order.Messages
 
         public double Total { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public OrderStatus Status { get; set; }
     }
 }
