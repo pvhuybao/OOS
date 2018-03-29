@@ -7,6 +7,7 @@ using System.Text;
 using OOS.Presentation.ApplicationLogic.Order.Messages;
 using MongoDB.Driver;
 using System.Linq;
+using OOS.Infrastructure.Queries;
 
 namespace OOS.Presentation.ApplicationLogic.Order
 {
@@ -30,14 +31,13 @@ namespace OOS.Presentation.ApplicationLogic.Order
             _mongoDbRepository.Create(pro);
             result.Id = pro.Id;
             return result;
-        } 
+        }
 
         public void DeleteOrder(string id)
         {
             var orderToDelete = _mongoDbRepository.Get<Orders>(id);
             _mongoDbRepository.Delete(orderToDelete);
         }
-
 
         public EditOrderResponse EditOrder(string id, EditOrderRequest request)
         {
@@ -51,22 +51,48 @@ namespace OOS.Presentation.ApplicationLogic.Order
                 ord.UpdatedDate = DateTime.UtcNow;
                 _mongoDbRepository.Replace(ord);
             }
-            
+
             return result;
         }
 
-
-        public List<Orders> GetOders()
+        public PagedQueryResult<GetOrdersResponse> GetOders(GetOrdersRequest query)
         {
-            List<Orders> listOrders = new List<Orders>();
-            var filter = Builders<Orders>.Filter.Empty;
-            listOrders.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate));
-            return listOrders;
+            var builder = Builders<Orders>.Filter;
+            var filter = builder.Empty;
+
+            if (!String.IsNullOrEmpty(query.Email))
+            {
+                filter = filter & builder.Where(it => it.Email.Equals(query.Email));
+            }
+
+            if (!String.IsNullOrEmpty(query.Phone))
+            {
+                filter = filter & builder.Where(it => it.Address.Any(a => a.Phone == query.Phone));
+            }
+
+            var orders = _mongoDbRepository.Find(filter);
+            var totalItemCount = orders.Count();
+
+            var ordersOverview = _mapper.Map<IEnumerable<GetOrdersResponse>>(orders
+                .SortByDescending(it => it.CreatedDate)
+                .Skip((query.Page - 1) * query.PageSize)
+                .Limit(query.PageSize)
+                .ToList());
+
+            var pagedResult = new PagedQueryResult<GetOrdersResponse>(ordersOverview, totalItemCount, query.Page, query.PageSize);
+            return pagedResult;
         }
 
         public Orders GetOdersById(string id)
         {
             return _mongoDbRepository.Get<Orders>(id);
+        }
+
+        public List<Orders> SearchOrders(string keyword)
+        {
+            var filter = Builders<Orders>.Filter.Where(p => p.Email.ToLower().Contains(keyword.ToLower()) || p.Address[0].Phone.Contains(keyword) || p.Address[1].Phone.Contains(keyword));
+            var orders = _mongoDbRepository.Find(filter).ToList();
+            return orders;
         }
     }
 }

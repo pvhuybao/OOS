@@ -22,9 +22,9 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(GetOrdersRequest query)
         {
-            var listOrders = _orderBusinessLogic.GetOders();
+            var listOrders = _orderBusinessLogic.GetOders(query);
             return Ok(listOrders);
         }
 
