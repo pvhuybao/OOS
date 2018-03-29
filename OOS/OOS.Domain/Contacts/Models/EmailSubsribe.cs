@@ -12,7 +12,7 @@ namespace OOS.Domain.Contacts.Models
     {
         public string Id { set; get; }
 
-        public string email { set; get; }
+        public string emailSubscribe { set; get; }
 
     }
 }

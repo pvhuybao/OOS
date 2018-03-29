@@ -6,6 +6,6 @@ namespace OOS.Presentation.ApplicationLogic.Contacts.Messages
 {
     public class CreateEmailSubscribeRequest
     {
-        public string email { set; get; }
+        public string emailSubscribe { set; get; }
     }
 }
