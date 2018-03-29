@@ -3,6 +3,7 @@ using OOS.Infrastructure.Domain;
 using OOS.Infrastructure.Mongodb;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace OOS.Domain.Contacts.Models
@@ -12,7 +13,8 @@ namespace OOS.Domain.Contacts.Models
     {
         public string Id { set; get; }
 
-        public string emailSubscribe { set; get; }
-
+        [Required(ErrorMessage = "Field can't be empty")]
+        [EmailAddress]
+        public string EmailSubscribe { set; get; }
     }
 }
