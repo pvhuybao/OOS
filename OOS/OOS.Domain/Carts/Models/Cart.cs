@@ -18,7 +18,5 @@ namespace OOS.Domain.Carts.Models
 
         public List<CartDetails> CartDetails { get; set; }
 
-        public double Total { get; set; }
-
     }
 }

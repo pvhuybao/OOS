@@ -12,8 +12,6 @@ namespace OOS.Presentation.ApplicationLogic.Carts.Messages
 
         public string UserId { get; set; }
 
-        public List<CartDetails> CartDetails { get; set; }
-
-        public double Total { get; set; }
+        public List<CartDetails> CartDetails { get; set; }        
     }
 }
