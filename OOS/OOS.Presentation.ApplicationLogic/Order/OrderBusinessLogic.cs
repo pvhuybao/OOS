@@ -68,5 +68,12 @@ namespace OOS.Presentation.ApplicationLogic.Order
         {
             return _mongoDbRepository.Get<Orders>(id);
         }
+
+        public List<Orders> SearchOrders(string keyword)
+        {
+            var filter = Builders<Orders>.Filter.Where(p => p.Email.ToLower().Contains(keyword.ToLower()) || p.Address[0].Phone.Contains(keyword) || p.Address[1].Phone.Contains(keyword));
+            var orders = _mongoDbRepository.Find(filter).ToList();
+            return orders;
+        }
     }
 }
