@@ -84,7 +84,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             {
                 //TimeSpan timeSpan = TimeSpan.FromDays(10);
                 var filter = Builders<Product>.Filter.Empty;
-                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(10));
+                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
             }else if(widget == "topSales")
             {
                 //wait for further update
