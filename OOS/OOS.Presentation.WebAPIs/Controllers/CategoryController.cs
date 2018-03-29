@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Categories.Messages;
-using OOS.Domain.Categories.Models;
 using OOS.Shared.Enums;
 
 namespace OOS.Presentation.WebAPIs.Controllers

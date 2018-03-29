@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Presentation.ApplicationLogic.Order.Messages
+namespace OOS.Presentation.ApplicationLogic.Carts.Messages
 {
-    public class EditOrderResponse : ResponseBase
+    public class EditCartResponse : ResponseBase
     {
         public string Id { get; set; }
 

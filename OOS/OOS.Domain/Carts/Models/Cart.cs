@@ -1,15 +1,17 @@
-﻿using OOS.Domain.Carts.Models;
-using OOS.Presentation.ApplicationLogic.Common;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OOS.Infrastructure.Mongodb;
+using OOS.Infrastructure.Domain;
 
-namespace OOS.Presentation.ApplicationLogic.Order.Messages
+namespace OOS.Domain.Carts.Models
 {
-    public class EditOrderResponse : ResponseBase
+    [BsonIgnoreExtraElements]
+    public class Cart : IAggregateRoot
     {
         public string Id { get; set; }
-
+     
         public string Email { get; set; }
 
         public string UserId { get; set; }
@@ -17,5 +19,6 @@ namespace OOS.Presentation.ApplicationLogic.Order.Messages
         public List<CartDetails> CartDetails { get; set; }
 
         public double Total { get; set; }
+
     }
 }

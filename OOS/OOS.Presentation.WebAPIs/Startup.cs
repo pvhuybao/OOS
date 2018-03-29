@@ -12,6 +12,7 @@ using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.WebAPIs.Filters;
 using OOS.Presentation.ApplicationLogic.Contacts;
 using OOS.Presentation.ApplicationLogic.Configurations;
+using OOS.Presentation.ApplicationLogic.Carts;
 
 namespace OOS.Presentation.WebAPIs
 {
@@ -32,13 +33,15 @@ namespace OOS.Presentation.WebAPIs
                 options.Filters.Add(typeof(ValidationFilter));
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
+
+            services.AddTransient<ICartBusinessLogic, CartBusinessLogic>();
             services.AddTransient<IConfigurationsBusinessLogic, ConfigurationsBusinessLogic>();
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
             services.AddTransient<IProductsBusinessLogic, ProductsBusinessLogic>();
             services.AddTransient<IOrderBusinessLogic, OrderBusinessLogic>();
             services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
-            services.AddTransient<IEmailBusinessLogic, EmailBusinessLogic>();
+            services.AddTransient<IEmailBusinessLogic, EmailBusinessLogic>();            
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(Configuration.GetValue<string>("MongoDb:DefaultConnectionString")));            
 
             AutoMapperConfig.Configure(services);

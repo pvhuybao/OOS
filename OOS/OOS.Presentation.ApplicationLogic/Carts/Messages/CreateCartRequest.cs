@@ -4,12 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Presentation.ApplicationLogic.Order.Messages
+namespace OOS.Presentation.ApplicationLogic.Carts.Messages
 {
-    public class EditOrderResponse : ResponseBase
+    public class CreateCartRequest : RequestBase
     {
-        public string Id { get; set; }
-
         public string Email { get; set; }
 
         public string UserId { get; set; }
