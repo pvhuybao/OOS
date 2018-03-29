@@ -57,7 +57,8 @@ namespace OOS.Presentation.ApplicationLogic.Products
             {
                 var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
                 //add category name
-                //response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                //calculate other values of Product:min-max price, total quantity, basic image
                 response.CalculateProductValues();
                 listResult.Add(response);
             }
