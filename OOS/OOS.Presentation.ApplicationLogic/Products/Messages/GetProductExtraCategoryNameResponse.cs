@@ -1,17 +1,16 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using OOS.Infrastructure.Domain;
-using OOS.Infrastructure.Mongodb;
+﻿using OOS.Domain.Products.Models;
+using OOS.Presentation.ApplicationLogic.Common;
 using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace OOS.Domain.Products.Models
+namespace OOS.Presentation.ApplicationLogic.Products.Messages
 {
-    [BsonIgnoreExtraElements]
-    public class Product : AuditableEntityBase, IAggregateRoot
+    public class GetProductExtraCategoryNameResponse:ResponseBase
     {
+
         public string Id { get; set; }
 
         [Required]
@@ -20,14 +19,20 @@ namespace OOS.Domain.Products.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public int Price { get; set; }
+
         public string Description { get; set; }
+
+        [Required]
+        public string Image { get; set; }
 
         [Required]
         public string IdCategory { get; set; }
 
         public ProductStatus? Status { get; set; }
-        
-        public string Details { get; set; }
+
+        public string CategoryName { get; set; }
 
         public List<ProductTail> ProductTails { get; set; }
     }

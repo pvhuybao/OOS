@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-
+using OOS.Domain.Categories.Models;
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -31,13 +31,16 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return result;
         }
 
-        public CreateProductResponse EditProduct(CreateProductRequest request, string id)
+        public EditProductResponse EditProduct(string id, EditProductResquest request)
         {
-            var result = new CreateProductResponse();
-            var pro = _mapper.Map<CreateProductRequest, Product>(request);         
-                pro.Id = id;    
+            var pro = _mapper.Map<EditProductResquest, Product>(request);
+            pro.Id = id;
+
             _mongoDbRepository.Replace<Product>(pro);
+
+            var result = _mapper.Map<Product, EditProductResponse>(pro);
             return result;
+            
         }
 
         public void DeleteProduct(string id)
@@ -45,11 +48,19 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var product = _mongoDbRepository.Get<Product>(id);
             _mongoDbRepository.Delete(product);
         }
-        public List<Product> GetProduct()
+        public List<GetProductExtraCategoryNameResponse> GetProduct()
         {
             var filter = Builders<Product>.Filter.Empty;
             var listProducts = _mongoDbRepository.Find(filter).ToList();
-            return listProducts;
+            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
+            foreach(var p in listProducts)
+            {
+                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
+                //add category name
+                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                listResult.Add(response);
+            }
+            return listResult;     
         }
         public Product GetProduct(string id)
         {
@@ -63,12 +74,6 @@ namespace OOS.Presentation.ApplicationLogic.Products
             if (count > 0)
                 return true;
             return false;
-        }
-        public List<Product> SearchProduct(string keyword)
-        {
-            var filter = Builders<Product>.Filter.Where(p => p.Name.Contains(keyword));
-            var products = _mongoDbRepository.Find(filter).ToList();
-            return products;
         }
 
         public List<Product> ProductWidget(string widget)
@@ -89,10 +94,33 @@ namespace OOS.Presentation.ApplicationLogic.Products
             }
             return products;
         }
+
         public List<Product> GetProductsBaseOnIDCategory(string idCategory)
         {
             var filter = Builders<Product>.Filter.Where(p => p.IdCategory.Equals(idCategory));
             var products = _mongoDbRepository.Find(filter).ToList();
+            return products;
+        }
+
+        public List<Product> SearchProduct(string keyword)
+        {
+            var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+            var products = _mongoDbRepository.Find(filter).ToList();
+            return products;
+        }
+
+        public List<Product> SearchProductByIdCategory(string idCategory, string keyword)
+        {
+            var products = new List<Product>();
+            if (idCategory == "all") {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+                products = _mongoDbRepository.Find(filter).ToList();
+            }
+            else
+            {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.IdCategory.Equals(idCategory));
+                products = _mongoDbRepository.Find(filter).ToList();
+            }
             return products;
         }
     }

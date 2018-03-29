@@ -11,21 +11,23 @@ namespace OOS.Presentation.ApplicationLogic.Products
     {
         CreateProductResponse CreateProduct(CreateProductRequest request);
 
-        CreateProductResponse EditProduct(CreateProductRequest Request, string Id);
+        EditProductResponse EditProduct(string Id, EditProductResquest Request);
 
         void DeleteProduct(string id);
 
-        List<Product> GetProduct();
+         List<GetProductExtraCategoryNameResponse> GetProduct();
 
         Product GetProduct(string id);
 
         bool checkExistedCode(string code);
+        
+        List<Product> GetProductsBaseOnIDCategory(string idCategory);
 
         List<Product> SearchProduct(string keyword);
 
-        List<Product> ProductWidget(string widget);
+        List<Product> SearchProductByIdCategory(string idCategory, string keyword);
 
-        List<Product> GetProductsBaseOnIDCategory(string idCategory);
+        List<Product> ProductWidget(string widget);
 
     }
 }

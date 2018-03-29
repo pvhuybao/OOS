@@ -24,8 +24,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var result = _productsBusinessLogic.GetProduct();
-            return Ok(result);
+            var products = _productsBusinessLogic.GetProduct();
+            return Ok(products);
         }
 
         // GET api/values/5
@@ -38,17 +38,17 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody]CreateProductRequest request)
+        public IActionResult Post([FromBody]CreateProductRequest value)
         {
-            _productsBusinessLogic.CreateProduct(request);
-            return Ok();
+            var rs = _productsBusinessLogic.CreateProduct(value);
+            return Ok(rs);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody]CreateProductRequest request)
+        public IActionResult Put(string id, [FromBody]EditProductResquest request)
         {
-            _productsBusinessLogic.EditProduct(request, id);
+            _productsBusinessLogic.EditProduct(id, request);
             return Ok();
         }
 
@@ -59,6 +59,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
             _productsBusinessLogic.DeleteProduct(id);
             return Ok();
         }
+
         [HttpGet]
         [Route("{code}/checkexistedcode")]
         public IActionResult checkExistedCode(string code)
@@ -67,6 +68,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
             response.IsCodeExisted = _productsBusinessLogic.checkExistedCode(code);
             return Ok(response);
         }
+
         [HttpGet]
         [Route ("{keyword}/searchproduct")]
         public IActionResult searchProduct(string keyword)
@@ -75,6 +77,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(products);
         }
 
+        [HttpGet]
         [Route("{widget}/widget")]
         public IActionResult widgetProduct(string widget)
         {
@@ -88,7 +91,14 @@ namespace OOS.Presentation.WebAPIs.Controllers
         public IActionResult GetProductBaseOnIDCategory(string idCategory)
         {
             var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(idCategory);
+            return Ok(products);
+        }
 
+        [HttpGet]
+        [Route("{idCategory}&{keyword}/search")]
+        public IActionResult searchProductByIdCategory(string idCategory, string keyword)
+        {
+            var products = _productsBusinessLogic.SearchProductByIdCategory(idCategory, keyword);
             return Ok(products);
         }
     }
