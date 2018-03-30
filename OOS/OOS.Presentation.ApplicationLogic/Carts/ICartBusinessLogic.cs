@@ -13,6 +13,8 @@ namespace OOS.Presentation.ApplicationLogic.Carts
 
         EditCartResponse EditCart(string id, EditCartRequest request);
 
+        Cart GetCartBaseOnEmail(string email);
+
         List<Cart> GetCart();
 
         Cart GetCartById(string id);

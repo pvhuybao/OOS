@@ -35,6 +35,14 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(cart);
         }
 
+        [HttpGet]
+        [Route("{email}/email")]
+        public IActionResult GetCartBaseOnEmail(string email)
+        {
+            var cart = _cartsBusinessLogic.GetCartBaseOnEmail(email);
+            return Ok(cart);
+        }
+
         // POST: api/Cart
         [HttpPost]
         public IActionResult Post([FromBody]CreateCartRequest value)

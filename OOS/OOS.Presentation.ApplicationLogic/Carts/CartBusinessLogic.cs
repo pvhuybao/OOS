@@ -43,6 +43,13 @@ namespace OOS.Presentation.ApplicationLogic.Carts
             var cart = _mongoDbRepository.Get<Cart>(id);
             return cart;
         }
+        
+        public Cart GetCartBaseOnEmail(string email)
+        {
+            var filter = Builders<Cart>.Filter.Where(p => p.Email.Equals(email));
+            var cart = _mongoDbRepository.Find(filter).ToList()[0];
+            return cart;
+        }
 
         public void DeleteCart(string id)
         {
