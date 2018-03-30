@@ -42,5 +42,12 @@ namespace OOS.Presentation.WebAPIs.Controllers
             var rs = _configurationsBusinessLogic.EditConfiguration(request, id);
             return Ok(rs);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _configurationsBusinessLogic.DeleteConfiguration(id);
+            return Ok();
+        }
     }
 }
