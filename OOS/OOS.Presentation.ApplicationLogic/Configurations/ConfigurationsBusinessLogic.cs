@@ -43,5 +43,10 @@ namespace OOS.Presentation.ApplicationLogic.Configurations
             var result = _mapper.Map<Configuration, ConfigurationResponse>(Configuration);
             return result;
         }
+
+        public void DeleteConfiguration(string id)
+        {
+            _mongoDbRepository.Delete<Configuration>(id);
+        }
     }
 }
