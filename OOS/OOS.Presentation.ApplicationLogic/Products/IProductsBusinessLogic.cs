@@ -27,7 +27,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         List<Product> SearchProductByIdCategory(string idCategory, string keyword);
 
-        List<Product> ProductWidget(string widget);
+        List<GetProductExtraCategoryNameResponse> ProductWidget(string widget);
 
     }
 }
