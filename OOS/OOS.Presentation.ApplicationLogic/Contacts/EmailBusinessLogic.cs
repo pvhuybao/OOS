@@ -52,12 +52,12 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             string senderPassword = "tau0bieT";
             string emailAdmin = "nguyenhuuloc304@gmail.com";
 
-            string body = "Feedback from " + request.toEmail +"<br>";
-            body += request.content;
+            string body = "Feedback from " + request.ToEmail +"<br>";
+            body += request.Content;
             MailMessage mail = new MailMessage();
             mail.To.Add(emailAdmin);
             mail.From = new MailAddress(senderID);
-            mail.Subject = "Feedback: "+request.subject;
+            mail.Subject = "Feedback: "+request.Subject;
             mail.Body = body;
             mail.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient();
@@ -70,7 +70,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
 
             string body1 = "We received a feedback from you";
             MailMessage mailFeedback = new MailMessage();
-            mailFeedback.To.Add(request.toEmail);
+            mailFeedback.To.Add(request.ToEmail);
             mailFeedback.From = new MailAddress(senderID);
             mailFeedback.Subject = "Email feedback";
             mailFeedback.Body = body1;

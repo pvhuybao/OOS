@@ -10,10 +10,10 @@
 
   <ItemGroup>
     <Folder Include="ProductCategories\" />
-    <Folder Include="Users\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OOS.Infrastructure.Identity.MongoDB\OOS.Infrastructure.Identity.MongoDB.csproj" />
     <ProjectReference Include="..\OOS.Infrastructure.Mongodb\OOS.Infrastructure.Mongodb.csproj" />
     <ProjectReference Include="..\OOS.Infrastructure\OOS.Infrastructure.csproj" />
     <ProjectReference Include="..\OOS.Shared\OOS.Shared.csproj" />
