@@ -1,0 +1,22 @@
+Code: 500
+Stack Trace:    at System.Security.Cryptography.HashAlgorithm.Create(String hashName)
+   at OOS.Infrastructure.Helpers.EncodeDecodePassword.EncodePassword(String pass, String salt) in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Infrastructure\Helpers\EncodeDecodePassword.cs:line 30
+   at OOS.Presentation.ApplicationLogic.Users.UsersBusinessLogic.CreateUser(CreateUserRequest request, String password) in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.ApplicationLogic\Users\UsersBusinessLogic.cs:line 52
+   at OOS.Presentation.WebAPIs.Controllers.UserController.Post(CreateUserRequest request) in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.WebAPIs\Controllers\UserController.cs:line 38
+   at lambda_method(Closure , Object , Object[] )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeNextActionFilterAsync>d__10.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeInnerFilterAsync>d__14.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
+Message: Operation is not supported on this platform.

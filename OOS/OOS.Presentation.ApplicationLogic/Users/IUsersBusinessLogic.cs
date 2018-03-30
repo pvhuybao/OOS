@@ -8,7 +8,7 @@ namespace OOS.Presentation.ApplicationLogic.Users
 {
     public interface IUsersBusinessLogic
     {
-        CreateUserResponse CreateUser(CreateUserRequest request);
+        CreateUserResponse CreateUser(CreateUserRequest request, string password);
         EditUserResponse EditUser(EditUserRequest request, string id);
         List<User> GetUser();
         User GetUser(string id);

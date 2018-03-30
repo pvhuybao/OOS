@@ -35,7 +35,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]CreateUserRequest request)
         {            
-            var rs = _usersBusinessLogic.CreateUser(request);
+            var rs = _usersBusinessLogic.CreateUser(request, request.Password);
             return Ok(rs);
         }
 
