@@ -21,7 +21,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         bool checkExistedCode(string code);
         
-        List<Product> GetProductsBaseOnIDCategory(string idCategory);
+        List<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(string idCategory);
 
         List<Product> SearchProduct(string keyword);
 
