@@ -11,5 +11,6 @@ namespace OOS.Presentation.ApplicationLogic.Configurations
         Configuration GetConfiguration();
         ConfigurationResponse EditConfiguration(ConfigurationRequest request, string id);
         ConfigurationResponse CreateConfiguration(ConfigurationRequest request);
+        void DeleteConfiguration(string id);
     }
 }

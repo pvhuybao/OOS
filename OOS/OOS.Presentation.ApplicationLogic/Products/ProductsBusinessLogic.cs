@@ -78,14 +78,22 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return false;
         }
 
-        public List<Product> ProductWidget(string widget)
+        public List<GetProductExtraCategoryNameResponse> ProductWidget(string widget)
         {
             List<Product> products = new List<Product>();
+            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
             if (widget == "newestProduct")
             {
                 //TimeSpan timeSpan = TimeSpan.FromDays(10);
                 var filter = Builders<Product>.Filter.Empty;
                 products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
+                foreach(var product in products)
+                {
+                    var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
+                    //calculate other values of Product:min-max price, total quantity, basic image
+                    response.CalculateProductValues();
+                    listResult.Add(response);
+                }
             }else if(widget == "topSales")
             {
                 //wait for further update
@@ -94,14 +102,25 @@ namespace OOS.Presentation.ApplicationLogic.Products
             {
                 //wait for further update
             }
-            return products;
+            return listResult;
         }
 
-        public List<Product> GetProductsBaseOnIDCategory(string idCategory)
+        public List<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(string idCategory)
         {
             var filter = Builders<Product>.Filter.Where(p => p.IdCategory.Equals(idCategory));
-            var products = _mongoDbRepository.Find(filter).ToList();
-            return products;
+            var listProducts = _mongoDbRepository.Find(filter).ToList();
+            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
+            foreach (var p in listProducts)
+            {
+                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
+                //add category name
+                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                //calculate other values of Product:min-max price, total quantity, basic image
+                response.CalculateProductValues();
+                listResult.Add(response);
+            }
+            return listResult;
+
         }
 
         public List<Product> SearchProduct(string keyword)
