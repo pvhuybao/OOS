@@ -29,6 +29,8 @@ namespace OOS.Domain.Products.Models
         
         public string Details { get; set; }
 
+        public int Discount { get; set; }
+
         public List<ProductTail> ProductTails { get; set; }
     }
 }
