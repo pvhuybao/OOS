@@ -9,11 +9,11 @@ namespace OOS.Presentation.ApplicationLogic.Users.Messages
     public class CreateUserRequest : RequestBase
     {
         [Required(ErrorMessage = "Please enter {0}!")]
-        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
+        [StringLength(20, MinimumLength = 10, ErrorMessage = "{0} contains {2}-{1} characters!")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter {0}!")]
-        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
+        [StringLength(20, MinimumLength = 8, ErrorMessage = "{0} contains {2}-{1} characters!")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please enter {0}!")]
