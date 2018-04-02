@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MongoDB.Driver;
 using OOS.Domain.Users.Models;
+using OOS.Domain.Users.Services;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 using System;
@@ -13,11 +14,13 @@ namespace OOS.Presentation.ApplicationLogic.Users
     {
         private readonly IMapper _mapper;
         private readonly IMongoDbRepository _mongoDbRepository;
+        private readonly IUserService _userService;
 
-        public UsersBusinessLogic(IMapper mapper, IMongoDbRepository mongoDbRepository)
+        public UsersBusinessLogic(IMapper mapper, IMongoDbRepository mongoDbRepository, IUserService userService)
         {
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
+            _userService = userService;
         }
 
         public List<User> GetUser()
