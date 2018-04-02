@@ -17,5 +17,9 @@ namespace OOS.Domain.Orders.Models
         public double Price { get; set; }
 
         public double TotalPrice { get; set; }
+
+        public string Size { get; set; }
+
+        public string Color { get; set; }
     }
 }

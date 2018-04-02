@@ -21,13 +21,13 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         bool checkExistedCode(string code);
         
-        List<Product> GetProductsBaseOnIDCategory(string idCategory);
+        List<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(string idCategory);
 
         List<Product> SearchProduct(string keyword);
 
         List<Product> SearchProductByIdCategory(string idCategory, string keyword);
 
-        List<Product> ProductWidget(string widget);
+        List<GetProductExtraCategoryNameResponse> ProductWidget(string widget);
 
     }
 }

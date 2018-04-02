@@ -8,6 +8,8 @@ using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Categories.Messages;
 using OOS.Domain.Categories.Models;
 using OOS.Shared.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace OOS.Presentation.WebAPIs.Controllers
 {
@@ -24,6 +26,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/Category
         [HttpGet]
+        [Authorize]
         public IActionResult Get()
         {
             return Ok(_categoriesBusinessLogic.GetCategories());
