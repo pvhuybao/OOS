@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using OOS.Domain.Categories.Models;
+using OOS.Domain.Orders.Models;
+using System.Dynamic;
+using System.Reflection;
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -40,7 +43,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
             var result = _mapper.Map<Product, EditProductResponse>(pro);
             return result;
-            
+
         }
 
         public void DeleteProduct(string id)
@@ -48,12 +51,13 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var product = _mongoDbRepository.Get<Product>(id);
             _mongoDbRepository.Delete(product);
         }
+
         public List<GetProductExtraCategoryNameResponse> GetProduct()
         {
             var filter = Builders<Product>.Filter.Empty;
             var listProducts = _mongoDbRepository.Find(filter).ToList();
             List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
-            foreach(var p in listProducts)
+            foreach (var p in listProducts)
             {
                 var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
                 //add category name
@@ -62,8 +66,9 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 response.CalculateProductValues();
                 listResult.Add(response);
             }
-            return listResult;     
+            return listResult;
         }
+
         public Product GetProduct(string id)
         {
             return _mongoDbRepository.Get<Product>(id);
@@ -87,16 +92,51 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 //TimeSpan timeSpan = TimeSpan.FromDays(10);
                 var filter = Builders<Product>.Filter.Empty;
                 products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
-                foreach(var product in products)
+                foreach (var product in products)
                 {
                     var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
                     //calculate other values of Product:min-max price, total quantity, basic image
                     response.CalculateProductValues();
                     listResult.Add(response);
                 }
-            }else if(widget == "topSales")
+            }
+            else if (widget == "topSales")
             {
-                //wait for further update
+                var orderfilter = Builders<Orders>.Filter.Empty;
+                var listOrders = _mongoDbRepository.Find(orderfilter).ToList();
+                var listDetails = new List<OrderDetails>();
+
+                foreach (var order in listOrders)
+                {
+                    listDetails.AddRange(order.OrderDetails);
+                }
+
+                var groupDetails = listDetails
+                    .GroupBy(g => g.IdProduct)
+                    .Select(d => new
+                    {
+                        id = d.Key,
+                        quantity = d.Sum(s => s.Quantity)
+                    })
+                    .OrderByDescending(o => o.quantity).ToList();
+
+                var prolist = groupDetails.Select(d => d.id).ToList();
+
+                var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Publish));
+                var categories = _mongoDbRepository.Find(categoryfilter).ToList();
+                var publishcat = categories.Select(d => d.Id).ToList();
+                
+                var filter = Builders<Product>.Filter.Where(p => prolist.Contains(p.Id) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
+                products = _mongoDbRepository.Find(filter).ToList();
+
+                var listProducts = products.Join(groupDetails, a => a.Id, b => b.id, (a, b) => (a,b)).OrderByDescending(o => o.b.quantity).Take(8).ToList();
+                foreach (var product in listProducts)
+                {
+                    var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product.a);
+                    //calculate other values of Product:min-max price, total quantity, basic image
+                    response.CalculateProductValues();
+                    listResult.Add(response);
+                }
             }
             else if (widget == "topDiscount")
             {
@@ -134,13 +174,9 @@ namespace OOS.Presentation.ApplicationLogic.Products
         {
             var products = new List<Product>();
 
-            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Unpublish));
-            var category = _mongoDbRepository.Find(categoryfilter).ToList();
-            var publishcat = new List<String>();
-            for (int i = 0; i < category.Count; i++)
-            {
-                if (category[i].Status == Shared.Enums.CategoryStatus.Publish) publishcat.Add(category[i].Id);
-            }
+            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Publish));
+            var categories = _mongoDbRepository.Find(categoryfilter).ToList();
+            var publishcat = categories.Select(d => d.Id).ToList();
 
 
             if (idCategory == "all")
