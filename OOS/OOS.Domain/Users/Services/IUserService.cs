@@ -33,6 +33,8 @@ namespace OOS.Domain.Users.Services
 
         Task<User> FindByIdAsync(string id);
 
+        Task<bool> CheckPasswordSignInAsync(User user, string password);
+
         string GenerateAppToken(User user);
     }
 }

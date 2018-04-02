@@ -80,6 +80,11 @@ namespace OOS.Domain.Users.Services
             return _userManager.FindByIdAsync(id);
         }
 
+        public Task<bool> CheckPasswordSignInAsync(User user, string password)
+        {
+            return _userManager.CheckPasswordAsync(user, password);
+        }
+
         public string GenerateAppToken(User user)
         {
             throw new NotImplementedException();

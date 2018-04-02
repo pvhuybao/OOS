@@ -12,6 +12,9 @@ using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.WebAPIs.Filters;
 using OOS.Presentation.ApplicationLogic.Contacts;
 using OOS.Presentation.ApplicationLogic.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace OOS.Presentation.WebAPIs
 {
@@ -32,16 +35,25 @@ namespace OOS.Presentation.WebAPIs
                 options.Filters.Add(typeof(ValidationFilter));
                 options.Filters.Add(typeof(GlobalExceptionFilter));
             });
-            services.AddTransient<IConfigurationsBusinessLogic, ConfigurationsBusinessLogic>();
-            services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
-            services.AddTransient<IProductsBusinessLogic, ProductsBusinessLogic>();
-            services.AddTransient<IOrderBusinessLogic, OrderBusinessLogic>();
-            services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
-            services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
-            services.AddTransient<IEmailBusinessLogic, EmailBusinessLogic>();
-            services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(Configuration.GetValue<string>("MongoDb:DefaultConnectionString")));            
 
+            DIConfig.Configure(services, Configuration);
             AutoMapperConfig.Configure(services);
+
+            services.AddAuthentication()
+            .AddCookie()
+            .AddJwtBearer(jwtBearerOptions =>
+            {
+                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateActor = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Token:Issuer"],
+                    ValidAudience = Configuration["Token:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:Key"]))
+                };
+            });
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -66,7 +78,7 @@ namespace OOS.Presentation.WebAPIs
             }
 
             app.UseSwagger();
-
+            app.UseAuthentication();
             app.UseCors("MyPolicy");
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
