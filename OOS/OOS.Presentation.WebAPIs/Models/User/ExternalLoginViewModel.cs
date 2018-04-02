@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoMVC3.Models.AccountViewModels
+namespace OOS.Presentation.WebAPIs.Models.User
 {
     public class ExternalLoginViewModel
     {

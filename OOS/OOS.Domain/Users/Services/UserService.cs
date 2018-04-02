@@ -25,6 +25,12 @@ namespace OOS.Domain.Users.Services
             return _userManager.CreateAsync(user, password);
         }
 
+        public Task<IdentityResult> UpdateUserAsync(User user)
+        {
+            return _userManager.UpdateAsync(user);
+           
+        }
+
         public Task<string> GenerateEmailConfirmationTokenAsync(User user)
         {
             return _userManager.GenerateEmailConfirmationTokenAsync(user);
