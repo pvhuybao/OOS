@@ -133,15 +133,27 @@ namespace OOS.Presentation.ApplicationLogic.Products
         public List<Product> SearchProductByIdCategory(string idCategory, string keyword)
         {
             var products = new List<Product>();
-            if (idCategory == "all") {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
+
+            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Unpublish));
+            var category = _mongoDbRepository.Find(categoryfilter).ToList();
+            var publishcat = new List<String>();
+            for (int i = 0; i < category.Count; i++)
+            {
+                if (category[i].Status == Shared.Enums.CategoryStatus.Publish) publishcat.Add(category[i].Id);
+            }
+
+
+            if (idCategory == "all")
+            {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
                 products = _mongoDbRepository.Find(filter).ToList();
             }
             else
             {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.IdCategory.Equals(idCategory));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory) && p.IdCategory.Equals(idCategory));
                 products = _mongoDbRepository.Find(filter).ToList();
             }
+
             return products;
         }
     }
