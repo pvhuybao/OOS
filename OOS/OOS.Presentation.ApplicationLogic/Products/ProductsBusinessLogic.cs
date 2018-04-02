@@ -101,8 +101,8 @@ namespace OOS.Presentation.ApplicationLogic.Products
             else if (widget == "topDiscount")
             {
                 //wait for further update
-                var filter = Builders<Product>.Filter.Empty;
-                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
+                products.AddRange(_mongoDbRepository.Find<Product>().SortByDescending(p => p.Discount).Limit(8).ToList());
+                
                 foreach (var product in products)
                 {
                     var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
