@@ -101,6 +101,15 @@ namespace OOS.Presentation.ApplicationLogic.Products
             else if (widget == "topDiscount")
             {
                 //wait for further update
+                var filter = Builders<Product>.Filter.Empty;
+                products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
+                foreach (var product in products)
+                {
+                    var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
+                    //calculate other values of Product:min-max price, total quantity, basic image
+                    response.CalculateProductValues();
+                    listResult.Add(response);
+                }
             }
             return listResult;
         }
