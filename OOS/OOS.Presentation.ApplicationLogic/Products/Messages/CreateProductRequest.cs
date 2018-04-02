@@ -25,6 +25,8 @@ namespace OOS.Presentation.ApplicationLogic.Products.Messages
 
         public string Details { get; set; }
 
+        public int Discount { get; set; }
+
         public List<ProductTail> ProductTails { get; set; }
     }
 }
