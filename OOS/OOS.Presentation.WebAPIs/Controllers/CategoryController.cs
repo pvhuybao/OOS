@@ -25,8 +25,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         // GET: api/Category
-        [HttpGet]
-        [Authorize]
+        [HttpGet]        
         public IActionResult Get()
         {
             return Ok(_categoriesBusinessLogic.GetCategories());

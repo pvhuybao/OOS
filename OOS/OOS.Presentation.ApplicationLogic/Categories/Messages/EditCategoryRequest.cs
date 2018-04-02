@@ -9,12 +9,12 @@ using OOS.Shared.Enums;
 namespace OOS.Presentation.ApplicationLogic.Categories.Messages
 {
     public class EditCategoryRequest : RequestBase
-    {           
-        //public string Id { get; set; }
-
-        [Required]
+    {
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [StringLength(25, MinimumLength = 3, ErrorMessage = "{0} contains {2}-{1} characters!")]
         public string Name { get; set; }
 
+        [StringLength(250, ErrorMessage = "{0} can't over {1} characters!")]
         public string Description { get; set; }
 
         public CategoryStatus Status { get; set; }

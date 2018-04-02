@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using OOS.Domain.Categories.Models;
+using OOS.Domain.Orders.Models;
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -96,11 +97,51 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 }
             }else if(widget == "topSales")
             {
-                //wait for further update
+                var orders = _mongoDbRepository.Find<Orders>().ToList();
+                var details = new List<OrderDetails>();
+                foreach(var order in orders)
+                {
+                    details.AddRange(order.OrderDetails);
+                }
+
+                var groupDetails = details
+                    .GroupBy(g => g.IdProduct)
+                    .Select(d => new
+                    {
+                        id = d.Key,
+                        quantity = d.Sum(s => s.Quantity)
+                    })
+                    .ToList();
+
+                var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Publish));
+                var categories = _mongoDbRepository.Find(categoryfilter).ToList();
+                var publishcat = categories.Select(d => d.Id).ToList();
+
+                var productfilter = Builders<Product>.Filter.Where(p => p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
+                products = _mongoDbRepository.Find(productfilter).ToList();
+
+                var sortlist = products.Join(groupDetails, a => a.Id, b => b.id, (a, b) => (a, b)).ToList().OrderBy(o => o.b.quantity).Take(8);
+
+                foreach (var product in sortlist)
+                {
+                    var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product.a);
+                    //calculate other values of Product:min-max price, total quantity, basic image
+                    response.CalculateProductValues();
+                    listResult.Add(response);
+                }
             }
             else if (widget == "topDiscount")
             {
                 //wait for further update
+                products.AddRange(_mongoDbRepository.Find<Product>().SortByDescending(p => p.Discount).Limit(8).ToList());
+                
+                foreach (var product in products)
+                {
+                    var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
+                    //calculate other values of Product:min-max price, total quantity, basic image
+                    response.CalculateProductValues();
+                    listResult.Add(response);
+                }
             }
             return listResult;
         }
@@ -134,14 +175,9 @@ namespace OOS.Presentation.ApplicationLogic.Products
         {
             var products = new List<Product>();
 
-            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Unpublish));
-            var category = _mongoDbRepository.Find(categoryfilter).ToList();
-            var publishcat = new List<String>();
-            for (int i = 0; i < category.Count; i++)
-            {
-                if (category[i].Status == Shared.Enums.CategoryStatus.Publish) publishcat.Add(category[i].Id);
-            }
-
+            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Publish));
+            var categories = _mongoDbRepository.Find(categoryfilter).ToList();
+            var publishcat = categories.Select(d => d.Id).ToList();
 
             if (idCategory == "all")
             {
