@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DemoMVC3.Models.ManageViewModels
+namespace OOS.Presentation.WebAPIs.Models.Manager
 {
     public class EnableAuthenticatorViewModel
     {
