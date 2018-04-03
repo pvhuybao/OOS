@@ -11,8 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using OOS.Presentation.WebAPIs.Models.User;
+using AutoMapper;
+using OOS.Domain.Users.Models;
+using OOS.Infrastructure.Identity.MongoDB;
 using OOS.Presentation.WebAPIs.Models.Manager;
-
 namespace OOS.Presentation.WebAPIs.Controllers
 {
     [Route("api/[controller]")]
@@ -21,6 +23,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IUserService _userService;
         private readonly IUsersBusinessLogic _usersBusinessLogic;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
 
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
@@ -125,6 +128,30 @@ namespace OOS.Presentation.WebAPIs.Controllers
             }
 
             return BadRequest();
+        }
+        
+        [HttpGet("CheckUser/{username}")]
+        public IActionResult CheckUserByUserName(string username)
+        {
+            var user = _usersBusinessLogic.GetUserByName(username);
+            return Ok(user);
+        }
+
+        [HttpGet("CheckUserEmail/{email}")]
+        public IActionResult CheckUserByEmail(string email)
+        {
+            var user = _usersBusinessLogic.GetUserByEmail(email);
+            return Ok(user);
+        }
+
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody] RegisterViewModel model)
+        {
+            //var user = _mapper.Map<RegisterViewModel, User>(model);
+            var user = new User { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Gender = model.Gender };
+            var result = _userService.SignUpAsync(user, model.Password);
+            //var response = _mapper.Map<User, CreateUserResponse>(user);
+            return Ok(result);
         }
 
         [HttpPut("UpdateProfile")]

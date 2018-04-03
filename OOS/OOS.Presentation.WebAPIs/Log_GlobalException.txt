@@ -17,6 +17,8 @@ Stack Trace:    at MongoDB.Bson.Serialization.BsonClassMapSerializer`1.Deseriali
    at MongoDB.Driver.MongoCollectionImpl`1.FindSync[TProjection](FilterDefinition`1 filter, FindOptions`2 options, CancellationToken cancellationToken)
    at MongoDB.Driver.FindFluent`2.ToCursor(CancellationToken cancellationToken)
    at MongoDB.Driver.IAsyncCursorSourceExtensions.ToList[TDocument](IAsyncCursorSource`1 source, CancellationToken cancellationToken)
+   at OOS.Presentation.ApplicationLogic.Users.UsersBusinessLogic.GetUser() in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.ApplicationLogic\Users\UsersBusinessLogic.cs:line 30
+   at OOS.Presentation.WebAPIs.Controllers.UserController.Get() in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.WebAPIs\Controllers\UserController.cs:line 39
    at OOS.Presentation.ApplicationLogic.Users.UsersBusinessLogic.GetUser() in D:\Github\Project\Backend\OOS\OOS.Presentation.ApplicationLogic\Users\UsersBusinessLogic.cs:line 29
    at OOS.Presentation.WebAPIs.Controllers.UserController.Get() in D:\Github\Project\Backend\OOS\OOS.Presentation.WebAPIs\Controllers\UserController.cs:line 35
    at lambda_method(Closure , Object , Object[] )
