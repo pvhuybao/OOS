@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace OOS.Presentation.WebAPIs.Models.Manager
-{
+{ 
     public class TwoFactorAuthenticationViewModel
     {
         public bool HasAuthenticator { get; set; }

@@ -14,7 +14,7 @@ using OOS.Presentation.WebAPIs.Models.User;
 using AutoMapper;
 using OOS.Domain.Users.Models;
 using OOS.Infrastructure.Identity.MongoDB;
-
+using OOS.Presentation.WebAPIs.Models.Manager;
 namespace OOS.Presentation.WebAPIs.Controllers
 {
     [Route("api/[controller]")]
@@ -24,6 +24,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IUsersBusinessLogic _usersBusinessLogic;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+
 
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
         {
@@ -54,6 +55,22 @@ namespace OOS.Presentation.WebAPIs.Controllers
         {
             var rs = _usersBusinessLogic.CreateUser(request);
             return Ok(rs);
+        }
+
+        [Route("Login")]
+        [HttpPost]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginViewModel value)
+        {
+            var result = await _userService.SignInAsync(value.Email, value.Password, value.RememberMe, lockoutOnFailure: false);
+            var userRespone = new UserResponse();
+            if (result.Succeeded)
+            {
+                var user = _userService.FindByEmailAsync(value.Email);
+                userRespone.UserName = user.Result.UserName;
+                userRespone.Email = value.Email;
+                userRespone.Token = null;
+            }
+            return Ok(userRespone);
         }
 
 
@@ -112,7 +129,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
             return BadRequest();
         }
-
+        
         [HttpGet("CheckUser/{username}")]
         public IActionResult CheckUserByUserName(string username)
         {
@@ -128,13 +145,44 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register ([FromBody] RegisterViewModel model)
+        public IActionResult Register([FromBody] RegisterViewModel model)
         {
             //var user = _mapper.Map<RegisterViewModel, User>(model);
-            var user = new User { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Gender = model.Gender};
+            var user = new User { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Gender = model.Gender };
             var result = _userService.SignUpAsync(user, model.Password);
             //var response = _mapper.Map<User, CreateUserResponse>(user);
             return Ok(result);
+        }
+
+        [HttpPut("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromBody]EditViewModel model)
+        {
+
+            var user = _userService.FindByEmailAsync(model.Email).Result;
+            if (user != null)
+            {
+                user.UserName = model.Username;
+                user.Gender = model.Gender;
+                user.UserType = model.UserType;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.MiddleName = model.MiddleName;
+                user.Country = model.Country;
+                user.PreferredLanguage = model.PreferredLanguage;
+                user.DateOfBirth = model.DateOfBirth;
+                user.Photo = model.Photo;
+                user.PhoneNumber = model.PhoneNumber;
+
+                var result = await _userService.UpdateUserAsync(user);
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred updating profile for user ID '{user.Id}'.");
+                }
+
+                return Ok(new EditViewModelResponse() { });
+            }
+
+            return BadRequest();
         }
     }
 }
