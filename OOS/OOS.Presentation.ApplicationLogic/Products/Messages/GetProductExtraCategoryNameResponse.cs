@@ -10,7 +10,6 @@ namespace OOS.Presentation.ApplicationLogic.Products.Messages
 {
     public class GetProductExtraCategoryNameResponse : ResponseBase
     {
-
         public string Id { get; set; }
 
         [Required]

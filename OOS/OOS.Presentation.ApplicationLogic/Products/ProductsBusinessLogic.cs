@@ -9,6 +9,7 @@ using System.Text;
 using System.Linq;
 using OOS.Domain.Categories.Models;
 using OOS.Domain.Orders.Models;
+using OOS.Infrastructure.Queries;
 
 namespace OOS.Presentation.ApplicationLogic.Products
 {
@@ -41,7 +42,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
             var result = _mapper.Map<Product, EditProductResponse>(pro);
             return result;
-            
+
         }
 
         public void DeleteProduct(string id)
@@ -49,22 +50,29 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var product = _mongoDbRepository.Get<Product>(id);
             _mongoDbRepository.Delete(product);
         }
-        public List<GetProductExtraCategoryNameResponse> GetProduct()
+        public PagedQueryResult<GetProductExtraCategoryNameResponse> GetProduct(GetProductsRequest query)
         {
             var filter = Builders<Product>.Filter.Empty;
-            var listProducts = _mongoDbRepository.Find(filter).ToList();
-            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
-            foreach(var p in listProducts)
+            var listProducts = _mongoDbRepository.Find(filter);           
+            var totalItemCount = listProducts.Count();
+
+            var ordersOverview = _mapper.Map<IEnumerable<GetProductExtraCategoryNameResponse>>(listProducts
+                .SortByDescending(it => it.CreatedDate)
+                .Skip((query.Page - 1) * query.PageSize)
+                .Limit(query.PageSize)
+                .ToList()).ToList();
+
+            var listCat = _mongoDbRepository.Find(Builders<Category>.Filter.Empty).ToList();
+            for (int i = 0; i < ordersOverview.Count(); i++)
             {
-                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
-                //add category name
-                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
-                //calculate other values of Product:min-max price, total quantity, basic image
-                response.CalculateProductValues();
-                listResult.Add(response);
-            }
-            return listResult;     
+                ordersOverview[i].CategoryName = listCat.SingleOrDefault(n => n.Id == ordersOverview[i].IdCategory).Name;
+                ordersOverview[i].CalculateProductValues();
+            }            
+
+            var pagedResult = new PagedQueryResult<GetProductExtraCategoryNameResponse>(ordersOverview, totalItemCount, query.Page, query.PageSize);
+            return pagedResult;
         }
+
         public Product GetProduct(string id)
         {
             return _mongoDbRepository.Get<Product>(id);
@@ -88,18 +96,19 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 //TimeSpan timeSpan = TimeSpan.FromDays(10);
                 var filter = Builders<Product>.Filter.Empty;
                 products.AddRange(_mongoDbRepository.Find(filter).ToList().OrderByDescending(t => t.CreatedDate).Take(8));
-                foreach(var product in products)
+                foreach (var product in products)
                 {
                     var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
                     //calculate other values of Product:min-max price, total quantity, basic image
                     response.CalculateProductValues();
                     listResult.Add(response);
                 }
-            }else if(widget == "topSales")
+            }
+            else if (widget == "topSales")
             {
                 var orders = _mongoDbRepository.Find<Orders>().ToList();
                 var details = new List<OrderDetails>();
-                foreach(var order in orders)
+                foreach (var order in orders)
                 {
                     details.AddRange(order.OrderDetails);
                 }
@@ -134,7 +143,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             {
                 //wait for further update
                 products.AddRange(_mongoDbRepository.Find<Product>().SortByDescending(p => p.Discount).Limit(8).ToList());
-                
+
                 foreach (var product in products)
                 {
                     var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(product);
