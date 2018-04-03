@@ -15,6 +15,9 @@ using OOS.Presentation.ApplicationLogic.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AutoMapper;
+using OOS.Domain.Users.Models;
+using OOS.Presentation.WebAPIs.Models.User;
 
 namespace OOS.Presentation.WebAPIs
 {

@@ -1,5 +1,6 @@
 ﻿using OOS.Domain.Products.Models;
 using OOS.Infrastructure.Mongodb;
+using OOS.Infrastructure.Queries;
 using OOS.Presentation.ApplicationLogic.Products.Messages;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         void DeleteProduct(string id);
 
-         List<GetProductExtraCategoryNameResponse> GetProduct();
+        PagedQueryResult<GetProductExtraCategoryNameResponse> GetProduct(GetProductsRequest query);
 
         Product GetProduct(string id);
 
