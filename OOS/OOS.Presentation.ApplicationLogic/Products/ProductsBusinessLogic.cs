@@ -120,7 +120,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 var productfilter = Builders<Product>.Filter.Where(p => p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
                 products = _mongoDbRepository.Find(productfilter).ToList();
 
-                var sortlist = products.Join(groupDetails, a => a.Id, b => b.id, (a, b) => (a, b)).ToList().OrderBy(o => o.b.quantity).Take(8);
+                var sortlist = products.Join(groupDetails, a => a.Id, b => b.id, (a, b) => (a, b)).ToList().OrderByDescending(o => o.b.quantity).Take(8);
 
                 foreach (var product in sortlist)
                 {
