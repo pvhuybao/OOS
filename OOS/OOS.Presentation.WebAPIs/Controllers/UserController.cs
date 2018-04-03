@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using OOS.Presentation.WebAPIs.Models.User;
+using OOS.Presentation.WebAPIs.Models.Manager;
 
 namespace OOS.Presentation.WebAPIs.Controllers
 {
@@ -20,6 +21,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IUserService _userService;
         private readonly IUsersBusinessLogic _usersBusinessLogic;
         private readonly IConfiguration _configuration;
+
 
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
         {
@@ -120,6 +122,37 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
                     return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
                 }
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromBody]EditViewModel model)
+        {
+
+            var user = _userService.FindByEmailAsync(model.Email).Result;
+            if (user != null)
+            {
+                user.UserName = model.Username;
+                user.Gender = model.Gender;
+                user.UserType = model.UserType;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.MiddleName = model.MiddleName;
+                user.Country = model.Country;
+                user.PreferredLanguage = model.PreferredLanguage;
+                user.DateOfBirth = model.DateOfBirth;
+                user.Photo = model.Photo;
+                user.PhoneNumber = model.PhoneNumber;
+
+                var result = await _userService.UpdateUserAsync(user);
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred updating profile for user ID '{user.Id}'.");
+                }
+
+                return Ok(new EditViewModelResponse() { });
             }
 
             return BadRequest();

@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoMVC3.Models.ManageViewModels
-{
+namespace OOS.Presentation.WebAPIs.Models.Manager
+{ 
     public class TwoFactorAuthenticationViewModel
     {
         public bool HasAuthenticator { get; set; }

@@ -11,6 +11,8 @@ namespace OOS.Domain.Users.Services
     {
         Task<IdentityResult> SignUpAsync(User user, string password);
 
+        Task<IdentityResult> UpdateUserAsync(User user);
+
         Task<string> GenerateEmailConfirmationTokenAsync(User user);
 
         Task<IdentityResult> ConfirmEmailAsync(User user, string token);
