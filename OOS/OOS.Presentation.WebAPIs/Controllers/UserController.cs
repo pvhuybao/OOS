@@ -113,6 +113,20 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return BadRequest();
         }
 
+        [HttpGet("CheckUser/{username}")]
+        public IActionResult CheckUserByUserName(string username)
+        {
+            var user = _usersBusinessLogic.GetUserByName(username);
+            return Ok(user);
+        }
+
+        [HttpGet("CheckUserEmail/{email}")]
+        public IActionResult CheckUserByEmail(string email)
+        {
+            var user = _usersBusinessLogic.GetUserByEmail(email);
+            return Ok(user);
+        }
+
         [HttpPost("Register")]
         public IActionResult Register ([FromBody] RegisterViewModel model)
         {
