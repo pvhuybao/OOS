@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace DemoMVC3.Models.ManageViewModels
+namespace OOS.Presentation.WebAPIs.Models.Manager
 {
     public class ExternalLoginsViewModel
     {
