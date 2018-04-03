@@ -10,8 +10,8 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using OOS.Presentation.WebAPIs.Models.User;
 using OOS.Presentation.WebAPIs.Models.Manager;
-using OOS.Domain.Users.Models;
 
 namespace OOS.Presentation.WebAPIs.Controllers
 {
@@ -52,6 +52,22 @@ namespace OOS.Presentation.WebAPIs.Controllers
         {
             var rs = _usersBusinessLogic.CreateUser(request);
             return Ok(rs);
+        }
+
+        [Route("Login")]
+        [HttpPost]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginViewModel value)
+        {
+            var result = await _userService.SignInAsync(value.Email, value.Password, value.RememberMe, lockoutOnFailure: false);
+            var userRespone = new UserResponse();
+            if (result.Succeeded)
+            {
+                var user = _userService.FindByEmailAsync(value.Email);
+                userRespone.UserName = user.Result.UserName;
+                userRespone.Email = value.Email;
+                userRespone.Token = null;
+            }
+            return Ok(userRespone);
         }
 
 
