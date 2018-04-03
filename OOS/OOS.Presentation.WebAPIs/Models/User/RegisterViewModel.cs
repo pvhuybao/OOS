@@ -1,13 +1,24 @@
-﻿using System;
+﻿using OOS.Shared.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoMVC3.Models.AccountViewModels
+namespace OOS.Presentation.WebAPIs.Models.User
 {
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Please enter {0}!")]
+        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
+        public string Username { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public GenderType Gender { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using OOS.Domain.Users.Models;
 using OOS.Domain.Users.Services;
+using OOS.Infrastructure.Helpers;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 using System;
@@ -40,14 +41,11 @@ namespace OOS.Presentation.ApplicationLogic.Users
         {
             var user = _mapper.Map<CreateUserRequest, User>(request);
             user.Id = Guid.NewGuid().ToString();
-
-            _userService.SignUpAsync(user, user.PasswordHash);
             _mongoDbRepository.Create(user);
-
             var result = _mapper.Map<User, CreateUserResponse>(user);
-
             return result;
         }
+
         public EditUserResponse EditUser(EditUserRequest request, string id)
         {
             var user = _mapper.Map<EditUserRequest, User>(request);
@@ -56,10 +54,12 @@ namespace OOS.Presentation.ApplicationLogic.Users
             var result = _mapper.Map<User, EditUserResponse>(user);
             return result;
         }
+
         public void DeleteUser(string id)
         {
             var User = _mongoDbRepository.Get<User>(id);
             _mongoDbRepository.Delete(User);
         }
+
     }
 }

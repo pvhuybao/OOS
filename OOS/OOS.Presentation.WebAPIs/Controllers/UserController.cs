@@ -10,6 +10,10 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using OOS.Presentation.WebAPIs.Models.User;
+using AutoMapper;
+using OOS.Domain.Users.Models;
+using OOS.Infrastructure.Identity.MongoDB;
 
 namespace OOS.Presentation.WebAPIs.Controllers
 {
@@ -19,6 +23,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IUserService _userService;
         private readonly IUsersBusinessLogic _usersBusinessLogic;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
         {
@@ -106,6 +111,16 @@ namespace OOS.Presentation.WebAPIs.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPost("Register")]
+        public IActionResult Register ([FromBody] RegisterViewModel model)
+        {
+            //var user = _mapper.Map<RegisterViewModel, User>(model);
+            var user = new User { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Gender = model.Gender};
+            var result = _userService.SignUpAsync(user, model.Password);
+            //var response = _mapper.Map<User, CreateUserResponse>(user);
+            return Ok(result);
         }
     }
 }
