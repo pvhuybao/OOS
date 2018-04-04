@@ -31,6 +31,11 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             return result;
         }
 
+        public Email GetFeedBack(string id)
+        {
+            return _mongoDbRepository.Get<Email>(id);
+        }
+
         public CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request)
         {
             var result = new CreateEmailSubscribeResponse();
