@@ -16,6 +16,8 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
 
         List<Email> GetEmailFeedBack();
 
+        Email GetFeedBack(string id);
+
         CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request);
 
         void DeleteEmailSubsribe(string id);

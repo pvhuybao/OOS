@@ -37,10 +37,12 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("getFeedBack/{id}")]
+        [HttpGet]
+        public IActionResult Get(string id)
         {
-            return "value";
+            var result = _emailsBusinessLogic.GetFeedBack(id);
+            return Ok(result);
         }
 
         // POST api/<controller>
