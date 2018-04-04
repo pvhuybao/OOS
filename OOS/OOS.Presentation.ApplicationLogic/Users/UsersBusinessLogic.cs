@@ -4,6 +4,7 @@ using OOS.Domain.Users.Models;
 using OOS.Domain.Users.Services;
 using OOS.Infrastructure.Helpers;
 using OOS.Infrastructure.Mongodb;
+using OOS.Infrastructure.Queries;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,39 @@ namespace OOS.Presentation.ApplicationLogic.Users
             _userService = userService;
         }
 
-        public List<User> GetUser()
+        public PagedQueryResult<GetUserResponse> GetUser(GetUserRequest request)
         {
-            var filter = Builders<User>.Filter.Empty;
-            var listUser = _mongoDbRepository.Find(filter).ToList();
-            return listUser;
+            var builder = Builders<User>.Filter;
+            var filter = builder.Empty;
+
+            if (!String.IsNullOrEmpty(request.Email))
+            {
+                filter = filter & builder.Where(it => it.Email.Equals(request.Email));
+            }
+
+            if (!String.IsNullOrEmpty(request.Phone))
+            {
+                filter = filter & builder.Where(it => it.PhoneNumber.Equals(request.Phone));
+            }
+
+            if (!String.IsNullOrEmpty(request.Username))
+            {
+                filter = filter & builder.Where(it => it.UserName.Equals(request.Username));
+            }
+
+            var listUsers = _mongoDbRepository.Find(filter);
+
+            var totalItemCount = listUsers.Count();
+
+            var usersOverview = _mapper.Map<IEnumerable<GetUserResponse>>(
+                listUsers
+                .SortByDescending(it => it.CreatedDate)
+                .Skip((request.Page - 1) * request.PageSize)
+                .Limit(request.PageSize)
+                .ToList());
+
+            var pagedResult = new PagedQueryResult<GetUserResponse>(usersOverview, totalItemCount, request.Page, request.PageSize);
+            return pagedResult;
         }
 
         public User GetUser(string id)
