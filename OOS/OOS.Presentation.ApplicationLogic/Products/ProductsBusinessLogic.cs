@@ -180,7 +180,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return products;
         }
 
-        public List<Product> SearchProductByIdCategory(string idCategory, string keyword)
+        public List<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string check, string idCategory, string keyword)
         {
             var products = new List<Product>();
 
@@ -191,15 +191,27 @@ namespace OOS.Presentation.ApplicationLogic.Products
             if (idCategory == "all")
             {
                 var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
-                products = _mongoDbRepository.Find(filter).ToList();
+                products = _mongoDbRepository.Find(filter).ToList().ToList();
+                
             }
             else
             {
                 var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory) && p.IdCategory.Equals(idCategory));
-                products = _mongoDbRepository.Find(filter).ToList();
+                products = _mongoDbRepository.Find(filter).ToList().ToList();
             }
 
-            return products;
+            if (check == "searchbar") products = products.Take(10).ToList();
+            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
+            foreach (var p in products)
+            {
+                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
+                //add category name
+                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
+                //calculate other values of Product:min-max price, total quantity, basic image
+                response.CalculateProductValues();
+                listResult.Add(response);
+            }
+            return listResult;
         }
     }
 }
