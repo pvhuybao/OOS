@@ -16,11 +16,10 @@ Stack Trace:    at MongoDB.Bson.Serialization.BsonClassMapSerializer`1.Deseriali
    at MongoDB.Driver.MongoCollectionImpl`1.UsingImplicitSession[TResult](Func`2 func, CancellationToken cancellationToken)
    at MongoDB.Driver.MongoCollectionImpl`1.FindSync[TProjection](FilterDefinition`1 filter, FindOptions`2 options, CancellationToken cancellationToken)
    at MongoDB.Driver.FindFluent`2.ToCursor(CancellationToken cancellationToken)
-   at MongoDB.Driver.IAsyncCursorSourceExtensions.ToList[TDocument](IAsyncCursorSource`1 source, CancellationToken cancellationToken)
-   at OOS.Presentation.ApplicationLogic.Users.UsersBusinessLogic.GetUser() in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.ApplicationLogic\Users\UsersBusinessLogic.cs:line 30
-   at OOS.Presentation.WebAPIs.Controllers.UserController.Get() in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.WebAPIs\Controllers\UserController.cs:line 39
-   at OOS.Presentation.ApplicationLogic.Users.UsersBusinessLogic.GetUser() in D:\Github\Project\Backend\OOS\OOS.Presentation.ApplicationLogic\Users\UsersBusinessLogic.cs:line 29
-   at OOS.Presentation.WebAPIs.Controllers.UserController.Get() in D:\Github\Project\Backend\OOS\OOS.Presentation.WebAPIs\Controllers\UserController.cs:line 35
+   at MongoDB.Driver.IAsyncCursorSourceExtensions.FirstOrDefault[TDocument](IAsyncCursorSource`1 source, CancellationToken cancellationToken)
+   at MongoDB.Driver.IFindFluentExtensions.FirstOrDefault[TDocument,TProjection](IFindFluent`2 find, CancellationToken cancellationToken)
+   at OOS.Presentation.ApplicationLogic.Users.UsersBusinessLogic.CheckUser(String term) in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.ApplicationLogic\Users\UsersBusinessLogic.cs:line 43
+   at OOS.Presentation.WebAPIs.Controllers.UserController.CheckUserExist(String terms) in E:\OSDInternship2018\OOS\BackEnd\OOS\OOS.Presentation.WebAPIs\Controllers\UserController.cs:line 137
    at lambda_method(Closure , Object , Object[] )
    at Microsoft.Extensions.Internal.ObjectMethodExecutor.Execute(Object target, Object[] parameters)
    at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.<InvokeActionMethodAsync>d__12.MoveNext()
@@ -37,4 +36,4 @@ Stack Trace:    at MongoDB.Bson.Serialization.BsonClassMapSerializer`1.Deseriali
    at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.<InvokeNextExceptionFilterAsync>d__23.MoveNext()
-Message: An error occurred while deserializing the Gender property of class OOS.Domain.Users.Models.User: Cannot deserialize a 'GenderType' from BsonType 'Boolean'.
+Message: An error occurred while deserializing the Id property of class OOS.Infrastructure.Identity.MongoDB.IdentityUser`5[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[OOS.Infrastructure.Identity.MongoDB.IdentityUserClaim`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], OOS.Infrastructure.Identity.MongoDB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[OOS.Infrastructure.Identity.MongoDB.IdentityUserRole`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], OOS.Infrastructure.Identity.MongoDB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[OOS.Infrastructure.Identity.MongoDB.IdentityUserLogin`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], OOS.Infrastructure.Identity.MongoDB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[OOS.Infrastructure.Identity.MongoDB.IdentityUserToken`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], OOS.Infrastructure.Identity.MongoDB, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]: Cannot deserialize a 'String' from BsonType 'ObjectId'.
