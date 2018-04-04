@@ -35,9 +35,9 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/values
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(GetUserRequest request)
         {
-            var listUser = _usersBusinessLogic.GetUser();
+            var listUser = _usersBusinessLogic.GetUser(request);
             return Ok(listUser);
         }
 
