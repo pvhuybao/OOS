@@ -45,8 +45,14 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            var user = _usersBusinessLogic.GetUser(id);
-            return Ok(user);
+            var user = _userService.FindByIdAsync(id).Result;
+            if (user != null)
+            {
+
+                return Ok(user);
+            }
+
+            return BadRequest();
         }
 
         // POST: api/User
@@ -74,7 +80,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
             if (result.Succeeded)
             {
                 var user = _userService.FindByEmailAsync(value.Email);
-                userRespone.UserName = user.Result.UserName;
+                userRespone.Id = user.Result.Id;
+                userRespone.Username = user.Result.UserName;
                 userRespone.Email = value.Email;
                 userRespone.Token = null;
             }
@@ -150,6 +157,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         {
 
             var user = _userService.FindByEmailAsync(model.Email).Result;
+            
             if (user != null)
             {
                 user.UserName = model.Username;

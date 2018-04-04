@@ -28,11 +28,21 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(listEmailSubsribe);
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("getFeedBack")]
+        [HttpGet]
+        public IActionResult GetFeedBack()
         {
-            return "value";
+            var listEmailFeedBack = _emailsBusinessLogic.GetEmailFeedBack();
+            return Ok(listEmailFeedBack);
+        }
+
+        // GET api/<controller>/5
+        [Route("getFeedBack/{id}")]
+        [HttpGet]
+        public IActionResult Get(string id)
+        {
+            var result = _emailsBusinessLogic.GetFeedBack(id);
+            return Ok(result);
         }
 
         // POST api/<controller>
@@ -40,6 +50,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         public IActionResult Post([FromBody] SentEmailRequest value)
         {
             _emailsBusinessLogic.SentEmail(value);
+            _emailsBusinessLogic.CreateFeedBack(value);
             return Ok();
         }
 

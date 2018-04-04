@@ -8,9 +8,15 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
 {
     public interface IEmailBusinessLogic
     {
+        SentEmailResponse CreateFeedBack(SentEmailRequest request);
+
         SentEmailResponse SentEmail (SentEmailRequest request);
 
         List<EmailSubsribe> GetEmailSubsribe();
+
+        List<Email> GetEmailFeedBack();
+
+        Email GetFeedBack(string id);
 
         CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request);
 
