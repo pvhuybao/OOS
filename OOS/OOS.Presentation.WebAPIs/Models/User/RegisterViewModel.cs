@@ -9,10 +9,6 @@ namespace OOS.Presentation.WebAPIs.Models.User
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Please enter {0}!")]
-        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
-        public string Username { get; set; }
-
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
