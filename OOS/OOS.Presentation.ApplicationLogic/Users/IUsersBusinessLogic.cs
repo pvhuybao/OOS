@@ -13,8 +13,7 @@ namespace OOS.Presentation.ApplicationLogic.Users
         EditUserResponse EditUser(EditUserRequest request, string id);
         PagedQueryResult<GetUserResponse> GetUser(GetUserRequest request);
         User GetUser(string id);
-        User GetUserByName(string name);
-        User GetUserByEmail(string email);
+        User CheckUser(string name);
         void DeleteUser(string id);
     }
 }
