@@ -60,7 +60,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         public async Task<IActionResult> Post([FromBody] RegisterViewModel model)
         {
             var user = new User {
-                UserName = model.Username,
+                UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
