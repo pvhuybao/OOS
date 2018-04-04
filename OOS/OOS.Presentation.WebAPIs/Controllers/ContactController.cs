@@ -37,7 +37,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         // GET api/<controller>/5
-        [Route("getFeedBack/:id")]
+        [Route("getFeedBack/{id}")]
         [HttpGet]
         public IActionResult Get(string id)
         {
