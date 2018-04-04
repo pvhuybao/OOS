@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using OOS.Domain.Configuration.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Configurations.Messages;
+using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -47,6 +48,11 @@ namespace OOS.Presentation.ApplicationLogic.Configurations
         public void DeleteConfiguration(string id)
         {
             _mongoDbRepository.Delete<Configuration>(id);
+        }
+
+        public Currency getCurrency()
+        {
+            return _mongoDbRepository.Find<Configuration>().FirstOrDefault().Currency;
         }
     }
 }
