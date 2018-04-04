@@ -7,11 +7,12 @@ namespace OOS.Presentation.WebAPIs.Models.User
 {
     public class UserResponse
     {
-        public string UserName { set; get; }
+        public string Id { set; get; }
+        public string Username { set; get; }
 
-        public string Email { get; set; }
+        public string Email { set; get; }
 
-        public string Token { get; set; }
+        public string Token { set; get; }
 
     }
 }
