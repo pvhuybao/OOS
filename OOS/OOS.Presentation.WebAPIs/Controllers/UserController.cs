@@ -72,7 +72,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
             if (result.Succeeded)
             {
                 var user = _userService.FindByEmailAsync(value.Email);
-                userRespone.UserName = user.Result.UserName;
+                userRespone.Id = user.Result.Id;
+                userRespone.Username = user.Result.UserName;
                 userRespone.Email = value.Email;
                 userRespone.Token = null;
             }
