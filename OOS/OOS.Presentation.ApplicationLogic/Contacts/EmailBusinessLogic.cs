@@ -21,6 +21,15 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
         }
+         
+        public SentEmailResponse CreateFeedBack(SentEmailRequest request)
+        {
+            var result = new SentEmailResponse();
+            var Feed = _mapper.Map<SentEmailRequest, Email>(request);
+            Feed.Id = Guid.NewGuid().ToString();
+            _mongoDbRepository.Create<Email>(Feed);
+            return result;
+        }
 
         public CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request)
         {
@@ -77,6 +86,12 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             mailFeedback.IsBodyHtml = true;
             smtp.Send(mailFeedback);
             return result;
+        }
+
+        public List<Email> GetEmailFeedBack()
+        {         
+            var data = _mongoDbRepository.Find<Email>().ToList();
+            return data;
         }
     }
 }

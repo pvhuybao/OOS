@@ -12,6 +12,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
         public EmailBusinessLogicAutoMapper()
         {
             CreateMap<CreateEmailSubscribeRequest, EmailSubsribe>();
+            CreateMap<SentEmailRequest, Email>();
         }
     }
 }
