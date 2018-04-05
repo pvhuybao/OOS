@@ -1,22 +1,19 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using OOS.Infrastructure.Identity.MongoDB;
-using OOS.Infrastructure.Mongodb;
 using OOS.Shared.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace OOS.Domain.Users.Models
+namespace OOS.Presentation.ApplicationLogic.Users.Messages
 {
-    [BsonIgnoreExtraElements]
-    public class User : IdentityUser<string>, IAggregateRoot
+    public class GetUserResponse
     {
-        public User()
-        {
-            Id = Guid.NewGuid().ToString("N");
-        }
+        public string UserName { get; set; }
+
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// User type
@@ -74,19 +71,18 @@ namespace OOS.Domain.Users.Models
         /// <summary>
         /// Date of birth
         /// </summary>
-        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
         /// Photo
         /// </summary>
         public string Photo { get; set; }
-       
+
         /// <summary>
         /// Status
         /// </summary>
         [BsonRepresentation(BsonType.String)]
-        public UserStatus Status { get; set; }                
+        public UserStatus Status { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
@@ -94,6 +90,6 @@ namespace OOS.Domain.Users.Models
 
         public DateTime? ModifiedDate { get; set; }
 
-        public string ModifiedBy { get; set; }       
+        public string ModifiedBy { get; set; }
     }
 }

@@ -9,10 +9,6 @@ namespace OOS.Presentation.WebAPIs.Models.User
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Please enter {0}!")]
-        [StringLength(20, MinimumLength = 12, ErrorMessage = "{0} contains 12-20 characters!")]
-        public string Username { get; set; }
-
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -23,6 +19,8 @@ namespace OOS.Presentation.WebAPIs.Models.User
         public string LastName { get; set; }
 
         public GenderType Gender { get; set; }
+        
+        public string  Image { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -32,7 +30,7 @@ namespace OOS.Presentation.WebAPIs.Models.User
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using OOS.Domain.Users.Models;
+using OOS.Infrastructure.Queries;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,9 @@ namespace OOS.Presentation.ApplicationLogic.Users
     {
         CreateUserResponse CreateUser(CreateUserRequest request);
         EditUserResponse EditUser(EditUserRequest request, string id);
-        List<User> GetUser();
+        PagedQueryResult<GetUserResponse> GetUser(GetUserRequest request);
         User GetUser(string id);
-        User GetUserByName(string name);
-        User GetUserByEmail(string email);
+        User CheckUser(string name);
         void DeleteUser(string id);
     }
 }
