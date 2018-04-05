@@ -95,10 +95,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         [HttpGet]
-        [Route("{idCategory}&{keyword}/search")]
-        public IActionResult searchProductByIdCategory(string idCategory, string keyword)
+        [Route("{check}&{idCategory}&{keyword}/search")]
+        public IActionResult searchProductByIdCategory(string check, string idCategory, string keyword)
         {
-            var products = _productsBusinessLogic.SearchProductByIdCategory(idCategory, keyword);
+            var products = _productsBusinessLogic.SearchProductByIdCategory(check, idCategory, keyword);
             return Ok(products);
         }
     }

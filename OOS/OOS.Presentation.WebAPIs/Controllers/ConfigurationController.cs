@@ -49,5 +49,13 @@ namespace OOS.Presentation.WebAPIs.Controllers
             _configurationsBusinessLogic.DeleteConfiguration(id);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("metaData")]
+        public IActionResult MetaData()
+        {
+            var rs = _configurationsBusinessLogic.getCurrency();
+            return Ok(rs);
+        }
     }
 }

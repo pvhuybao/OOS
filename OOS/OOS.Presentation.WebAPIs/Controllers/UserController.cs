@@ -35,9 +35,9 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // GET: api/values
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(GetUserRequest request)
         {
-            var listUser = _usersBusinessLogic.GetUser();
+            var listUser = _usersBusinessLogic.GetUser(request);
             return Ok(listUser);
         }
 
@@ -57,10 +57,18 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         // POST: api/User
         [HttpPost]
-        public IActionResult Post([FromBody]CreateUserRequest request)
+        public async Task<IActionResult> Post([FromBody] RegisterViewModel model)
         {
-            var rs = _usersBusinessLogic.CreateUser(request);
-            return Ok(rs);
+            var user = new User {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Gender = model.Gender,
+                Photo = model.Image
+            };
+            var result = await _userService.SignUpAsync(user, model.Password);
+            return Ok(result);
         }
 
         [Route("Login")]
@@ -72,7 +80,8 @@ namespace OOS.Presentation.WebAPIs.Controllers
             if (result.Succeeded)
             {
                 var user = _userService.FindByEmailAsync(value.Email);
-                userRespone.UserName = user.Result.UserName;
+                userRespone.Id = user.Result.Id;
+                userRespone.Username = user.Result.UserName;
                 userRespone.Email = value.Email;
                 userRespone.Token = null;
             }
@@ -135,31 +144,14 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet("CheckUserExist/{terms}")]
+        public IActionResult CheckUserExist(string terms)
+        {
+            var user = _usersBusinessLogic.CheckUser(terms);
+            return Ok(user);
+        }
         
-        [HttpGet("CheckUser/{username}")]
-        public IActionResult CheckUserByUserName(string username)
-        {
-            var user = _usersBusinessLogic.GetUserByName(username);
-            return Ok(user);
-        }
-
-        [HttpGet("CheckUserEmail/{email}")]
-        public IActionResult CheckUserByEmail(string email)
-        {
-            var user = _usersBusinessLogic.GetUserByEmail(email);
-            return Ok(user);
-        }
-
-        [HttpPost("Register")]
-        public IActionResult Register([FromBody] RegisterViewModel model)
-        {
-            //var user = _mapper.Map<RegisterViewModel, User>(model);
-            var user = new User { UserName = model.Username, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Gender = model.Gender };
-            var result = _userService.SignUpAsync(user, model.Password);
-            //var response = _mapper.Map<User, CreateUserResponse>(user);
-            return Ok(result);
-        }
-
         [HttpPut("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody]EditViewModel model)
         {
