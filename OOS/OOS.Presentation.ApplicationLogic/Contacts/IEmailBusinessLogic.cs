@@ -10,6 +10,8 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
     {
         SentEmailResponse CreateFeedBack(SentEmailRequest request);
 
+        EditFeedBackResponse EditFeedBack(string id, EditFeedBackRequest request);
+
         SentEmailResponse SentEmail (SentEmailRequest request);
 
         List<EmailSubsribe> GetEmailSubsribe();
@@ -21,5 +23,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
         CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request);
 
         void DeleteEmailSubsribe(string id);
+
+        void DeleteFeedback(string id);
     }
 }

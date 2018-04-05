@@ -13,6 +13,9 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
         {
             CreateMap<CreateEmailSubscribeRequest, EmailSubsribe>();
             CreateMap<SentEmailRequest, Email>();
+            CreateMap<EditFeedBackRequest, Email>();
+            CreateMap<Email, EditFeedBackResponse>();
+
         }
     }
 }
