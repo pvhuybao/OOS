@@ -192,5 +192,25 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return BadRequest();
         }
 
+        [HttpPost("{id}/product/{idProduct}/checkWishProduct")]
+        public async Task<IActionResult> CheckWishProduct(string id, string idProduct)
+        {
+            var user = _userService.FindByIdAsync(id).Result;
+            if (user != null)
+            {
+                var product = user.WishList.Find(p => p == idProduct);
+                var response = new CheckWishProductResponse();
+                if (product != null)
+                {
+                    response.IsWishProduct = true;
+                }
+                else
+                {
+                    response.IsWishProduct = false;
+                }
+                return Ok(response);
+            }
+            return BadRequest();
+        }
     }
 }
