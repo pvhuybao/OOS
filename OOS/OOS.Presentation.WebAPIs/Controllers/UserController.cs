@@ -171,7 +171,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpGet("CheckUserExist/{terms}")]
         public IActionResult CheckUserExist(string terms)
         {
-            var user = _usersBusinessLogic.CheckUser(terms);
+            var user = _userService.FindByEmailAsync(terms).Result;
             return Ok(user);
         }
 
