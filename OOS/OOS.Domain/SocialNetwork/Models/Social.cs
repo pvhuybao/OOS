@@ -7,7 +7,7 @@ using System.Text;
 namespace OOS.Domain.SocialNetwork.Models
 {
     [BsonIgnoreExtraElements]
-    public class Social :IAggregateRoot
+    public class Social : IAggregateRoot
     {
         public string Id { get; set; }
 
@@ -16,5 +16,16 @@ namespace OOS.Domain.SocialNetwork.Models
         public string Hostline { get; set; }
 
         public string Email { get; set; }
-    }
+
+        public string linkFB { get; set; }
+
+        public string linkTwitter { get; set; }
+
+        public string linkInstagram { get; set; }
+
+        public string linkGooglePlus {get;set;}
+
+        public string linkPinterest { get; set; }
+
+}
 }

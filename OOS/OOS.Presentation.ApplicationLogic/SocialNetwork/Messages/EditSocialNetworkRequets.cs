@@ -15,5 +15,20 @@ namespace OOS.Presentation.ApplicationLogic.SocialNetwork.Messages
 
         [Required]
         public string Email { get; set; }
+
+        [Required]
+        public string linkFB { get; set; }
+
+        [Required]
+        public string linkTwitter { get; set; }
+
+        [Required]
+        public string linkInstagram { get; set; }
+
+        [Required]
+        public string linkGooglePlus { get; set; }
+
+        [Required]
+        public string linkPinterest { get; set; }
     }
 }
