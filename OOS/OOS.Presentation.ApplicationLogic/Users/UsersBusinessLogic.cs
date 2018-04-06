@@ -66,13 +66,6 @@ namespace OOS.Presentation.ApplicationLogic.Users
             return user;
         }
 
-        public User CheckUser(string term)
-        {
-            var filter = Builders<User>.Filter.Where(u => u.UserName == term || u.Email == term);
-            var user = _mongoDbRepository.Find<User>(filter).FirstOrDefault();
-            return user;
-        }
-        
         public CreateUserResponse CreateUser(CreateUserRequest request)
         {
             var user = _mapper.Map<CreateUserRequest, User>(request);
