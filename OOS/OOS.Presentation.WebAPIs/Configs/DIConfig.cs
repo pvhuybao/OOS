@@ -29,7 +29,7 @@ namespace OOS.Presentation.WebAPIs.Configs
             services.AddTransient<IOrderBusinessLogic, OrderBusinessLogic>();
             services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
-            services.AddTransient<IFeedbackBusinessLogic, FeedbackBusinessLogic>();
+            services.AddTransient<IEmailBusinessLogic, EmailBusinessLogic>();
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(config.GetValue<string>("MongoDb:DefaultConnectionString")));
 
 

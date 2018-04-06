@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using OOS.Domain.Contacts.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Contacts.Messages;
+using OOS.Presentation.ApplicationLogic.CustomerFeedback;
 
 
 namespace OOS.Presentation.ApplicationLogic.Contacts
@@ -21,7 +22,43 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
         }
-     
+
+
+        public Feedback GetFeedBack(string id)
+        {
+            return _mongoDbRepository.Get<Feedback>(id);
+        }
+
+        public List<Feedback> GetEmailFeedBack()
+        {
+            var data = _mongoDbRepository.Find<Feedback>().ToList();
+            return data;
+        }
+
+        public void DeleteFeedback(string id)
+        {
+            var feed = _mongoDbRepository.Get<Feedback>(id);
+            _mongoDbRepository.Delete(feed);
+        }
+
+        public SentEmailResponse CreateFeedBack(SentEmailRequest request)
+        {
+            var result = new SentEmailResponse();
+            var Feed = _mapper.Map<SentEmailRequest, Feedback>(request);
+            Feed.Id = Guid.NewGuid().ToString();
+            _mongoDbRepository.Create<Feedback>(Feed);
+            return result;
+        }
+
+        public EditFeedBackResponse EditFeedBack(string id, EditFeedBackRequest request)
+        {
+            var feed = _mapper.Map<EditFeedBackRequest, Feedback>(request);
+            feed.Id = id;
+            _mongoDbRepository.Replace<Feedback>(feed);
+            var result = _mapper.Map<Feedback, EditFeedBackResponse>(feed);
+            return result;
+        }
+
         public CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request)
         {
             var result = new CreateEmailSubscribeResponse();
@@ -51,6 +88,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             string senderID = "dmthanh572@gmail.com";
             string senderPassword = "tau0bieT";
             string emailAdmin = "nguyenhuuloc304@gmail.com";
+           
 
             string body = "Feedback from " + request.ToEmail +"<br>";
             body += request.Content;
