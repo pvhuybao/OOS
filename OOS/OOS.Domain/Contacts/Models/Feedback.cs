@@ -16,6 +16,6 @@ namespace OOS.Domain.Contacts.Models
 
         public string Content { set; get; }
 
-        public Boolean Status  { set; get; }
+        public Boolean Status { set; get; }
     }
 }
