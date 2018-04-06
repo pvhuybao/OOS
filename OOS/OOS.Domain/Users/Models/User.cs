@@ -94,6 +94,8 @@ namespace OOS.Domain.Users.Models
 
         public DateTime? ModifiedDate { get; set; }
 
-        public string ModifiedBy { get; set; }       
+        public string ModifiedBy { get; set; }
+
+        public List<string> WishList { get; set; }
     }
 }
