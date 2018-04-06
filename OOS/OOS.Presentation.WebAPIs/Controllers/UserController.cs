@@ -25,7 +25,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
         {
             _usersBusinessLogic = UsersBusinessLogic;
@@ -59,13 +58,15 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] RegisterViewModel model)
         {
-            var user = new User {
+            var user = new User
+            {
                 UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Gender = model.Gender,
-                Photo = model.Image
+                Photo = model.Image,
+                WishList = new List<string>()
             };
             var result = await _userService.SignUpAsync(user, model.Password);
             return Ok(result);
@@ -88,7 +89,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(userRespone);
         }
 
-
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
@@ -98,10 +98,33 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody]EditUserRequest request)
+        public async Task<IActionResult> Put(string id, [FromBody]EditViewModel request)
         {
-            var rs = _usersBusinessLogic.EditUser(request, id);
-            return Ok(rs);
+            var user = _userService.FindByIdAsync(id).Result;
+            if (user != null)
+            {
+                user.UserName = request.Username;
+                user.Gender = request.Gender;
+                user.UserType = request.UserType;
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.MiddleName = request.MiddleName;
+                user.Country = request.Country;
+                user.PreferredLanguage = request.PreferredLanguage;
+                user.DateOfBirth = request.DateOfBirth;
+                user.Photo = request.Photo;
+                user.PhoneNumber = request.PhoneNumber;
+
+                var result = await _userService.UpdateUserAsync(user);
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred updating profile for user ID '{user.Id}'.");
+                }
+
+                return Ok(new EditViewModelResponse() { });
+            }
+
+            return BadRequest();
         }
 
         [HttpPost("CreateToken")]
@@ -151,37 +174,23 @@ namespace OOS.Presentation.WebAPIs.Controllers
             var user = _userService.FindByEmailAsync(terms).Result;
             return Ok(user);
         }
-        
-        [HttpPut("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile([FromBody]EditViewModel model)
-        {
 
-            var user = _userService.FindByEmailAsync(model.Email).Result;
-            
+        [HttpPost("{id}/product/{idProduct}/addWishProduct")]
+        public async Task<IActionResult> AddWishProduct(string id, string idProduct)
+        {
+            var user = _userService.FindByIdAsync(id).Result;
             if (user != null)
             {
-                user.UserName = model.Username;
-                user.Gender = model.Gender;
-                user.UserType = model.UserType;
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.MiddleName = model.MiddleName;
-                user.Country = model.Country;
-                user.PreferredLanguage = model.PreferredLanguage;
-                user.DateOfBirth = model.DateOfBirth;
-                user.Photo = model.Photo;
-                user.PhoneNumber = model.PhoneNumber;
-
+                user.WishList.Add(idProduct);
                 var result = await _userService.UpdateUserAsync(user);
                 if (!result.Succeeded)
                 {
-                    throw new ApplicationException($"Unexpected error occurred updating profile for user ID '{user.Id}'.");
+                    throw new ApplicationException($"Unexpected error occurred Adding wish product for user ID '{user.Id}'.");
                 }
-
-                return Ok(new EditViewModelResponse() { });
+                return Ok();
             }
-
             return BadRequest();
         }
+
     }
 }
