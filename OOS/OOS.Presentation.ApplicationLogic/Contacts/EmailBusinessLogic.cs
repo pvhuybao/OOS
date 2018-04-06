@@ -21,35 +21,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             _mapper = mapper;
             _mongoDbRepository = mongoDbRepository;
         }
-
-        public void DeleteFeedback(string id)
-        {
-            var feed = _mongoDbRepository.Get<Email>(id);
-            _mongoDbRepository.Delete(feed);
-        }
-
-        public SentEmailResponse CreateFeedBack(SentEmailRequest request)
-        {
-            var result = new SentEmailResponse();
-            var Feed = _mapper.Map<SentEmailRequest, Email>(request);
-            Feed.Id = Guid.NewGuid().ToString();
-            _mongoDbRepository.Create<Email>(Feed);
-            return result;
-        }
-       public EditFeedBackResponse EditFeedBack(string id, EditFeedBackRequest request)
-        {
-            var feed = _mapper.Map<EditFeedBackRequest, Email>(request);
-            feed.Id = id;
-            _mongoDbRepository.Replace<Email>(feed);
-            var result = _mapper.Map<Email, EditFeedBackResponse>(feed);
-            return result;
-        }
-
-        public Email GetFeedBack(string id)
-        {
-            return _mongoDbRepository.Get<Email>(id);
-        }
-
+     
         public CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request)
         {
             var result = new CreateEmailSubscribeResponse();
@@ -105,12 +77,6 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             mailFeedback.IsBodyHtml = true;
             smtp.Send(mailFeedback);
             return result;
-        }
-
-        public List<Email> GetEmailFeedBack()
-        {         
-            var data = _mongoDbRepository.Find<Email>().ToList();
-            return data;
         }
     }
 }

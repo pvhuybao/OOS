@@ -5,7 +5,8 @@ using System.Text;
 
 namespace OOS.Presentation.ApplicationLogic.Contacts.Messages
 {
-    public class EditFeedBackResponse : ResponseBase
+    public class CreateFeedbackResponse : ResponseBase
     {
+
     }
 }
