@@ -7,6 +7,7 @@ using MongoDB.Driver;
 using OOS.Domain.Contacts.Models;
 using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Contacts.Messages;
+using OOS.Presentation.ApplicationLogic.CustomerFeedback;
 
 
 namespace OOS.Presentation.ApplicationLogic.Contacts
@@ -22,32 +23,40 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             _mongoDbRepository = mongoDbRepository;
         }
 
+
+        public Feedback GetFeedBack(string id)
+        {
+            return _mongoDbRepository.Get<Feedback>(id);
+        }
+
+        public List<Feedback> GetEmailFeedBack()
+        {
+            var data = _mongoDbRepository.Find<Feedback>().ToList();
+            return data;
+        }
+
         public void DeleteFeedback(string id)
         {
-            var feed = _mongoDbRepository.Get<Email>(id);
+            var feed = _mongoDbRepository.Get<Feedback>(id);
             _mongoDbRepository.Delete(feed);
         }
 
         public SentEmailResponse CreateFeedBack(SentEmailRequest request)
         {
             var result = new SentEmailResponse();
-            var Feed = _mapper.Map<SentEmailRequest, Email>(request);
+            var Feed = _mapper.Map<SentEmailRequest, Feedback>(request);
             Feed.Id = Guid.NewGuid().ToString();
-            _mongoDbRepository.Create<Email>(Feed);
-            return result;
-        }
-       public EditFeedBackResponse EditFeedBack(string id, EditFeedBackRequest request)
-        {
-            var feed = _mapper.Map<EditFeedBackRequest, Email>(request);
-            feed.Id = id;
-            _mongoDbRepository.Replace<Email>(feed);
-            var result = _mapper.Map<Email, EditFeedBackResponse>(feed);
+            _mongoDbRepository.Create<Feedback>(Feed);
             return result;
         }
 
-        public Email GetFeedBack(string id)
+        public EditFeedBackResponse EditFeedBack(string id, EditFeedBackRequest request)
         {
-            return _mongoDbRepository.Get<Email>(id);
+            var feed = _mapper.Map<EditFeedBackRequest, Feedback>(request);
+            feed.Id = id;
+            _mongoDbRepository.Replace<Feedback>(feed);
+            var result = _mapper.Map<Feedback, EditFeedBackResponse>(feed);
+            return result;
         }
 
         public CreateEmailSubscribeResponse CreateEmailSubscribe(CreateEmailSubscribeRequest request)
@@ -79,6 +88,7 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             string senderID = "dmthanh572@gmail.com";
             string senderPassword = "tau0bieT";
             string emailAdmin = "nguyenhuuloc304@gmail.com";
+           
 
             string body = "Feedback from " + request.ToEmail +"<br>";
             body += request.Content;
@@ -105,12 +115,6 @@ namespace OOS.Presentation.ApplicationLogic.Contacts
             mailFeedback.IsBodyHtml = true;
             smtp.Send(mailFeedback);
             return result;
-        }
-
-        public List<Email> GetEmailFeedBack()
-        {         
-            var data = _mongoDbRepository.Find<Email>().ToList();
-            return data;
         }
     }
 }

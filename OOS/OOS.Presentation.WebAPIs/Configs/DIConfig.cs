@@ -8,6 +8,7 @@ using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Configurations;
 using OOS.Presentation.ApplicationLogic.Contacts;
+using OOS.Presentation.ApplicationLogic.CustomerFeedback;
 using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.ApplicationLogic.Products;
 using OOS.Presentation.ApplicationLogic.SocialNetwork;

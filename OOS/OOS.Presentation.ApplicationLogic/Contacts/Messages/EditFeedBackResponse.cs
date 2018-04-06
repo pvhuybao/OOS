@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Presentation.ApplicationLogic.Contacts.Messages
+namespace OOS.Presentation.ApplicationLogic.CustomerFeedback
 {
-    public class EditFeedBackResponse : ResponseBase
+   public class EditFeedBackResponse : ResponseBase
     {
     }
 }

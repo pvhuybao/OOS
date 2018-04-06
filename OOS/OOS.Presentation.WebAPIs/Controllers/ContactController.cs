@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OOS.Presentation.ApplicationLogic.Contacts;
 using OOS.Presentation.ApplicationLogic.Contacts.Messages;
+using OOS.Presentation.ApplicationLogic.CustomerFeedback;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,23 +30,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(listEmailSubsribe);
         }
 
-        [Route("getFeedBack")]
-        [HttpGet]
-        public IActionResult GetFeedBack()
-        {
-            var listEmailFeedBack = _emailsBusinessLogic.GetEmailFeedBack();
-            return Ok(listEmailFeedBack);
-        }
-
-        // GET api/<controller>/5
-        [Route("getFeedBack/{id}")]
-        [HttpGet]
-        public IActionResult Get(string id)
-        {
-            var result = _emailsBusinessLogic.GetFeedBack(id);
-            return Ok(result);
-        }
-
         // POST api/<controller>
         [HttpPost]
         public IActionResult Post([FromBody] SentEmailRequest value)
@@ -58,7 +43,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         [HttpPost]
         public IActionResult EmailSubsribe([FromBody] CreateEmailSubscribeRequest value)
         {
-            _emailsBusinessLogic.CreateEmailSubscribe(value);
+            _emailsBusinessLogic.CreateEmailSubscribe(value); 
             return Ok();
         }
 
@@ -69,7 +54,24 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok();
         }
 
-        [Route("getFeedBack/{id}")]
+        [Route("getFeedback")]
+        [HttpGet]
+        public IActionResult GetFeedBack()
+        {
+            var listEmailFeedBack = _emailsBusinessLogic.GetEmailFeedBack();
+            return Ok(listEmailFeedBack);
+        }
+
+        // GET api/<controller>/5
+        [Route("getFeedback/{id}")]
+        [HttpGet]
+        public IActionResult Get(string id)
+        {
+            var result = _emailsBusinessLogic.GetFeedBack(id);
+            return Ok(result);
+        }
+
+        [Route("getFeedback/{id}")]
         [HttpDelete]
         public IActionResult DeleteFeedback(string id)
         {
@@ -77,14 +79,13 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok();
         }
 
-        [Route("getFeedBack/{id}")]
+        [Route("getFeedback/{id}")]
         [HttpPut]
         public IActionResult PutFeedBack(string id, [FromBody] EditFeedBackRequest request)
         {
-           var rs = _emailsBusinessLogic.EditFeedBack(id, request);
+            var rs = _emailsBusinessLogic.EditFeedBack(id, request);
             return Ok(rs);
         }
-
 
     }
 }
