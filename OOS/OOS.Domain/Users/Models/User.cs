@@ -74,6 +74,7 @@ namespace OOS.Domain.Users.Models
         /// <summary>
         /// Date of birth
         /// </summary>
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
