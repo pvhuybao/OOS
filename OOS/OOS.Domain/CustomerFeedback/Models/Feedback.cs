@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Presentation.ApplicationLogic.Contacts.Messages
+namespace OOS.Domain.CustomerFeedback.Models
 {
-    public class EditFeedBackRequest : AuditableEntityBase, IAggregateRoot
+    public class Feedback : AuditableEntityBase, IAggregateRoot
     {
         public string Id { set; get; }
 
