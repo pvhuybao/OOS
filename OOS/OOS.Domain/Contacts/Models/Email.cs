@@ -9,6 +9,7 @@ namespace OOS.Domain.Contacts.Models
 {
     public class Email : AuditableEntityBase, IAggregateRoot
     {
+
         public string Id { set; get; }
 
         public string ToEmail { set; get; }
@@ -17,6 +18,5 @@ namespace OOS.Domain.Contacts.Models
 
         public string Content { set; get; }
 
-        public Boolean Status { set; get; }
     }
 }
