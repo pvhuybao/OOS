@@ -11,5 +11,6 @@ namespace OOS.Presentation.ApplicationLogic.Configurations.Messages
         public string ShippingReturnHtml { get; set; }
         public string ShippingGuideHtml { get; set; }
         public string FaqHtml { get; set; }
+        public int[] PageSize { get; set; }
     }
 }
