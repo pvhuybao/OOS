@@ -25,7 +25,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
         {
             _usersBusinessLogic = UsersBusinessLogic;
@@ -89,7 +88,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
             }
             return Ok(userRespone);
         }
-
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
@@ -193,10 +191,6 @@ namespace OOS.Presentation.WebAPIs.Controllers
             }
             return BadRequest();
         }
-
-        
-
-
 
     }
 }
