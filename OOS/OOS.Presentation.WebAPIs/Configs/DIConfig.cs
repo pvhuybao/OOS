@@ -8,8 +8,11 @@ using OOS.Infrastructure.Mongodb;
 using OOS.Presentation.ApplicationLogic.Categories;
 using OOS.Presentation.ApplicationLogic.Configurations;
 using OOS.Presentation.ApplicationLogic.Contacts;
+using OOS.Presentation.ApplicationLogic.CustomerFeedback;
 using OOS.Presentation.ApplicationLogic.Order;
 using OOS.Presentation.ApplicationLogic.Products;
+using OOS.Presentation.ApplicationLogic.SocialNetwork;
+using OOS.Presentation.ApplicationLogic.SocialNetworks;
 using OOS.Presentation.ApplicationLogic.Users;
 using System;
 using System.Collections.Generic;
@@ -29,8 +32,9 @@ namespace OOS.Presentation.WebAPIs.Configs
             services.AddTransient<ICategoriesBusinessLogic, CategoriesBusinessLogic>();
             services.AddTransient<IUsersBusinessLogic, UsersBusinessLogic>();
             services.AddTransient<IEmailBusinessLogic, EmailBusinessLogic>();
+            services.AddTransient<ISocialNetworkBusinessLogic, SocialNetworkBusinessLogic>();
             services.AddTransient<IMongoDbRepository, MongoDbRepository>(n => new MongoDbRepository(config.GetValue<string>("MongoDb:DefaultConnectionString")));
-
+            
 
             services.AddIdentity<User, Role>(
                 identityOptions =>

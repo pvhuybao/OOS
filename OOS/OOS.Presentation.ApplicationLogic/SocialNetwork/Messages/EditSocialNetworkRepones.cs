@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOS.Presentation.ApplicationLogic.CustomerFeedback
+namespace OOS.Presentation.ApplicationLogic.SocialNetwork.Messages
 {
-   public class EditFeedBackResponse : ResponseBase
+    public class EditSocialNetworkRepones : ResponseBase
     {
     }
 }
