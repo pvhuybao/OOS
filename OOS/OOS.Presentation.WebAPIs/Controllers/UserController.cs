@@ -15,6 +15,10 @@ using AutoMapper;
 using OOS.Domain.Users.Models;
 using OOS.Infrastructure.Identity.MongoDB;
 using OOS.Presentation.WebAPIs.Models.Manager;
+using System.Net.Http;
+using Newtonsoft.Json;
+using OOS.Shared.Enums;
+
 namespace OOS.Presentation.WebAPIs.Controllers
 {
     [Route("api/[controller]")]
@@ -24,7 +28,7 @@ namespace OOS.Presentation.WebAPIs.Controllers
         private readonly IUsersBusinessLogic _usersBusinessLogic;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-
+        private static readonly HttpClient Client = new HttpClient();
 
         public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
         {
@@ -182,6 +186,37 @@ namespace OOS.Presentation.WebAPIs.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("LoginFacebook")]
+        public async Task<IActionResult> Facebook([FromBody]FacebookAuthViewModel model)
+        {
+            // 3. we've got a valid token so we can request user data from fb
+            var userInfoResponse = await Client.GetStringAsync($"https://graph.facebook.com/v2.8/me?fields=id,email,first_name,last_name,name,gender,locale,birthday,picture&access_token={model.AccessToken}");
+            var userInfo = JsonConvert.DeserializeObject<FacebookUserData>(userInfoResponse);
+
+            // 4. ready to create the local user account (if necessary) and jwt
+            var user = await _userService.FindByEmailAsync(userInfo.Email);
+            User userFacebook = new User();
+            if (user == null)
+            {  
+                userFacebook.FirstName = userInfo.FirstName;
+                userFacebook.LastName = userInfo.LastName;
+                userFacebook.Email = userInfo.Email;
+                userFacebook.Photo = userInfo.Picture.Data.Url;
+                userFacebook.UserName = userInfo.Email;
+                userFacebook.Gender =(GenderType)Enum.Parse(typeof(GenderType), userInfo.Gender, ignoreCase: true) ;
+                userFacebook.Country = userInfo.Locale;
+                string password = "Eshop123!";
+                var result = await _userService.SignUpAsync(userFacebook, password);
+                
+                if (result.Succeeded == false) return BadRequest();
+                return Ok(userFacebook);
+
+            }
+            return Ok(user);
+
         }
     }
 }
