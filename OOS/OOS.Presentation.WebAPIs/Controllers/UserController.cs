@@ -248,5 +248,34 @@ namespace OOS.Presentation.WebAPIs.Controllers
             return Ok(user);
 
         }
+        [HttpPost]
+        [Route("LoginGoogle")]
+        public async Task<IActionResult> Google([FromBody]string token)
+        {
+            // 3. we've got a valid token so we can request user data from fb
+            var userInfoResponse = await Client.GetStringAsync($"https://www.googleapis.com/oauth2/v3/tokeninfo?id_token={token}");
+            var userInfo = JsonConvert.DeserializeObject<GoogleOAuthResponse>(userInfoResponse);
+
+            // 4. ready to create the local user account (if necessary) and jwt
+            var user = await _userService.FindByEmailAsync(userInfo.email);
+            User userGoogle = new User();
+            if (user == null)
+            {
+                userGoogle.FirstName = userInfo.given_name;
+                userGoogle.LastName = userInfo.family_name;
+                userGoogle.Email = userInfo.email;
+                userGoogle.Photo = userInfo.picture;
+                userGoogle.UserName = userInfo.email;
+                userGoogle.Gender = 0;
+                userGoogle.Country = userInfo.locale;
+                string password = "Eshop123!";
+                var result = await _userService.SignUpAsync(userGoogle, password);
+
+                if (result.Succeeded == false) return BadRequest();
+                return Ok(userGoogle);
+
+            }
+            return Ok(user);
+        }
     }
 }
