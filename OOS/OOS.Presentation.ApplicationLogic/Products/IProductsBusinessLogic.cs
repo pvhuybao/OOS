@@ -18,7 +18,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         PagedQueryResult<GetProductExtraCategoryNameResponse> GetProduct(GetProductsRequest query);
 
-        Product GetProduct(string id);
+        GetProductExtraCategoryNameResponse GetProduct(string id);
 
         bool checkExistedCode(string code);
         
