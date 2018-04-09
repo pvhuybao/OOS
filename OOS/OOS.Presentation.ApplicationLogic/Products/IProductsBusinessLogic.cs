@@ -26,7 +26,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         List<Product> SearchProduct(string idCategory, string keyword);
 
-        PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string idCategory, string keyword, string sort, GetProductsRequest query);
+        PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(GetProductsRequest query);
 
         List<GetProductExtraCategoryNameResponse> ProductWidget(string widget);
 

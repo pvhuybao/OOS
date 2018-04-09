@@ -198,7 +198,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return products;
         }
 
-        public PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string idCategory, string keyword, string sort, GetProductsRequest query)
+        public PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(GetProductsRequest query)
         {
             var products = new List<Product>();
 
@@ -206,19 +206,17 @@ namespace OOS.Presentation.ApplicationLogic.Products
             var categories = _mongoDbRepository.Find(categoryfilter).ToList();
             var publishcat = categories.Select(d => d.Id).ToList();
 
-            if (idCategory == "all")
+            if (query.IdCategory == "all")
             {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(query.Keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
                 products = _mongoDbRepository.Find(filter).ToList().ToList();
                 
             }
             else
             {
-                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory) && p.IdCategory.Equals(idCategory));
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(query.Keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory) && p.IdCategory.Equals(query.IdCategory));
                 products = _mongoDbRepository.Find(filter).ToList().ToList();
             }
-
-            var totalItemCount = products.Count();
 
             var ordersOverview = _mapper.Map<IEnumerable<GetProductExtraCategoryNameResponse>>(products).ToList();
 
@@ -229,8 +227,12 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 ordersOverview[i].CalculateProductValues();
             }
 
-            if (sort == "price") ordersOverview = ordersOverview.OrderBy(o => o.MinPrice).ToList();
+            ordersOverview = ordersOverview.Where(p => (p.MinPrice >= query.MinInPrice) && (p.MinPrice <= query.MaxInPrice)).ToList();
+
+            if (query.Sort == "price") ordersOverview = ordersOverview.OrderBy(o => o.MinPrice).ToList();
             else ordersOverview = ordersOverview.OrderBy(o => o.Name).ToList();
+
+            var totalItemCount = ordersOverview.Count();
 
             ordersOverview = ordersOverview
                 .Skip((query.Page - 1) * query.PageSize)
