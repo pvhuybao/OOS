@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using OOS.Presentation.ApplicationLogic.Users;
 using OOS.Presentation.ApplicationLogic.Users.Messages;
+using OOS.Presentation.ApplicationLogic.Products;
 using OOS.Domain.Users.Services;
 using System.Threading.Tasks;
 using System.Security.Claims;
@@ -13,8 +14,10 @@ using System.Text;
 using OOS.Presentation.WebAPIs.Models.User;
 using AutoMapper;
 using OOS.Domain.Users.Models;
+using OOS.Domain.Products.Models;
 using OOS.Infrastructure.Identity.MongoDB;
 using OOS.Presentation.WebAPIs.Models.Manager;
+using OOS.Presentation.ApplicationLogic.Products.Messages;
 using System.Net.Http;
 using Newtonsoft.Json;
 using OOS.Shared.Enums;
@@ -26,15 +29,17 @@ namespace OOS.Presentation.WebAPIs.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUsersBusinessLogic _usersBusinessLogic;
+        private readonly IProductsBusinessLogic _productsBusinessLogic;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private static readonly HttpClient Client = new HttpClient();
 
-        public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration)
+        public UserController(IUsersBusinessLogic UsersBusinessLogic, IUserService userService, IConfiguration configuration, IProductsBusinessLogic productsBusinessLogic)
         {
             _usersBusinessLogic = UsersBusinessLogic;
             _userService = userService;
             _configuration = configuration;
+            _productsBusinessLogic = productsBusinessLogic;
         }
 
         // GET: api/values
@@ -178,6 +183,35 @@ namespace OOS.Presentation.WebAPIs.Controllers
         {
             var user = _userService.FindByEmailAsync(terms).Result;
             return Ok(user);
+        }
+
+        [HttpGet("GetWishList/{userId}")]
+        public IActionResult GetWishList(string userId)
+        {
+            var user = _userService.FindByIdAsync(userId).Result;
+            List<GetProductExtraCategoryNameResponse> productWishList = new List<GetProductExtraCategoryNameResponse>();
+            foreach (var item in user.WishList)
+            {
+                productWishList.Add(_productsBusinessLogic.GetProduct(item));
+            }
+            return Ok(productWishList);
+        }
+
+        [HttpDelete("{id}/product/{idProduct}/removeWishProduct")]
+        public async Task<IActionResult> RemoveWishProduct(string id, string idProduct)
+        {
+            var user = _userService.FindByIdAsync(id).Result;
+            if (user != null)
+            {
+                user.WishList.Remove(idProduct);
+                var result = await _userService.UpdateUserAsync(user);
+                if (!result.Succeeded)
+                {
+                    throw new ApplicationException($"Unexpected error occurred Adding wish product for user ID '{user.Id}'.");
+                }
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpPost("{id}/product/{idProduct}/addWishProduct")]

@@ -73,9 +73,15 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return pagedResult;
         }
 
-        public Product GetProduct(string id)
+        public GetProductExtraCategoryNameResponse GetProduct(string id)
         {
-            return _mongoDbRepository.Get<Product>(id);
+            var listCat = _mongoDbRepository.Find(Builders<Category>.Filter.Empty).ToList();
+            Product _product = _mongoDbRepository.Get<Product>(id);
+            GetProductExtraCategoryNameResponse product = new GetProductExtraCategoryNameResponse();
+            product = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(_product);
+            product.CategoryName = listCat.SingleOrDefault(n => n.Id == product.IdCategory).Name;
+            product.CalculateProductValues(); 
+            return product;
         }
 
         public bool checkExistedCode(string code)
