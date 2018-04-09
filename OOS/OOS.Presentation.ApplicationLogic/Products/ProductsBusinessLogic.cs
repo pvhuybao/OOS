@@ -173,14 +173,32 @@ namespace OOS.Presentation.ApplicationLogic.Products
 
         }
 
-        public List<Product> SearchProduct(string keyword)
+        public List<Product> SearchProduct(string idCategory, string keyword)
         {
-            var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
-            var products = _mongoDbRepository.Find(filter).ToList();
+            var products = new List<Product>();
+
+            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Publish));
+            var categories = _mongoDbRepository.Find(categoryfilter).ToList();
+            var publishcat = categories.Select(d => d.Id).ToList();
+
+            if (idCategory == "all")
+            {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
+                products = _mongoDbRepository.Find(filter).ToList().ToList();
+
+            }
+            else
+            {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory) && p.IdCategory.Equals(idCategory));
+                products = _mongoDbRepository.Find(filter).ToList().ToList();
+            }
+
+            products = products.Take(10).ToList();
+
             return products;
         }
 
-        public List<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string check, string idCategory, string keyword)
+        public PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string idCategory, string keyword, string sort, GetProductsRequest query)
         {
             var products = new List<Product>();
 
@@ -200,18 +218,27 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 products = _mongoDbRepository.Find(filter).ToList().ToList();
             }
 
-            if (check == "searchbar") products = products.Take(10).ToList();
-            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
-            foreach (var p in products)
+            var totalItemCount = products.Count();
+
+            var ordersOverview = _mapper.Map<IEnumerable<GetProductExtraCategoryNameResponse>>(products).ToList();
+
+            var listCat = _mongoDbRepository.Find(Builders<Category>.Filter.Empty).ToList();
+            for (int i = 0; i < ordersOverview.Count(); i++)
             {
-                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
-                //add category name
-                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
-                //calculate other values of Product:min-max price, total quantity, basic image
-                response.CalculateProductValues();
-                listResult.Add(response);
+                ordersOverview[i].CategoryName = listCat.SingleOrDefault(n => n.Id == ordersOverview[i].IdCategory).Name;
+                ordersOverview[i].CalculateProductValues();
             }
-            return listResult;
+
+            if (sort == "price") ordersOverview = ordersOverview.OrderBy(o => o.MinPrice).ToList();
+            else ordersOverview = ordersOverview.OrderBy(o => o.Name).ToList();
+
+            ordersOverview = ordersOverview
+                .Skip((query.Page - 1) * query.PageSize)
+                .Take(query.PageSize)
+                .ToList();
+
+            var pagedResult = new PagedQueryResult<GetProductExtraCategoryNameResponse>(ordersOverview, totalItemCount, query.Page, query.PageSize);
+            return pagedResult;
         }
     }
 }
