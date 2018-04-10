@@ -70,10 +70,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
         }
 
         [HttpGet]
-        [Route ("{keyword}/searchproduct")]
-        public IActionResult searchProduct(string keyword)
+        [Route ("{idCategory}&{keyword}/searchproduct")]
+        public IActionResult searchProduct(string idCategory, string keyword)
         {
-            var products = _productsBusinessLogic.SearchProduct(keyword);
+            var products = _productsBusinessLogic.SearchProduct(idCategory, keyword);
             return Ok(products);
         }
 
@@ -87,18 +87,18 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         //Get product base on ID Category
         [HttpGet]
-        [Route("{idCategory}/category")]
-        public IActionResult GetProductBaseOnIDCategory(string idCategory)
+        [Route("{IdCategory}/category")]
+        public IActionResult GetProductBaseOnIDCategory(GetProductsRequest query)
         {
-            var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(idCategory);
+            var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(query);
             return Ok(products);
         }
 
         [HttpGet]
-        [Route("{check}&{idCategory}&{keyword}/search")]
-        public IActionResult searchProductByIdCategory(string check, string idCategory, string keyword)
+        [Route("search")]
+        public IActionResult searchProductByIdCategory(GetProductsRequest query)
         {
-            var products = _productsBusinessLogic.SearchProductByIdCategory(check, idCategory, keyword);
+            var products = _productsBusinessLogic.SearchProductByIdCategory(query);
             return Ok(products);
         }
     }

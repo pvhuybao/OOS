@@ -161,32 +161,39 @@ namespace OOS.Presentation.ApplicationLogic.Products
             return listResult;
         }
 
-        public List<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(string idCategory)
+        public PagedQueryResult<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(GetProductsRequest query)
         {
-            var filter = Builders<Product>.Filter.Where(p => p.IdCategory.Equals(idCategory));
-            var listProducts = _mongoDbRepository.Find(filter).ToList();
-            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
-            foreach (var p in listProducts)
+            var products = new List<Product>();
+            var a = query.IdCategory;
+            var filter = Builders<Product>.Filter.Where(p => p.Status.Equals(Shared.Enums.ProductStatus.Publish) && p.IdCategory.Equals(query.IdCategory));
+            products = _mongoDbRepository.Find(filter).ToList().ToList();
+
+            var ordersOverview = _mapper.Map<IEnumerable<GetProductExtraCategoryNameResponse>>(products).ToList();
+
+            var listCat = _mongoDbRepository.Find(Builders<Category>.Filter.Empty).ToList();
+            for (int i = 0; i < ordersOverview.Count(); i++)
             {
-                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
-                //add category name
-                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
-                //calculate other values of Product:min-max price, total quantity, basic image
-                response.CalculateProductValues();
-                listResult.Add(response);
+                ordersOverview[i].CategoryName = listCat.SingleOrDefault(n => n.Id == ordersOverview[i].IdCategory).Name;
+                ordersOverview[i].CalculateProductValues();
             }
-            return listResult;
 
+            ordersOverview = ordersOverview.Where(p => (p.MinPrice >= query.MinInPrice) && (p.MinPrice <= query.MaxInPrice)).ToList();
+
+            if (query.Sort == "price") ordersOverview = ordersOverview.OrderBy(o => o.MinPrice).ToList();
+            else ordersOverview = ordersOverview.OrderBy(o => o.Name).ToList();
+
+            var totalItemCount = ordersOverview.Count();
+
+            ordersOverview = ordersOverview
+                .Skip((query.Page - 1) * query.PageSize)
+                .Take(query.PageSize)
+                .ToList();
+
+            var pagedResult = new PagedQueryResult<GetProductExtraCategoryNameResponse>(ordersOverview, totalItemCount, query.Page, query.PageSize);
+            return pagedResult;
         }
 
-        public List<Product> SearchProduct(string keyword)
-        {
-            var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()));
-            var products = _mongoDbRepository.Find(filter).ToList();
-            return products;
-        }
-
-        public List<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string check, string idCategory, string keyword)
+        public List<Product> SearchProduct(string idCategory, string keyword)
         {
             var products = new List<Product>();
 
@@ -198,7 +205,7 @@ namespace OOS.Presentation.ApplicationLogic.Products
             {
                 var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
                 products = _mongoDbRepository.Find(filter).ToList().ToList();
-                
+
             }
             else
             {
@@ -206,18 +213,54 @@ namespace OOS.Presentation.ApplicationLogic.Products
                 products = _mongoDbRepository.Find(filter).ToList().ToList();
             }
 
-            if (check == "searchbar") products = products.Take(10).ToList();
-            List<GetProductExtraCategoryNameResponse> listResult = new List<GetProductExtraCategoryNameResponse>();
-            foreach (var p in products)
+            products = products.Take(10).ToList();
+
+            return products;
+        }
+
+        public PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(GetProductsRequest query)
+        {
+            var products = new List<Product>();
+
+            var categoryfilter = Builders<Category>.Filter.Where(p => p.Status.Equals(Shared.Enums.CategoryStatus.Publish));
+            var categories = _mongoDbRepository.Find(categoryfilter).ToList();
+            var publishcat = categories.Select(d => d.Id).ToList();
+
+            if (query.IdCategory == "all")
             {
-                var response = _mapper.Map<Product, GetProductExtraCategoryNameResponse>(p);
-                //add category name
-                response.CategoryName = _mongoDbRepository.Get<Category>(response.IdCategory).Name;
-                //calculate other values of Product:min-max price, total quantity, basic image
-                response.CalculateProductValues();
-                listResult.Add(response);
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(query.Keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory));
+                products = _mongoDbRepository.Find(filter).ToList().ToList();
+                
             }
-            return listResult;
+            else
+            {
+                var filter = Builders<Product>.Filter.Where(p => p.Name.ToLower().Contains(query.Keyword.ToLower()) && p.Status.Equals(Shared.Enums.ProductStatus.Publish) && publishcat.Contains(p.IdCategory) && p.IdCategory.Equals(query.IdCategory));
+                products = _mongoDbRepository.Find(filter).ToList().ToList();
+            }
+
+            var ordersOverview = _mapper.Map<IEnumerable<GetProductExtraCategoryNameResponse>>(products).ToList();
+
+            var listCat = _mongoDbRepository.Find(Builders<Category>.Filter.Empty).ToList();
+            for (int i = 0; i < ordersOverview.Count(); i++)
+            {
+                ordersOverview[i].CategoryName = listCat.SingleOrDefault(n => n.Id == ordersOverview[i].IdCategory).Name;
+                ordersOverview[i].CalculateProductValues();
+            }
+            
+            ordersOverview = ordersOverview.Where(p => (p.MinPrice >= query.MinInPrice) && (p.MinPrice <= query.MaxInPrice)).ToList();
+
+            if (query.Sort == "price") ordersOverview = ordersOverview.OrderBy(o => o.MinPrice).ToList();
+            else ordersOverview = ordersOverview.OrderBy(o => o.Name).ToList();
+
+            var totalItemCount = ordersOverview.Count();
+
+            ordersOverview = ordersOverview
+                .Skip((query.Page - 1) * query.PageSize)
+                .Take(query.PageSize)
+                .ToList();
+
+            var pagedResult = new PagedQueryResult<GetProductExtraCategoryNameResponse>(ordersOverview, totalItemCount, query.Page, query.PageSize);
+            return pagedResult;
         }
     }
 }

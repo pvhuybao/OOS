@@ -21,12 +21,12 @@ namespace OOS.Presentation.ApplicationLogic.Products
         GetProductExtraCategoryNameResponse GetProduct(string id);
 
         bool checkExistedCode(string code);
-        
-        List<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(string idCategory);
 
-        List<Product> SearchProduct(string keyword);
+        PagedQueryResult<GetProductExtraCategoryNameResponse> GetProductsBaseOnIDCategory(GetProductsRequest query);
 
-        List<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(string check, string idCategory, string keyword);
+        List<Product> SearchProduct(string idCategory, string keyword);
+
+        PagedQueryResult<GetProductExtraCategoryNameResponse> SearchProductByIdCategory(GetProductsRequest query);
 
         List<GetProductExtraCategoryNameResponse> ProductWidget(string widget);
 
