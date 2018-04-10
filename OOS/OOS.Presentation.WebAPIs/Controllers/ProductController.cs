@@ -87,10 +87,10 @@ namespace OOS.Presentation.WebAPIs.Controllers
 
         //Get product base on ID Category
         [HttpGet]
-        [Route("{idCategory}/category")]
-        public IActionResult GetProductBaseOnIDCategory(string idCategory)
+        [Route("{IdCategory}/category")]
+        public IActionResult GetProductBaseOnIDCategory(GetProductsRequest query)
         {
-            var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(idCategory);
+            var products = _productsBusinessLogic.GetProductsBaseOnIDCategory(query);
             return Ok(products);
         }
 
