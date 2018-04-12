@@ -53,13 +53,13 @@ namespace OOS.Presentation.ApplicationLogic.Products
         public PagedQueryResult<GetProductExtraCategoryNameResponse> GetProduct(GetProductsRequest query)
         {
             var filter = Builders<Product>.Filter.Empty;
-            var listProducts = _mongoDbRepository.Find(filter);           
+            var listProducts = _mongoDbRepository.Find(filter).ToList();           
             var totalItemCount = listProducts.Count();
 
             var ordersOverview = _mapper.Map<IEnumerable<GetProductExtraCategoryNameResponse>>(listProducts
-                .SortByDescending(it => it.CreatedDate)
+                .OrderByDescending(it => it.CreatedDate)
                 .Skip((query.Page - 1) * query.PageSize)
-                .Limit(query.PageSize)
+                .Take(query.PageSize)
                 .ToList()).ToList();
 
             var listCat = _mongoDbRepository.Find(Builders<Category>.Filter.Empty).ToList();
